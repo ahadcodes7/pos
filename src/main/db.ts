@@ -1,4 +1,4 @@
-import { PrismaClient } from "../main/generated/prisma/client.ts";
+import { PrismaClient } from "./generated/prisma/client.ts";
 import { config } from "dotenv";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 
@@ -10,7 +10,7 @@ const adapter = new PrismaBetterSqlite3({
   url: connectionString,
 });
 
-const globalForPrisma = globalThis;
+const globalForPrisma = globalThis as typeof globalThis & { prisma?: PrismaClient };
 
 const prisma = globalForPrisma.prisma ?? new PrismaClient({ adapter });
 

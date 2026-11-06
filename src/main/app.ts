@@ -1,6 +1,6 @@
 import { app, BrowserWindow } from "electron";
-import { registerIPCHandlers } from "./ipc/index.js";
-import { createMainWindow } from "./window.js";
+import { registerIPCHandlers } from "./ipc/index";
+import { createMainWindow } from "./window";
 
 export async function bootstrapApp() {
   await app.whenReady();

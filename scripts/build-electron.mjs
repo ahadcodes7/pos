@@ -14,7 +14,7 @@ const common = {
 await Promise.all([
   build({
     ...common,
-    entryPoints: ["src/main/index.js"],
+    entryPoints: ["src/main/index.ts"],
     outfile: "dist-electron/main.js",
     format: "esm",
     // node_modules (electron, prisma runtime, native modules) are loaded at runtime.

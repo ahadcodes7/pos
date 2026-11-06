@@ -1,8 +1,12 @@
+import type { IpcMainInvokeEvent } from "electron";
 import { ZodError } from "zod";
-import ApiError from "../utils/apiError.util.js";
+import ApiError from "../utils/apiError.util";
 
-export function ipcHandler(handler) {
-  return async (event, payload) => {
+// Payload arrives from the renderer untyped; handlers validate it with Zod.
+type Handler = (payload: unknown, event: IpcMainInvokeEvent) => unknown;
+
+export function ipcHandler(handler: Handler) {
+  return async (event: IpcMainInvokeEvent, payload: unknown) => {
     try {
       const data = await handler(payload, event);
       return {

@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
-import { createUserService, listUsersService } from "../services/user.service.js";
-import { createUserSchema } from "../schemas/user.schema.js";
-import { ipcHandler } from "./ipcWrapper.js";
+import { createUserService, listUsersService } from "../services/user.service";
+import { createUserSchema } from "../schemas/user.schema";
+import { ipcHandler } from "./ipcWrapper";
 
 export function registerUserIPC() {
   ipcMain.handle(

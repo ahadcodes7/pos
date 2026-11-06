@@ -6,14 +6,23 @@ const userSchema = z.object({
   username: z.string("username is required for user session."),
 });
 
-// global user session state in main process
-let session = null;
+export type SessionUser = z.infer<typeof userSchema>;
 
-export async function setSession(user) {
+// global user session state in main process
+let session: SessionUser | null = null;
+
+// Throws inside the callers' try blocks when unset, which keytar did implicitly before.
+function serviceName(): string {
+  const name = process.env.SERVICE_NAME;
+  if (!name) throw new Error("SERVICE_NAME is not set");
+  return name;
+}
+
+export async function setSession(user: SessionUser) {
   const parsed = userSchema.parse(user);
   session = parsed;
   try {
-    await keytar.setPassword(process.env.SERVICE_NAME, "lastUserId", user.id);
+    await keytar.setPassword(serviceName(), "lastUserId", user.id);
   } catch (error) {
     console.error("Error in setSession function.", error);
   }
@@ -26,7 +35,7 @@ export function getSession() {
 export async function clearSession() {
   session = null;
   try {
-    await keytar.deletePassword(process.env.SERVICE_NAME, "lastUserId");
+    await keytar.deletePassword(serviceName(), "lastUserId");
   } catch (error) {
     console.error("Error in clearSession function.", error);
   }
@@ -34,7 +43,7 @@ export async function clearSession() {
 
 export async function getLastUserId() {
   try {
-    return await keytar.getPassword(process.env.SERVICE_NAME, "lastUserId");
+    return await keytar.getPassword(serviceName(), "lastUserId");
   } catch (error) {
     console.error("Error in getLastUserId function.", error);
   }

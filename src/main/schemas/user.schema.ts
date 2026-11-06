@@ -10,3 +10,5 @@ export const userFilterSchema = z.object({
   limit: z.coerce.number().int().positive().max(100).default(20),
   search: z.string().optional(),
 });
+
+export type CreateUserInput = z.infer<typeof createUserSchema>;

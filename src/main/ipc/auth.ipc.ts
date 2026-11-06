@@ -4,9 +4,9 @@ import {
   logoutService,
   getCurrentUserService,
   isAuthenticatedService,
-} from "../services/auth.service.js";
-import { loginSchema } from "../schemas/auth.schema.js";
-import { ipcHandler } from "./ipcWrapper.js";
+} from "../services/auth.service";
+import { loginSchema } from "../schemas/auth.schema";
+import { ipcHandler } from "./ipcWrapper";
 
 export function registerAuthIPC() {
   ipcMain.handle(

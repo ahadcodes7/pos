@@ -1,12 +1,13 @@
-import ApiError from "../utils/apiError.util.js";
+import ApiError from "../utils/apiError.util";
+import type { LoginInput } from "../schemas/auth.schema";
 
-import prisma from "../db.js";
+import prisma from "../db";
 
 import bcrypt from "bcryptjs";
 
-import { clearSession, getSession, setSession } from "../auth/session.js";
+import { clearSession, getSession, setSession } from "../auth/session";
 
-export async function loginService(data) {
+export async function loginService(data: LoginInput) {
   const { username, password } = data;
 
   const user = await prisma.user.findUnique({
@@ -42,7 +43,7 @@ export function getCurrentUserService() {
 }
 
 export async function logoutService() {
-  clearSession();
+  await clearSession();
   return { success: true };
 }
 

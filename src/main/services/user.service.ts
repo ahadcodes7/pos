@@ -1,7 +1,8 @@
-import prisma from "../db.js";
+import prisma from "../db";
 import bcrypt from "bcryptjs";
+import type { CreateUserInput } from "../schemas/user.schema";
 
-export async function createUserService(data) {
+export async function createUserService(data: CreateUserInput) {
   const hashedPassword = await bcrypt.hash(data.password, 10);
 
   const user = await prisma.user.create({
