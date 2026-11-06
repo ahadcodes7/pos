@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/auth-context";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
@@ -17,8 +17,8 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login, loginLoading } = useAuth();
-  const navigate = useNavigate();
+  const [signedIn, setSignedIn] = useState(false);
+  const { login, loginLoading, isAuthenticated } = useAuth();
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,13 +27,19 @@ const Login = () => {
     try {
       const result = await login({ username, password });
       toast.success(`Welcome back, ${result.user.username}!`);
-      navigate("/dashboard");
+      setSignedIn(true);
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
       setError(message);
       toast.error(message);
     }
   };
+
+  // Navigate only once the auth state shows the new user. Navigating as soon as login()
+  // resolves let ProtectedRoute render before the query update arrived and bounce back here.
+  if (signedIn && isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
