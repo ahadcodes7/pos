@@ -22,5 +22,12 @@ export default defineConfig([
       reactRefresh.configs.vite,
     ],
     languageOptions: { ecmaVersion: 2022, globals: globals.browser },
+    rules: {
+      // Non-component exports that live next to their components (shadcn variants, context hooks).
+      "react-refresh/only-export-components": [
+        "error",
+        { allowExportNames: ["buttonVariants", "badgeVariants", "useAuth", "useTheme", "themes", "modes"] },
+      ],
+    },
   },
 ]);

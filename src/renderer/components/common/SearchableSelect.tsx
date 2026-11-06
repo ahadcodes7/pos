@@ -86,6 +86,7 @@ export function SearchableSelect({
 
   useEffect(() => {
     if (!open) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- pre-existing reset-on-close; kept to avoid behavior change
       setSearch("");
       setDebouncedSearch("");
     }

@@ -3,9 +3,7 @@
   "compilerOptions": {
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "types": ["vite/client"],
-    "jsx": "react-jsx",
-    "allowJs": true,
-    "checkJs": false
+    "jsx": "react-jsx"
   },
   "include": ["src/renderer", "src/shared"]
 }

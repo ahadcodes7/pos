@@ -35,6 +35,7 @@ export function AddCustomerDialog({ open, onOpenChange, onAdd }: AddCustomerDial
     if (!name.trim()) return;
     
     const newCustomer: NewCustomer = {
+      // eslint-disable-next-line react-hooks/purity -- runs in the submit handler, not during render
       id: Date.now().toString(),
       name: name.trim(),
       phone: phone.trim(),

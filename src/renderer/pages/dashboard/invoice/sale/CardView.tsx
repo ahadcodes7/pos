@@ -29,7 +29,6 @@ import {
 import {
   mockCategories,
   mockProducts,
-  mockCustomers,
   formatCurrency,
   filterProducts,
   getStockStatus,
@@ -50,7 +49,6 @@ interface CardViewProps {
 
 function CardView({ viewMode, setViewMode }: CardViewProps) {
   const { state, activeOrder, actions } = useCardViewReducer();
-  const customerQuery = useInfiniteCustomers({});
   
   const [paymentMode, setPaymentMode] = useState("cash");
   const [addCustomerOpen, setAddCustomerOpen] = useState(false);
