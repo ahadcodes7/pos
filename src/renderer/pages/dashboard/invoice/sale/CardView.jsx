@@ -36,13 +36,14 @@ import {
   uomOptions,
   paymentModes,
 } from "./sale-data";
-import { SearchableSelect } from "@/renderer/components/common/SearchableSelect";
+import { SearchableSelect, AddCustomerDialog } from "@/renderer/components/common";
 
 function CardView({ viewMode, setViewMode }) {
   const { state, activeOrder, actions } = useCardViewReducer();
   const customerQuery = useInfiniteCustomers({});
-
+  
   const [paymentMode, setPaymentMode] = useState("cash");
+  const [addCustomerOpen, setAddCustomerOpen] = useState(false);
 
   const filteredProducts = useMemo(
     () =>
@@ -58,6 +59,10 @@ function CardView({ viewMode, setViewMode }) {
   const handleClearCart = () => {
     setPaymentMode("cash");
     actions.clearOrder();
+  };
+
+  const handleAddCustomer = (newCustomer) => {
+    actions.setCustomer(newCustomer.id);
   };
 
   return (
@@ -219,14 +224,25 @@ function CardView({ viewMode, setViewMode }) {
           <Label className="text-xs text-muted-foreground mb-1 block">
             Customer
           </Label>
-          <SearchableSelect
-            value={activeOrder.customer?.id || null}
-            onValueChange={(val) => actions.setCustomer(val)}
-            placeholder="Select customer"
-            fetchFn={useInfiniteCustomers}
-            labelKey="name"
-            valueKey="id"
-          />
+          <div className="flex gap-2">
+            <SearchableSelect
+              value={activeOrder.customer?.id || null}
+              onValueChange={(val) => actions.setCustomer(val)}
+              placeholder="Select customer"
+              fetchFn={useInfiniteCustomers}
+              labelKey="name"
+              valueKey="id"
+              className="flex-1"
+            />
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-9 w-9 rounded-full shrink-0"
+              onClick={() => setAddCustomerOpen(true)}
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
 
         {/* Cart Items */}
@@ -316,6 +332,13 @@ function CardView({ viewMode, setViewMode }) {
           </Button>
         </div>
       </div>
+
+      {/* Add Customer Dialog */}
+      <AddCustomerDialog
+        open={addCustomerOpen}
+        onOpenChange={setAddCustomerOpen}
+        onAdd={handleAddCustomer}
+      />
     </div>
   );
 }
