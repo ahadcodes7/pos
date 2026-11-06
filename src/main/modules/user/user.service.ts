@@ -1,8 +1,8 @@
-import prisma from "../db";
+import prisma from "../../db";
 import bcrypt from "bcryptjs";
-import type { CreateUserInput } from "../schemas/user.schema";
+import type { CreatedUser, CreateUserInput, UserListItem } from "@/shared/contracts/user.contract";
 
-export async function createUserService(data: CreateUserInput) {
+export async function createUserService(data: CreateUserInput): Promise<CreatedUser> {
   const hashedPassword = await bcrypt.hash(data.password, 10);
 
   const user = await prisma.user.create({
@@ -13,16 +13,12 @@ export async function createUserService(data: CreateUserInput) {
   });
 
   return {
-    success: true,
-    message: "User created successfully",
-    user: {
-      id: user.id,
-      username: user.username,
-    },
+    id: user.id,
+    username: user.username,
   };
 }
 
-export async function listUsersService() {
+export async function listUsersService(): Promise<UserListItem[]> {
   const users = await prisma.user.findMany({
     select: {
       id: true,

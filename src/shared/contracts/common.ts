@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /** Input/output for routes that take or return nothing. */
-export const Empty = z.undefined();
+export const Empty = z.void();
 
 /**
  * Money is always an integer amount in minor units (e.g. paisa), never a float.

@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
         throw new Error(response?.message || "Login Failed");
       }
 
-      return response.data.user;
+      return response.data;
     },
     onSuccess: (userData) => {
       queryClient.setQueryData(["auth", "status"], userData);

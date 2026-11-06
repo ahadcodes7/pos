@@ -1,28 +1,19 @@
 import { contextBridge, ipcRenderer } from "electron";
+import { ipcRoutes, type ElectronApi } from "@/shared/ipc/routes";
 
-const electronAPI = {
-  user: {
-    create: (payload: unknown) => {
-      return ipcRenderer.invoke("user:create", payload);
-    },
-    list: () => {
-      return ipcRenderer.invoke("user:list");
-    },
-  },
-  auth: {
-    login: (payload: unknown) => {
-      return ipcRenderer.invoke("auth:login", payload);
-    },
-    logout: () => {
-      return ipcRenderer.invoke("auth:logout");
-    },
-    status: () => {
-      return ipcRenderer.invoke("auth:status");
-    },
-    currentUser: () => {
-      return ipcRenderer.invoke("auth:currentUser");
-    },
-  },
-};
+// Build one invoke function per registered route. Only these functions are exposed;
+// the renderer never sees ipcRenderer or arbitrary channels.
+const electronAPI = Object.fromEntries(
+  Object.entries(ipcRoutes).map(([moduleName, group]) => [
+    moduleName,
+    Object.fromEntries(
+      Object.entries(group).map(([routeName, route]) => [
+        routeName,
+        (input?: unknown) => ipcRenderer.invoke(route.channel, input),
+      ]),
+    ),
+  ]),
+  // Object.fromEntries erases key types; the structure above mirrors ElectronApi exactly.
+) as ElectronApi;
 
 contextBridge.exposeInMainWorld("electronAPI", electronAPI);
