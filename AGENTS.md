@@ -12,7 +12,7 @@ src/main/              Electron main process
   db.ts, generated/    Prisma client (generated/ is generated, do not edit)
 src/preload/index.ts   Exposes window.electronAPI built from the route registry
 src/shared/            Imported by main, preload and renderer
-  contracts/           <domain>.contract.ts: Zod DTOs + route definitions; common.ts (Empty, Money)
+  contracts/           <domain>.contract.ts: Zod DTOs + route definitions; common.ts (Empty, NoData, Money)
   ipc/                 contract.ts (defineRoute, envelope) · errors.ts (ErrorCode) · routes.ts (registry)
 src/renderer/          React app: pages/, components/ (ui/ = shadcn), context/, routes/
   modules/<domain>/    api.ts: TanStack Query hooks for that domain's IPC
@@ -27,7 +27,7 @@ src/renderer/          React app: pages/, components/ (ui/ = shadcn), context/, 
 
 ## Conventions (reference implementation: auth)
 `src/shared/contracts/auth.contract.ts` → `src/main/modules/auth/` → `src/renderer/modules/auth/api.ts` → `src/renderer/context/auth-context.tsx`
-- **DTOs:** every IPC input/output is a Zod schema in `src/shared/contracts`, and its type comes from `z.infer`. Use `Empty` for no input/output.
+- **DTOs:** every IPC input/output is a Zod schema in `src/shared/contracts`, and its type comes from `z.infer`. Use `Empty` for no input and `NoData` for no output.
 - **IPC routes:** declare routes with `defineRoute({ channel: "<domain>:<action>", input, output, successMessage })` and add the module to `src/shared/ipc/routes.ts`. Main registers handlers through `registerRoutes` in `src/main/ipc/index.ts`, typed as `RouteHandlers<typeof xRoutes>`. Input and output are validated there. The preload picks new routes up automatically; never use raw `ipcRenderer` or channel strings anywhere else.
 - **Services:** business logic lives in `<domain>.service.ts` and returns plain domain data (no envelope). Handlers only delegate. Routes with no result return `null` (`NoData`).
 - **Envelope:** every reply is `{ success, message, data }`. On failure `data` is `null` and `details` is `{ code, issues?, fields? }`. Built only by `register.ts` and `toFailure`.
