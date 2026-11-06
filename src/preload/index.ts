@@ -1,8 +1,8 @@
-const { contextBridge, ipcRenderer } = require("electron");
+import { contextBridge, ipcRenderer } from "electron";
 
 const electronAPI = {
   user: {
-    create: (payload) => {
+    create: (payload: unknown) => {
       return ipcRenderer.invoke("user:create", payload);
     },
     list: () => {
@@ -10,7 +10,7 @@ const electronAPI = {
     },
   },
   auth: {
-    login: (payload) => {
+    login: (payload: unknown) => {
       return ipcRenderer.invoke("auth:login", payload);
     },
     logout: () => {

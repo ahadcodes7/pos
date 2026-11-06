@@ -22,7 +22,7 @@ await Promise.all([
   }),
   build({
     ...common,
-    entryPoints: ["src/preload/index.cjs"],
+    entryPoints: ["src/preload/index.ts"],
     outfile: "dist-electron/preload.cjs",
     format: "cjs",
     // Sandboxed preload can only require "electron"; everything else is bundled.
