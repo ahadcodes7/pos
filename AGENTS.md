@@ -22,7 +22,8 @@ src/renderer/          React app: pages/, components/ (ui/ = shadcn), context/, 
 ## Commands
 - `npm run dev`: Vite on the first free port from 5173 (127.0.0.1); writes `.dev-server-url` for Electron (`DEV_SERVER_URL` overrides)
 - `npm start`: build main/preload to `dist-electron/` and launch Electron
-- `npm run typecheck` · `npm run lint`: there is no test suite; these two must pass
+- `npm run typecheck` · `npm run lint` · `npm test` (main + renderer, in parallel): all must pass
+- `npm run test:main` (runs under Electron's Node) · `npm run test:renderer` · `npm run test:e2e` (Playwright + Electron) · `npm run coverage`
 - `npm run build`: Vite renderer build + main/preload bundle
 
 ## Conventions (reference implementation: auth)
@@ -35,3 +36,13 @@ src/renderer/          React app: pages/, components/ (ui/ = shadcn), context/, 
 - **Renderer state:** IPC/server data goes through TanStack Query hooks in `src/renderer/modules/<domain>/api.ts`, using `unwrap`. Components never call `window.electronAPI`. UI state uses `useState`/`useReducer` in the component or page. Form state stays local to the form; validate with the shared contract schema when submitting over IPC.
 - **Money:** always integer minor units (`Money` in `contracts/common.ts`), never floats. Format only for display. Existing float math in the sale/product UI is marked `FLAG(money)`.
 - **Strict TS:** no `any`; if one is unavoidable, add a comment saying why. Imports use the `@/` alias (`@/shared/...`, `@/renderer/...`).
+
+## Testing (reference: the auth tests)
+- **Scope:** test services and their routes, the IPC/error pipeline, contracts with real rules, and complex client state (providers, reducers, multi-step forms). Skip `components/ui`, static markup and pass-through code. No coverage target.
+- **Levels:**
+  - Unit/integration: `*.test.ts(x)` next to the source. Main tests in `src/main/**` run through `registerIPCHandlers()` with `@tests/setup/main-ipc` and real SQLite.
+  - Renderer: `renderRoutes` with `installFakeElectronApi`, whose replies are parsed by the route output schemas.
+  - E2E: `e2e/` with its fixtures.
+- **Assert intended behavior only.** Never encode known-wrong behavior. Fix it test-first, or leave it untested (see the `FLAG` comments).
+- **Isolation:** every main test file and E2E test gets its own copy of the migrated template DB. `useTestDatabase()` empties the tables before each test; seed with `@tests/setup/factories` (unique names). Never use `dev.db`, the real keytar (mocked in unit/integration tests; namespaced `nayahisab-e2e-*` in E2E), the network, or test order.
+- **No sleeps.** Use `findBy*`/`waitFor`, Playwright auto-waiting, and `deferred()` for in-flight states. Fakes that stand in for main must keep state the way main does (e.g. status reflects login).
