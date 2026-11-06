@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export async function createMainWindow() {
-  const preloadPath = path.join(__dirname, "../preload/index.cjs");
+  const preloadPath = path.join(__dirname, "preload.cjs");
 
   const win = new BrowserWindow({
     width: 1200,
