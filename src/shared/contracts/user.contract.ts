@@ -30,6 +30,16 @@ export const UserListItem = z.object({
 export type UserListItem = z.infer<typeof UserListItem>;
 
 export const userRoutes = {
-  create: defineRoute({ channel: "user:create", input: CreateUserInput, output: CreatedUser }),
-  list: defineRoute({ channel: "user:list", input: Empty, output: z.array(UserListItem) }),
+  create: defineRoute({
+    channel: "user:create",
+    input: CreateUserInput,
+    output: CreatedUser,
+    successMessage: "User created successfully",
+  }),
+  list: defineRoute({
+    channel: "user:list",
+    input: Empty,
+    output: z.array(UserListItem),
+    successMessage: "Users fetched successfully",
+  }),
 };

@@ -1,8 +1,7 @@
 import { ipcMain, type IpcMainInvokeEvent } from "electron";
 import type { z } from "zod";
-import { ZodError } from "zod";
-import ApiError from "../utils/apiError.util";
 import type { IpcResponse, RouteDef, RouteGroup } from "@/shared/ipc/contract";
+import { OutputValidationError, toFailure } from "../errors/error-handler";
 
 /** Handler for a route: receives validated input, returns data matching the output schema. */
 export type RouteHandler<R extends RouteDef> = (
@@ -16,20 +15,7 @@ export type RegistryHandlers<Reg extends Record<string, RouteGroup>> = {
   [M in keyof Reg]: RouteHandlers<Reg[M]>;
 };
 
-class OutputValidationError extends Error {}
-
 const registered = new Set<string>();
-
-function toFailure(err: unknown, channel: string): IpcResponse<never> {
-  if (err instanceof ApiError) {
-    return { success: false, message: err.message, errors: err.errors, status: err.status };
-  }
-  if (err instanceof ZodError) {
-    return { success: false, message: err.issues[0]?.message || "Validation Failed", status: 400 };
-  }
-  console.error(`Unhandled IPC error on "${channel}":`, err);
-  return { success: false, message: "Internal error", status: 500 };
-}
 
 function registerRoute<I extends z.ZodType, O extends z.ZodType>(
   route: RouteDef<I, O>,
@@ -48,7 +34,7 @@ function registerRoute<I extends z.ZodType, O extends z.ZodType>(
       if (!parsed.success) {
         throw new OutputValidationError(`Output for "${route.channel}" failed its schema: ${parsed.error.message}`);
       }
-      return { success: true, data: parsed.data };
+      return { success: true, message: route.successMessage, data: parsed.data };
     } catch (err) {
       return toFailure(err, route.channel);
     }

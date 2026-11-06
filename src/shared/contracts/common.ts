@@ -1,7 +1,10 @@
 import { z } from "zod";
 
-/** Input/output for routes that take or return nothing. */
+/** Input for routes that take nothing. */
 export const Empty = z.void();
+
+/** Output for routes that return nothing; `data` is always present on the wire, so it is null. */
+export const NoData = z.null();
 
 /**
  * Money is always an integer amount in minor units (e.g. paisa), never a float.

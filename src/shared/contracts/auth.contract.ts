@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { defineRoute } from "../ipc/contract";
-import { Empty } from "./common";
+import { Empty, NoData } from "./common";
 
 export const LoginInput = z.object({
   username: z.string().min(3, "Username must be at least 3 characters long"),
@@ -21,8 +21,28 @@ export const AuthStatus = z.object({
 export type AuthStatus = z.infer<typeof AuthStatus>;
 
 export const authRoutes = {
-  login: defineRoute({ channel: "auth:login", input: LoginInput, output: AuthUser }),
-  logout: defineRoute({ channel: "auth:logout", input: Empty, output: Empty }),
-  status: defineRoute({ channel: "auth:status", input: Empty, output: AuthStatus }),
-  currentUser: defineRoute({ channel: "auth:currentUser", input: Empty, output: AuthUser.nullable() }),
+  login: defineRoute({
+    channel: "auth:login",
+    input: LoginInput,
+    output: AuthUser,
+    successMessage: "Login successful",
+  }),
+  logout: defineRoute({
+    channel: "auth:logout",
+    input: Empty,
+    output: NoData,
+    successMessage: "Logout successful",
+  }),
+  status: defineRoute({
+    channel: "auth:status",
+    input: Empty,
+    output: AuthStatus,
+    successMessage: "Auth status fetched successfully",
+  }),
+  currentUser: defineRoute({
+    channel: "auth:currentUser",
+    input: Empty,
+    output: AuthUser.nullable(),
+    successMessage: "Current user fetched successfully",
+  }),
 };

@@ -10,7 +10,10 @@ import {
 // Handlers only delegate: input is already validated, output is validated by registerRoutes.
 export const authHandlers: RouteHandlers<typeof authRoutes> = {
   login: (input) => loginService(input),
-  logout: () => logoutService(),
+  logout: async () => {
+    await logoutService();
+    return null;
+  },
   status: () => getAuthStatusService(),
   currentUser: () => getCurrentUserService(),
 };

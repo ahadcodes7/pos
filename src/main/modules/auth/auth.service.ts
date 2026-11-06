@@ -1,4 +1,4 @@
-import ApiError from "../../utils/apiError.util";
+import ApiError from "../../errors/api-error";
 import prisma from "../../db";
 import type { AuthStatus, AuthUser, LoginInput } from "@/shared/contracts/auth.contract";
 import { clearSession, getSession, setSession } from "./session";
@@ -12,13 +12,13 @@ export async function loginService(data: LoginInput): Promise<AuthUser> {
   });
 
   if (!user) {
-    throw new ApiError("User not found", 404);
+    throw ApiError.notFound("User not found");
   }
 
   // TODO(intentional): password verification is disabled for now (owner decision).
   // const isValidPassword = await bcrypt.compare(data.password, user.password);
   // if (!isValidPassword) {
-  //   throw new ApiError("Invalid credentials", 401);
+  //   throw ApiError.unauthorized("Invalid credentials");
   // }
 
   await setSession({ id: user.id, username: user.username });
