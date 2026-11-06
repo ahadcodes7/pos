@@ -6,9 +6,12 @@ import { cn } from "@/renderer/lib/utils";
 
 const Navbar = () => {
   const { user } = useAuth();
+  // NOTE: AuthUser has no `name`, so this is always undefined and the icon is shown.
+  // Kept as-is (pre-existing behavior); use `username` if initials are wanted.
+  const name = (user as { name?: string } | null)?.name;
 
   // Get user initials for avatar
-  const getInitials = (name) => {
+  const getInitials = (name: string) => {
     if (!name) return "U";
     return name
       .split(" ")
@@ -40,9 +43,9 @@ const Navbar = () => {
             "text-primary",
           )}
         >
-          {user?.name ? (
+          {name ? (
             <span className="text-sm font-medium">
-              {getInitials(user.name)}
+              {getInitials(name)}
             </span>
           ) : (
             <User className="w-5 h-5" />

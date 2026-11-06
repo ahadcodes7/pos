@@ -1,9 +1,44 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, type MouseEvent, type UIEvent } from "react";
 import { Check, ChevronDown, X } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandInput, CommandList } from "@/renderer/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/renderer/components/ui/popover";
 import { Button } from "@/renderer/components/ui/button";
 import { cn } from "@/renderer/lib/utils";
+
+export type OptionValue = string | number;
+type OptionItem = Record<string, OptionValue>;
+
+interface OptionPage {
+  data?: OptionItem[];
+  items?: OptionItem[];
+  results?: OptionItem[];
+}
+
+/** Shape of an infinite-query-like result (TanStack useInfiniteQuery or a mock of it). */
+export interface SearchableSelectFetchResult {
+  data?: { pages: OptionPage[] };
+  fetchNextPage: () => unknown;
+  hasNextPage: boolean;
+  isFetchingNextPage: boolean;
+  isLoading: boolean;
+  refetch: () => unknown;
+}
+
+interface SearchableSelectProps {
+  value?: OptionValue | null;
+  onValueChange?: (value: OptionValue | null) => void;
+  placeholder?: string;
+  fetchFn: (params: Record<string, OptionValue>) => SearchableSelectFetchResult;
+  labelKey?: string;
+  valueKey?: string;
+  searchParam?: string;
+  pageParam?: string;
+  limit?: number;
+  className?: string;
+  disabled?: boolean;
+  emptyMessage?: string;
+  onOpenChange?: (open: boolean) => void;
+}
 
 export function SearchableSelect({
   value,
@@ -19,7 +54,7 @@ export function SearchableSelect({
   disabled = false,
   emptyMessage = "No results found.",
   onOpenChange,
-}) {
+}: SearchableSelectProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
@@ -30,7 +65,7 @@ export function SearchableSelect({
     limit,
   }), [debouncedSearch, searchParam, pageParam, limit]);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } = fetchFn(queryParams);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = fetchFn(queryParams);
 
   const items = useMemo(() => {
     if (!data?.pages) return [];
@@ -56,16 +91,16 @@ export function SearchableSelect({
     }
   }, [open]);
 
-  const handleScroll = useCallback((event) => {
-    const target = event.target;
+  const handleScroll = useCallback((event: UIEvent<HTMLDivElement>) => {
+    const target = event.currentTarget;
     const nearBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 100;
     if (nearBottom && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  const handleSelect = useCallback((item) => {
-    const itemValue = item[valueKey];
+  const handleSelect = useCallback((item: OptionItem) => {
+    const itemValue = item[valueKey] ?? null;
     if (value === itemValue) {
       onValueChange?.(null);
     } else {
@@ -74,12 +109,12 @@ export function SearchableSelect({
     setOpen(false);
   }, [value, onValueChange, valueKey]);
 
-  const handleClear = useCallback((e) => {
+  const handleClear = useCallback((e: MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
     onValueChange?.(null);
   }, [onValueChange]);
 
-  const handleOpenChange = useCallback((isOpen) => {
+  const handleOpenChange = useCallback((isOpen: boolean) => {
     setOpen(isOpen);
     onOpenChange?.(isOpen);
   }, [onOpenChange]);
@@ -118,7 +153,7 @@ export function SearchableSelect({
         sideOffset={4}
         onEscapeKeyDown={() => setOpen(false)}
         onInteractOutside={(e) => {
-          const trigger = e.target?.closest("[role='combobox']");
+          const trigger = e.target instanceof Element ? e.target.closest("[role='combobox']") : null;
           if (trigger) {
             e.preventDefault();
           }
@@ -145,7 +180,7 @@ export function SearchableSelect({
                 {items.map((item) => (
                   <CommandItem
                     key={item[valueKey]}
-                    value={item[labelKey]}
+                    value={String(item[labelKey])}
                     onSelect={() => handleSelect(item)}
                     className="cursor-pointer"
                   >

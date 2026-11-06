@@ -1,3 +1,29 @@
+// FLAG(money): prices here are floats in major units (PKR). Money must become integer
+// minor units (see src/shared/contracts/common.ts) when this moves to real data.
+import type { OptionValue } from "@/renderer/components/common/SearchableSelect";
+
+export interface SaleProduct {
+  id: string;
+  name: string;
+  sku: string;
+  price: number;
+  taxRate: number;
+  category: string;
+  image: string;
+  stock: number;
+  uom: string;
+  discount?: number;
+}
+
+// A type alias (not interface) so it is assignable to SearchableSelect's option records.
+export type Customer = {
+  id: string;
+  name: string;
+  phone: string;
+};
+
+export type ViewMode = "card" | "table";
+
 export const mockCategories = [
   { id: "all", name: "All", icon: "📦" },
   { id: "food", name: "Food", icon: "🍔" },
@@ -24,7 +50,7 @@ export const paymentModes = [
   { id: "wallet", name: "Digital Wallet" },
 ];
 
-export const mockProducts = [
+export const mockProducts: SaleProduct[] = [
   {
     id: "1",
     name: "Chicken Biryani",
@@ -242,7 +268,7 @@ export const mockProducts = [
   },
 ];
 
-export const mockCustomers = [
+export const mockCustomers: Customer[] = [
   { id: "1", name: "Walk-in Customer", phone: "" },
   { id: "2", name: "Ahmed Khan", phone: "03001234567" },
   { id: "3", name: "Sara Ali", phone: "03019876543" },
@@ -250,10 +276,12 @@ export const mockCustomers = [
   { id: "5", name: "Fatima Zahra", phone: "03001112223" },
 ];
 
-export const useInfiniteCustomers = (params) => {
-  const { search = "", page = 1, limit = 20 } = params || {};
+export const useInfiniteCustomers = (params?: Record<string, OptionValue>) => {
+  const search = String(params?.search ?? "");
+  const page = Number(params?.page ?? 1);
+  const limit = Number(params?.limit ?? 20);
 
-  const allCustomers = [
+  const allCustomers: Customer[] = [
     ...mockCustomers,
     { id: "6", name: "Mohammad Ali", phone: "03001234568" },
     { id: "7", name: "Aisha Bibi", phone: "03001234569" },
@@ -305,7 +333,7 @@ export const useInfiniteCustomers = (params) => {
   };
 };
 
-export const formatCurrency = (amount) => {
+export const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-PK", {
     style: "currency",
     currency: "PKR",
@@ -314,7 +342,8 @@ export const formatCurrency = (amount) => {
   }).format(amount);
 };
 
-export const filterProducts = (products, searchQuery, selectedCategory) => {
+// NOTE: TableView calls this without a category, so nothing matches there (pre-existing behavior).
+export const filterProducts = (products: SaleProduct[], searchQuery: string, selectedCategory?: string) => {
   return products.filter((product) => {
     const matchesSearch =
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -325,7 +354,7 @@ export const filterProducts = (products, searchQuery, selectedCategory) => {
   });
 };
 
-export const getStockStatus = (stock) => {
+export const getStockStatus = (stock: number) => {
   if (stock === 0)
     return {
       label: "Out of Stock",

@@ -1,6 +1,54 @@
 import { useReducer, useMemo } from "react";
+import type { Customer, SaleProduct } from "../sale-data";
 
-const initialState = {
+// FLAG(money): price/discount/tax are floats and totals use float math. Must move to
+// integer minor units before real invoices. Kept as-is (no behavior change in migration).
+export interface CartLine {
+  id: number;
+  productId: string;
+  name: string;
+  sku: string;
+  price: number;
+  taxRate: number;
+  // FLAG: becomes a string after the qty input is edited (CardView handleBlur), so
+  // INCREMENT_ITEM then concatenates ("3" + 1 = "31"). Pre-existing; typed as-is.
+  quantity: number | string;
+  image: string;
+  uom: string;
+  discount: number;
+}
+
+export interface Order {
+  id: number;
+  name: string;
+  items: CartLine[];
+  customer: Customer | null;
+}
+
+interface CardViewState {
+  orders: Order[];
+  activeOrderId: number;
+  searchQuery: string;
+  selectedCategory: string;
+}
+
+type CartLineField = keyof CartLine;
+
+type CardViewAction =
+  | { type: "SET_ACTIVE_ORDER"; payload: number }
+  | { type: "ADD_ORDER" }
+  | { type: "DELETE_ORDER"; payload: number }
+  | { type: "SET_CUSTOMER"; payload: { orderId: number; customerId: string | number | null } }
+  | { type: "ADD_ITEM"; payload: { orderId: number; product: SaleProduct } }
+  | { type: "UPDATE_ITEM"; payload: { orderId: number; itemId: number; field: CartLineField; value: CartLine[CartLineField] } }
+  | { type: "REMOVE_ITEM"; payload: { orderId: number; itemId: number } }
+  | { type: "CLEAR_ORDER"; payload: number }
+  | { type: "INCREMENT_ITEM"; payload: { orderId: number; itemId: number } }
+  | { type: "DECREMENT_ITEM"; payload: { orderId: number; itemId: number } }
+  | { type: "SET_SEARCH_QUERY"; payload: string }
+  | { type: "SET_CATEGORY"; payload: string };
+
+const initialState: CardViewState = {
   orders: [{ id: 1, name: "Order 1", items: [], customer: null }],
   activeOrderId: 1,
   searchQuery: "",
@@ -20,9 +68,9 @@ const ACTION_TYPES = {
   DECREMENT_ITEM: "DECREMENT_ITEM",
   SET_SEARCH_QUERY: "SET_SEARCH_QUERY",
   SET_CATEGORY: "SET_CATEGORY",
-};
+} as const;
 
-const mockCustomers = [
+const mockCustomers: Customer[] = [
   { id: "1", name: "Walk-in Customer", phone: "" },
   { id: "2", name: "Ahmed Khan", phone: "03001234567" },
   { id: "3", name: "Sara Ali", phone: "03019876543" },
@@ -30,7 +78,10 @@ const mockCustomers = [
   { id: "5", name: "Fatima Zahra", phone: "03001112223" },
 ];
 
-function cardViewReducer(state, action) {
+// Preserves pre-existing behavior: a string quantity concatenates ("3" + 1 = "31"). See FLAG on CartLine.
+const incrementQuantity = (q: number | string) => (typeof q === "string" ? q + 1 : q + 1);
+
+function cardViewReducer(state: CardViewState, action: CardViewAction): CardViewState {
   switch (action.type) {
     case ACTION_TYPES.SET_ACTIVE_ORDER:
       return { ...state, activeOrderId: action.payload };
@@ -45,7 +96,7 @@ function cardViewReducer(state, action) {
             id: newOrderId,
             name: `Order ${newOrderId}`,
             items: [],
-            customer: mockCustomers[0],
+            customer: mockCustomers[0] ?? null,
           },
         ],
         activeOrderId: newOrderId,
@@ -60,7 +111,7 @@ function cardViewReducer(state, action) {
         orders: updatedOrders,
         activeOrderId:
           state.activeOrderId === action.payload
-            ? updatedOrders[0].id
+            ? updatedOrders[0]!.id
             : state.activeOrderId,
       };
     }
@@ -92,7 +143,7 @@ function cardViewReducer(state, action) {
               ...order,
               items: order.items.map((item) =>
                 item.productId === product.id
-                  ? { ...item, quantity: item.quantity + 1 }
+                  ? { ...item, quantity: incrementQuantity(item.quantity) }
                   : item,
               ),
             };
@@ -170,7 +221,7 @@ function cardViewReducer(state, action) {
             ...order,
             items: order.items.map((item) =>
               item.id === itemId
-                ? { ...item, quantity: item.quantity + 1 }
+                ? { ...item, quantity: incrementQuantity(item.quantity) }
                 : item,
             ),
           };
@@ -188,7 +239,7 @@ function cardViewReducer(state, action) {
             ...order,
             items: order.items.map((item) =>
               item.id === itemId
-                ? { ...item, quantity: Math.max(1, item.quantity - 1) }
+                ? { ...item, quantity: Math.max(1, Number(item.quantity) - 1) }
                 : item,
             ),
           };
@@ -207,12 +258,12 @@ function cardViewReducer(state, action) {
   }
 }
 
-const parseNumber = (val) => {
-  const n = parseFloat(val);
+const parseNumber = (val: unknown) => {
+  const n = parseFloat(String(val));
   return Number.isFinite(n) ? n : 0;
 };
 
-export const calculateOrderTotals = (orderItems) => {
+export const calculateOrderTotals = (orderItems: CartLine[]) => {
   let subTotal = 0;
   let taxTotal = 0;
   let discountTotal = 0;
@@ -239,32 +290,33 @@ export function useCardViewReducer() {
 
   const activeOrder = useMemo(
     () =>
-      state.orders.find((o) => o.id === state.activeOrderId) || state.orders[0],
+      // DELETE_ORDER never removes the last order, so orders[0] always exists.
+      state.orders.find((o) => o.id === state.activeOrderId) || state.orders[0]!,
     [state.orders, state.activeOrderId],
   );
 
   const actions = {
-    setActiveOrder: (orderId) =>
+    setActiveOrder: (orderId: number) =>
       dispatch({ type: ACTION_TYPES.SET_ACTIVE_ORDER, payload: orderId }),
     addOrder: () => dispatch({ type: ACTION_TYPES.ADD_ORDER }),
-    deleteOrder: (orderId) =>
+    deleteOrder: (orderId: number) =>
       dispatch({ type: ACTION_TYPES.DELETE_ORDER, payload: orderId }),
-    setCustomer: (customerId) =>
+    setCustomer: (customerId: string | number | null) =>
       dispatch({
         type: ACTION_TYPES.SET_CUSTOMER,
         payload: { orderId: state.activeOrderId, customerId },
       }),
-    addItem: (product) =>
+    addItem: (product: SaleProduct) =>
       dispatch({
         type: ACTION_TYPES.ADD_ITEM,
         payload: { orderId: state.activeOrderId, product },
       }),
-    updateItem: (itemId, field, value) =>
+    updateItem: <K extends CartLineField>(itemId: number, field: K, value: CartLine[K]) =>
       dispatch({
         type: ACTION_TYPES.UPDATE_ITEM,
         payload: { orderId: state.activeOrderId, itemId, field, value },
       }),
-    removeItem: (itemId) =>
+    removeItem: (itemId: number) =>
       dispatch({
         type: ACTION_TYPES.REMOVE_ITEM,
         payload: { orderId: state.activeOrderId, itemId },
@@ -274,19 +326,19 @@ export function useCardViewReducer() {
         type: ACTION_TYPES.CLEAR_ORDER,
         payload: state.activeOrderId,
       }),
-    incrementItem: (itemId) =>
+    incrementItem: (itemId: number) =>
       dispatch({
         type: ACTION_TYPES.INCREMENT_ITEM,
         payload: { orderId: state.activeOrderId, itemId },
       }),
-    decrementItem: (itemId) =>
+    decrementItem: (itemId: number) =>
       dispatch({
         type: ACTION_TYPES.DECREMENT_ITEM,
         payload: { orderId: state.activeOrderId, itemId },
       }),
-    setSearchQuery: (query) =>
+    setSearchQuery: (query: string) =>
       dispatch({ type: ACTION_TYPES.SET_SEARCH_QUERY, payload: query }),
-    setCategory: (category) =>
+    setCategory: (category: string) =>
       dispatch({ type: ACTION_TYPES.SET_CATEGORY, payload: category }),
   };
 

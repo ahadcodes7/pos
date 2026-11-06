@@ -10,13 +10,19 @@ import {
 import { Button } from "@/renderer/components/ui/button";
 import { Input } from "@/renderer/components/ui/input";
 import { useTableViewReducer, calculateTableTotals } from "./hooks/useTableViewReducer";
+import type { ViewMode } from "./sale-data";
 import { 
   mockProducts, 
   formatCurrency, 
   filterProducts 
 } from "./sale-data";
 
-function TableView({ viewMode, setViewMode }) {
+interface TableViewProps {
+  viewMode: ViewMode;
+  setViewMode: (mode: ViewMode) => void;
+}
+
+function TableView({ viewMode, setViewMode }: TableViewProps) {
   const { state, actions } = useTableViewReducer();
 
   const filteredProducts = useMemo(
@@ -111,7 +117,8 @@ function TableView({ viewMode, setViewMode }) {
                 </tr>
               ) : (
                 state.items.map((item, index) => {
-                  const lineTotal = (item.price * item.quantity) * (1 + (item.taxRate || 18) / 100);
+                  // FLAG(money): float math; Number() mirrors the implicit coercion of the original `*`.
+                  const lineTotal = (Number(item.price) * Number(item.quantity)) * (1 + Number(item.taxRate || 18) / 100);
                   return (
                     <tr key={item.id} className="border-t hover:bg-muted/50">
                       <td className="p-2 text-sm">{index + 1}</td>

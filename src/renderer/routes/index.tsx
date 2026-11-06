@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom";
-import Login from "../components/Login.jsx";
-import ProtectedRoute from "./ProtectedRoute.jsx";
-import Dashboard from "../pages/dashboard/Dashboard.jsx";
-import Home from "../components/Home.jsx";
-import AddProduct from "../pages/dashboard/inventory/product/AddProduct.jsx";
-import CreateSaleInvoice from "../pages/dashboard/invoice/sale/CreateSaleInvoice.jsx";
-import Settings from "../pages/dashboard/Settings.jsx";
+import Login from "../components/Login";
+import ProtectedRoute from "./ProtectedRoute";
+import Dashboard from "../pages/dashboard/Dashboard";
+import Home from "../components/Home";
+import AddProduct from "../pages/dashboard/inventory/product/AddProduct";
+import CreateSaleInvoice from "../pages/dashboard/invoice/sale/CreateSaleInvoice";
+import Settings from "../pages/dashboard/Settings";
 
 export const routes = [
   {

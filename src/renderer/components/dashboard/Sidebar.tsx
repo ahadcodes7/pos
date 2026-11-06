@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import type { LucideIcon } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   Package,
@@ -13,7 +14,22 @@ import {
 } from "lucide-react";
 import { cn } from "@/renderer/lib/utils";
 
-const menuItems = [
+interface MenuSubItem {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+  path: string;
+}
+
+interface MenuItem {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+  path?: string;
+  subItems?: MenuSubItem[];
+}
+
+const menuItems: MenuItem[] = [
   {
     id: "home",
     label: "Home",
@@ -54,15 +70,15 @@ const menuItems = [
   },
 ];
 
-const Sidebar = ({ className }) => {
-  const [expandedItems, setExpandedItems] = useState([]);
+const Sidebar = ({ className }: { className?: string }) => {
+  const [expandedItems, setExpandedItems] = useState<string[]>([]);
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path: string) => location.pathname === path;
 
-  const hasActiveChild = (item) => {
+  const hasActiveChild = (item: MenuItem) => {
     if (!item.subItems) return false;
     return item.subItems.some((subItem) => location.pathname === subItem.path);
   };
@@ -79,7 +95,7 @@ const Sidebar = ({ className }) => {
     });
   }, [location.pathname]);
 
-  const toggleExpand = (itemId) => {
+  const toggleExpand = (itemId: string) => {
     setExpandedItems((prev) =>
       prev.includes(itemId)
         ? prev.filter((id) => id !== itemId)
@@ -87,9 +103,9 @@ const Sidebar = ({ className }) => {
     );
   };
 
-  const isExpanded = (itemId) => expandedItems.includes(itemId);
+  const isExpanded = (itemId: string) => expandedItems.includes(itemId);
 
-  const handleItemClick = (item) => {
+  const handleItemClick = (item: MenuItem) => {
     if (item.subItems) {
       if (collapsed) {
         setCollapsed(false);
@@ -198,7 +214,7 @@ const Sidebar = ({ className }) => {
                     )}
                   >
                     <ul className="mt-1 ml-4 pl-4 border-l border-sidebar-border space-y-1">
-                      {item.subItems.map((subItem) => {
+                      {item.subItems?.map((subItem) => {
                         const SubIcon = subItem.icon;
                         const subActive = isActive(subItem.path);
 

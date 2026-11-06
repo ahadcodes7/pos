@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ChangeEvent } from "react";
 import {
   Search,
   ShoppingCart,
@@ -24,6 +24,7 @@ import { cn } from "@/renderer/lib/utils";
 import {
   useCardViewReducer,
   calculateOrderTotals,
+  type CartLine,
 } from "./hooks/useCardViewReducer";
 import {
   mockCategories,
@@ -35,10 +36,19 @@ import {
   useInfiniteCustomers,
   uomOptions,
   paymentModes,
+  type ViewMode,
 } from "./sale-data";
 import { SearchableSelect, AddCustomerDialog } from "@/renderer/components/common";
+import type { NewCustomer } from "@/renderer/components/common/AddCustomerDialog";
 
-function CardView({ viewMode, setViewMode }) {
+type CardViewActions = ReturnType<typeof useCardViewReducer>["actions"];
+
+interface CardViewProps {
+  viewMode: ViewMode;
+  setViewMode: (mode: ViewMode) => void;
+}
+
+function CardView({ viewMode, setViewMode }: CardViewProps) {
   const { state, activeOrder, actions } = useCardViewReducer();
   const customerQuery = useInfiniteCustomers({});
   
@@ -61,7 +71,9 @@ function CardView({ viewMode, setViewMode }) {
     actions.clearOrder();
   };
 
-  const handleAddCustomer = (newCustomer) => {
+  // NOTE: setCustomer only looks up mockCustomers, so a newly added customer is not
+  // selected (pre-existing behavior).
+  const handleAddCustomer = (newCustomer: NewCustomer) => {
     actions.setCustomer(newCustomer.id);
   };
 
@@ -343,10 +355,16 @@ function CardView({ viewMode, setViewMode }) {
   );
 }
 
-function CartItem({ item, actions, formatCurrency }) {
+interface CartItemProps {
+  item: CartLine;
+  actions: CardViewActions;
+  formatCurrency: (amount: number) => string;
+}
+
+function CartItem({ item, actions, formatCurrency }: CartItemProps) {
   const [localQty, setLocalQty] = useState(item.quantity.toString());
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setLocalQty(val);
   };
@@ -377,7 +395,8 @@ function CartItem({ item, actions, formatCurrency }) {
         </h4>
         {/* Row 2: Price */}
         <span className="text-sm font-semibold text-primary mt-0.5">
-          {formatCurrency(item.price * item.quantity)}
+          {/* FLAG(money): float math; Number() mirrors the original implicit coercion. */}
+          {formatCurrency(item.price * Number(item.quantity))}
         </span>
         {/* Row 3: UOM */}
         <div className="mt-1">

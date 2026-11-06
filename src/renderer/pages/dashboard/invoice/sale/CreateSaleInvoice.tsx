@@ -1,9 +1,10 @@
 import { useState } from "react";
 import CardView from "./CardView";
 import TableView from "./TableView";
+import type { ViewMode } from "./sale-data";
 
 export default function CreateSaleInvoice() {
-  const [viewMode, setViewMode] = useState("card");
+  const [viewMode, setViewMode] = useState<ViewMode>("card");
 
   return (
     <div className="h-full flex flex-col">

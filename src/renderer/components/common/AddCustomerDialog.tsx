@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Button } from "@/renderer/components/ui/button";
 import { Input } from "@/renderer/components/ui/input";
 import { Label } from "@/renderer/components/ui/label";
@@ -10,17 +10,31 @@ import {
   DialogFooter,
 } from "@/renderer/components/ui/dialog";
 
-export function AddCustomerDialog({ open, onOpenChange, onAdd }) {
+export interface NewCustomer {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+}
+
+interface AddCustomerDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onAdd?: (customer: NewCustomer) => void;
+}
+
+export function AddCustomerDialog({ open, onOpenChange, onAdd }: AddCustomerDialogProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!name.trim()) return;
     
-    const newCustomer = {
+    const newCustomer: NewCustomer = {
       id: Date.now().toString(),
       name: name.trim(),
       phone: phone.trim(),

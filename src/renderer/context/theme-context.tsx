@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 
 export const themes = [
   { id: "main", name: "Main", primary: "#0ea5e9" },
@@ -14,7 +14,14 @@ export const modes = [
   { id: "dark", name: "Dark" },
 ];
 
-const ThemeContext = createContext({
+interface ThemeContextValue {
+  theme: string;
+  mode: string;
+  setTheme: (theme: string) => void;
+  setMode: (mode: string) => void;
+}
+
+const ThemeContext = createContext<ThemeContextValue>({
   theme: "main",
   mode: "light",
   setTheme: () => null,
@@ -27,6 +34,11 @@ export function ThemeProvider({
   defaultMode = "light",
   storageKey = "vite-ui-theme",
   ...props
+}: {
+  children: ReactNode;
+  defaultTheme?: string;
+  defaultMode?: string;
+  storageKey?: string;
 }) {
   const [theme, setTheme] = useState(
     () => localStorage.getItem(`${storageKey}-theme`) || defaultTheme
@@ -55,8 +67,8 @@ export function ThemeProvider({
   const value = {
     theme,
     mode,
-    setTheme: (theme) => setTheme(theme),
-    setMode: (mode) => setMode(mode),
+    setTheme: (theme: string) => setTheme(theme),
+    setMode: (mode: string) => setMode(mode),
   };
 
   return (

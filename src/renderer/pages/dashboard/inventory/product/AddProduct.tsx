@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, type ChangeEvent, type FormEvent } from "react";
 import {
   Plus,
   Upload,
@@ -37,14 +37,41 @@ import {
   SelectValue,
 } from "@/renderer/components/ui/select";
 
+// FLAG(money): costPrice/sellingPrice are form strings parsed with parseFloat for the
+// margin preview. Must become integer minor units when this form is wired to IPC.
+interface ProductFormData {
+  name: string;
+  sku: string;
+  barcode: string;
+  category: string;
+  brand: string;
+  description: string;
+  unit: string;
+  costPrice: string;
+  sellingPrice: string;
+  taxRate: string;
+  stockQuantity: string;
+  minStockLevel: string;
+  maxStockLevel: string;
+  supplier: string;
+  location: string;
+  weight: string;
+  dimensions: { length: string; width: string; height: string };
+  status: string;
+  trackInventory: boolean;
+  allowDecimal: boolean;
+}
+
+type ProductFormErrors = Partial<Record<keyof ProductFormData, string | null>>;
+
 const AddProduct = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [imagePreview, setImagePreview] = useState(null);
-  const [productTags, setProductTags] = useState([]);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [productTags, setProductTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ProductFormData>({
     name: "",
     sku: "",
     barcode: "",
@@ -67,28 +94,29 @@ const AddProduct = () => {
     allowDecimal: false,
   });
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<ProductFormErrors>({});
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = <K extends keyof ProductFormData>(field: K, value: ProductFormData[K]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: null }));
     }
   };
 
-  const handleDimensionChange = (dimension, value) => {
+  const handleDimensionChange = (dimension: keyof ProductFormData["dimensions"], value: string) => {
     setFormData((prev) => ({
       ...prev,
       dimensions: { ...prev.dimensions, [dimension]: value },
     }));
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
+  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result);
+        // readAsDataURL always yields a string result.
+        setImagePreview(typeof reader.result === "string" ? reader.result : null);
       };
       reader.readAsDataURL(file);
     }
@@ -108,12 +136,12 @@ const AddProduct = () => {
     }
   };
 
-  const removeTag = (tagToRemove) => {
+  const removeTag = (tagToRemove: string) => {
     setProductTags(productTags.filter((tag) => tag !== tagToRemove));
   };
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: ProductFormErrors = {};
     if (!formData.name.trim()) newErrors.name = "Product name is required";
     if (!formData.sku.trim()) newErrors.sku = "SKU is required";
     if (!formData.sellingPrice)
@@ -124,7 +152,7 @@ const AddProduct = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validateForm()) return;
 
@@ -183,7 +211,7 @@ const AddProduct = () => {
     { value: "25", label: "25%" },
   ];
 
-  const inputClass = (field) =>
+  const inputClass = (field: keyof ProductFormData) =>
     cn(
       "bg-background",
       errors[field] && "border-destructive focus-visible:ring-destructive",

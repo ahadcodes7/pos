@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth-context";
 import { toast } from "sonner";
@@ -20,7 +20,7 @@ const Login = () => {
   const { login, loginLoading } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
 
@@ -29,8 +29,9 @@ const Login = () => {
       toast.success(`Welcome back, ${result.user.username}!`);
       navigate("/dashboard");
     } catch (error) {
-      setError(error.message);
-      toast.error(error.message);
+      const message = error instanceof Error ? error.message : String(error);
+      setError(message);
+      toast.error(message);
     }
   };
 
