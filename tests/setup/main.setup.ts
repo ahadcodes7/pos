@@ -12,6 +12,7 @@ if (!process.versions.electron) {
 const dbFile = copyTemplateDatabase(inject("templateDbFile"));
 process.env.DATABASE_URL = `file:${dbFile}`;
 process.env.SERVICE_NAME = "nayahisab-test";
+process.env.DOTENV_CONFIG_QUIET = "true";
 
 vi.mock("keytar", async () => ({ default: (await import("./keytar.mock")).keytarMock }));
 

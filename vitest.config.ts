@@ -3,7 +3,10 @@ import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 
 // Standalone on purpose: vite.config.js probes ports and writes .dev-server-url when served.
-const alias = { "@": path.resolve(import.meta.dirname, "src") };
+const alias = {
+  "@tests": path.resolve(import.meta.dirname, "tests"),
+  "@": path.resolve(import.meta.dirname, "src"),
+};
 
 export default defineConfig({
   test: {
