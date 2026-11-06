@@ -16,6 +16,8 @@ function devServerUrlFile() {
     name: "dev-server-url-file",
     apply: "serve",
     configureServer(server) {
+      // The E2E suite runs its own dev server; it must not replace a developer's session file.
+      if (process.env.NO_DEV_SERVER_URL_FILE) return;
       server.httpServer?.once("listening", () => {
         const { port } = server.httpServer.address();
         fs.writeFileSync(DEV_URL_FILE, `http://${DEV_HOST}:${port}`);
@@ -36,6 +38,12 @@ export default defineConfig(async ({ command }) => ({
   },
   server:
     command === "serve"
-      ? { host: DEV_HOST, port: await findFreePort(FIRST_PORT), strictPort: true }
+      ? {
+          host: DEV_HOST,
+          port: await findFreePort(FIRST_PORT),
+          strictPort: true,
+          // Transform the app's module graph at startup instead of on the first page load.
+          warmup: { clientFiles: ["./src/renderer/main.tsx"] },
+        }
       : undefined,
 }));

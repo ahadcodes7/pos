@@ -18,7 +18,7 @@
     "test:renderer": "vitest run --project renderer",
     "test:main": "node scripts/test-main.mjs run",
     "test:watch": "vitest --project renderer",
-    "test:e2e": "vite build && npm run build:electron && playwright test",
+    "test:e2e": "npm run build:electron && playwright test",
     "coverage": "vitest run --project renderer --coverage && node scripts/test-main.mjs run --coverage"
   },
   "dependencies": {
