@@ -6,6 +6,7 @@
   "main": "dist-electron/main.js",
   "scripts": {
     "dev": "vite",
+    "dev:web": "npm run build:electron && node scripts/dev-web.mjs",
     "build": "vite build && npm run build:electron",
     "build:electron": "node scripts/build-electron.mjs",
     "typecheck": "tsc -p tsconfig.node.json && tsc -p tsconfig.web.json && tsc -p tsconfig.test.json",

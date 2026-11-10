@@ -22,6 +22,7 @@ src/renderer/          React app: pages/, components/ (ui/ = shadcn), context/, 
 ## Commands
 - `npm run dev`: Vite on the first free port from 5173 (127.0.0.1); writes `.dev-server-url` for Electron (`DEV_SERVER_URL` overrides)
 - `npm start`: build main/preload to `dist-electron/` and launch Electron
+- `npm run dev:web`: dev only, run the renderer in a browser; only auth routes work, through a loopback bridge (`src/main/web-bridge/`)
 - `npm run typecheck` · `npm run lint` · `npm test` (main + renderer, in parallel): all must pass
 - `npm run test:main` (runs under Electron's Node) · `npm run test:renderer` · `npm run test:e2e` (Playwright + Electron) · `npm run coverage`
 - `npm run build`: Vite renderer build + main/preload bundle

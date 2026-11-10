@@ -22,6 +22,13 @@ await Promise.all([
   }),
   build({
     ...common,
+    entryPoints: ["src/main/web-bridge/index.ts"],
+    outfile: "dist-electron/web-bridge.js",
+    format: "esm",
+    packages: "external",
+  }),
+  build({
+    ...common,
     entryPoints: ["src/preload/index.ts"],
     outfile: "dist-electron/preload.cjs",
     format: "cjs",

@@ -44,6 +44,10 @@ export default defineConfig(async ({ command }) => ({
           strictPort: true,
           // Transform the app's module graph at startup instead of on the first page load.
           warmup: { clientFiles: ["./src/renderer/main.tsx"] },
+          // Only with `npm run dev:web`: sends browser auth calls to the local bridge.
+          proxy: process.env.WEB_BRIDGE_PORT
+            ? { "/__bridge": `http://127.0.0.1:${process.env.WEB_BRIDGE_PORT}` }
+            : undefined,
         }
       : undefined,
 }));

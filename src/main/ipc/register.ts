@@ -1,13 +1,9 @@
-import { ipcMain, type IpcMainInvokeEvent } from "electron";
+import { ipcMain } from "electron";
 import type { z } from "zod";
-import type { IpcResponse, RouteDef, RouteGroup } from "@/shared/ipc/contract";
-import { OutputValidationError, toFailure } from "../errors/error-handler";
+import type { RouteDef, RouteGroup } from "@/shared/ipc/contract";
+import { executeRoute, type RouteHandler } from "./execute";
 
-/** Handler for a route: receives validated input, returns data matching the output schema. */
-export type RouteHandler<R extends RouteDef> = (
-  input: z.output<R["input"]>,
-  event: IpcMainInvokeEvent,
-) => z.input<R["output"]> | Promise<z.input<R["output"]>>;
+export type { RouteHandler };
 
 export type RouteHandlers<G extends RouteGroup> = { [K in keyof G]: RouteHandler<G[K]> };
 
@@ -26,19 +22,7 @@ function registerRoute<I extends z.ZodType, O extends z.ZodType>(
   }
   registered.add(route.channel);
 
-  ipcMain.handle(route.channel, async (event, payload: unknown): Promise<IpcResponse<z.output<O>>> => {
-    try {
-      const input = route.input.parse(payload);
-      const result = await handler(input, event);
-      const parsed = route.output.safeParse(result);
-      if (!parsed.success) {
-        throw new OutputValidationError(`Output for "${route.channel}" failed its schema: ${parsed.error.message}`);
-      }
-      return { success: true, message: route.successMessage, data: parsed.data };
-    } catch (err) {
-      return toFailure(err, route.channel);
-    }
-  });
+  ipcMain.handle(route.channel, (event, payload: unknown) => executeRoute(route, handler, payload, event));
 }
 
 /** Registers every route of every module; the type requires a handler for each route. */

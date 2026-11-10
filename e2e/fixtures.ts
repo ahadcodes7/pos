@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 import { test as base, expect, _electron, type ElectronApplication, type Page } from "@playwright/test";
@@ -18,12 +20,14 @@ export const test = base.extend<AppFixtures>({
   // eslint-disable-next-line no-empty-pattern -- Playwright fixtures require the destructuring argument
   app: async ({}, use, testInfo) => {
     const dbFile = copyTemplateDatabase(process.env.E2E_TEMPLATE_DB!);
+    // Own Chromium profile: the default is the real app's, shared by every running instance.
+    const profileDir = path.join(os.tmpdir(), `nayahisab-profile-${randomUUID()}`);
     // Login writes lastUserId to the OS credential store via keytar; a unique service name
     // keeps it apart from the real app, and teardown removes it (through auth:logout).
     const serviceName = `nayahisab-e2e-${testInfo.workerIndex}-${randomUUID().slice(0, 8)}`;
 
     const app = await _electron.launch({
-      args: ["."],
+      args: [`--user-data-dir=${profileDir}`, "."],
       cwd: ROOT,
       env: {
         ...process.env,
@@ -43,6 +47,8 @@ export const test = base.extend<AppFixtures>({
       await page?.evaluate(() => window.electronAPI.auth.logout()).catch(() => {});
       await app.close();
       removeDatabaseFiles(dbFile);
+      // Windows can hold profile files for a moment after the process exits.
+      fs.rmSync(profileDir, { recursive: true, force: true, maxRetries: 10, retryDelay: 100 });
     }
   },
 
