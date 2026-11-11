@@ -1,9 +1,11 @@
 # AGENTS.md
 
 ## Stack
+
 Electron 39 · React 19 · TypeScript (strict) · Vite (renderer) · esbuild (main/preload) · Prisma 7 + SQLite (better-sqlite3) · Zod 4 · TanStack Query · Tailwind 4 + shadcn/ui.
 
 ## Layout
+
 ```
 src/main/              Electron main process
   modules/<domain>/    <domain>.service.ts (business logic) + <domain>.routes.ts (IPC handlers)
@@ -20,6 +22,7 @@ src/renderer/          React app: pages/, components/ (ui/ = shadcn), context/, 
 ```
 
 ## Commands
+
 - `npm run dev`: Vite on the first free port from 5173 (127.0.0.1); writes `.dev-server-url` for Electron (`DEV_SERVER_URL` overrides)
 - `npm start`: build main/preload to `dist-electron/` and launch Electron
 - `npm run dev:web`: dev only, run the renderer in a browser; only auth routes work, through a loopback bridge (`src/main/web-bridge/`)
@@ -28,7 +31,9 @@ src/renderer/          React app: pages/, components/ (ui/ = shadcn), context/, 
 - `npm run build`: Vite renderer build + main/preload bundle
 
 ## Conventions (reference implementation: auth)
+
 `src/shared/contracts/auth.contract.ts` → `src/main/modules/auth/` → `src/renderer/modules/auth/api.ts` → `src/renderer/context/auth-context.tsx`
+
 - **DTOs:** every IPC input/output is a Zod schema in `src/shared/contracts`, and its type comes from `z.infer`. Use `Empty` for no input and `NoData` for no output.
 - **IPC routes:** declare routes with `defineRoute({ channel: "<domain>:<action>", input, output, successMessage })` and add the module to `src/shared/ipc/routes.ts`. Main registers handlers through `registerRoutes` in `src/main/ipc/index.ts`, typed as `RouteHandlers<typeof xRoutes>`. Input and output are validated there. The preload picks new routes up automatically; never use raw `ipcRenderer` or channel strings anywhere else.
 - **Services:** business logic lives in `<domain>.service.ts` and returns plain domain data (no envelope). Handlers only delegate. Routes with no result return `null` (`NoData`).
@@ -39,6 +44,7 @@ src/renderer/          React app: pages/, components/ (ui/ = shadcn), context/, 
 - **Strict TS:** no `any`; if one is unavoidable, add a comment saying why. Imports use the `@/` alias (`@/shared/...`, `@/renderer/...`).
 
 ## Testing (reference: the auth tests)
+
 - **Scope:** test services and their routes, the IPC/error pipeline, contracts with real rules, and complex client state (providers, reducers, multi-step forms). Skip `components/ui`, static markup and pass-through code. No coverage target.
 - **Levels:**
   - Unit/integration: `*.test.ts(x)` next to the source. Main tests in `src/main/**` run through `registerIPCHandlers()` with `@tests/setup/main-ipc` and real SQLite.
