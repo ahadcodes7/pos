@@ -33,12 +33,22 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-commit: var(--commit);
+  --color-commit-foreground: var(--commit-foreground);
+  --color-commit-border: var(--commit-border);
+  --color-commit-hover: var(--commit-hover);
   --color-destructive: var(--destructive);
+  --color-destructive-solid: var(--destructive-solid);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-success: var(--success);
+  --color-success-surface: var(--success-surface);
   --color-success-foreground: var(--success-foreground);
   --color-warning: var(--warning);
+  --color-warning-surface: var(--warning-surface);
   --color-warning-foreground: var(--warning-foreground);
+  --color-destructive-surface: var(--destructive-surface);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -91,13 +101,28 @@
   --accent: #fff3c9;
   --accent-foreground: var(--foreground);
 
-  /* Semantics: status colors stay conventional */
+  /* Brand / commit: coral appears only at the value moment.
+     Ink labels are required; cream or white on coral fails AA. */
+  --brand: #ff7a66;
+  --brand-foreground: #181a1f;
+  --commit: #ff7a66;
+  --commit-foreground: #181a1f;
+  --commit-border: #e85d4a;
+  --commit-hover: #f26a56;
+
+  /* Semantics: status colors stay conventional.
+     `--destructive` is for text, borders and rings; `--destructive-solid` is
+     the filled action, so dark mode can use a deep red without harming error text. */
   --destructive: #b42318;
+  --destructive-solid: #b42318;
   --destructive-foreground: #ffffff;
   --success: #2f7d5a;
+  --success-surface: #ecf7f1;
   --success-foreground: #ffffff;
   --warning: #8a5a00;
+  --warning-surface: #fff4d6;
   --warning-foreground: #ffffff;
+  --destructive-surface: #fdecea;
 
   /* Lines and focus */
   --border: #e2dccf;
@@ -146,12 +171,25 @@
   --accent: #3a3320;
   --accent-foreground: var(--foreground);
 
+  --brand: #ff7a66;
+  --brand-foreground: #181a1f;
+  --commit: #ff7a66;
+  --commit-foreground: #181a1f;
+  --commit-border: #ff9a8c;
+  --commit-hover: #ff8f7d;
+
+  /* Deep red keeps the filled destructive action distinct from coral; the
+     lighter `--destructive` keeps error text readable on the dark canvas. */
   --destructive: #ff8a80;
-  --destructive-foreground: #181a1f;
+  --destructive-solid: #c0392b;
+  --destructive-foreground: #f7f3ea;
   --success: #74d3a6;
+  --success-surface: #17352a;
   --success-foreground: #181a1f;
   --warning: #f2c063;
+  --warning-surface: #3a2e18;
   --warning-foreground: #181a1f;
+  --destructive-surface: #3a1e1b;
 
   --border: rgb(247 243 234 / 12%);
   --input: rgb(247 243 234 / 24%);

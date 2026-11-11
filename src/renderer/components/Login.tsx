@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { BrandMark, BrandWordmark } from "./brand/BrandMark";
 import {
   Card,
   CardContent,
@@ -45,13 +46,21 @@ const Login = () => {
     <div className="h-full overflow-y-auto bg-background">
       <div className="flex min-h-full items-center justify-center p-6">
         <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">
-            POS Login
-          </CardTitle>
-          <CardDescription className="text-center">
-            Enter your credentials to access the system
-          </CardDescription>
+        <CardHeader className="space-y-4">
+          <div className="flex flex-col items-center gap-3">
+            <BrandMark className="h-12 w-12 rounded-xl" />
+            <div className="text-xl text-foreground">
+              <BrandWordmark />
+            </div>
+          </div>
+          <div className="space-y-1">
+            <CardTitle className="text-2xl font-bold text-center">
+              Welcome back
+            </CardTitle>
+            <CardDescription className="text-center">
+              Sign in to your workspace
+            </CardDescription>
+          </div>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">

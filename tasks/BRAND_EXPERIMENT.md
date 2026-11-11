@@ -1,7 +1,9 @@
 # Brand Direction Experiment
 
-Status: **Creator OS palette**, light default with a charcoal dark companion. Round 6
-replaces the lavender direction. Layout variants are still pending reference designs.
+Status: **Round 6 palette history.** The production action and logo system is in
+`tasks/BRAND_SYSTEM.md`. Creator OS is the current palette: light default with a
+charcoal dark companion. Round 6 replaced the lavender direction; layout variants are
+still pending reference designs.
 
 ## 1. Decision
 
@@ -36,27 +38,27 @@ Why this direction:
 
 Implementation lives in `src/renderer/index.css`. Hex is the source of truth.
 
-| Role | Light | Dark | Notes |
-| --- | --- | --- | --- |
-| Canvas | `#F7F3EA` | `#1C1F25` | warm cream / charcoal |
-| Surface (cards) | `#FFFDF8` | `#23262D` | popovers one step lighter: `#282C34` |
-| Ink | `#181A1F` | `#F7F3EA` | 15.7 / 14.9 |
-| Muted text | `#59606B` | `#A8AFBA` | 5.8 / 7.5 |
-| Primary action | `#181A1F` | `#F7F3EA` | label cream / charcoal, both 15.7 |
-| Active / selected | `#FFF3C9` | `#3A3320` | butter wash |
-| Secondary surface | `#EDE7DB` | `#2A2E36` | secondary buttons, chips |
-| Muted surface | `#F1ECE2` | `#242830` | table headers, skeletons |
-| Border | `#E2DCCF` | `rgb(247 243 234 / 12%)` | decorative hairlines |
-| Input border | `#93897A` | `rgb(247 243 234 / 24%)` | 3.3:1 on paper |
-| Focus ring | `#59606B` | `#A8AFBA` | |
-| Sidebar / title strip | `#FFFDF8` | `#181A1F` | changed per mode |
-| Sidebar primary | `#181A1F` | `#FFE39A` | logo tile, active submenu, marker |
-| Butter | `#FFE39A` | `#FFE39A` | tint and dark chart only |
-| Coral | `#FF7A66` | `#FF7A66` | attention badges, charts |
-| Destructive | `#B42318` | `#FF8A80` | white / charcoal label |
-| Success | `#2F7D5A` | `#74D3A6` | white / charcoal label |
-| Warning | `#8A5A00` | `#F2C063` | darkened for text contrast |
-| Charts | `#181A1F`, `#59606B`, `#D9A72E`, `#FF7A66`, `#2F7D5A` | `#F7F3EA`, `#A8AFBA`, `#FFE39A`, `#FF7A66`, `#74D3A6` | neutral + warm signals |
+| Role                  | Light                                                 | Dark                                                  | Notes                                |
+| --------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ------------------------------------ |
+| Canvas                | `#F7F3EA`                                             | `#1C1F25`                                             | warm cream / charcoal                |
+| Surface (cards)       | `#FFFDF8`                                             | `#23262D`                                             | popovers one step lighter: `#282C34` |
+| Ink                   | `#181A1F`                                             | `#F7F3EA`                                             | 15.7 / 14.9                          |
+| Muted text            | `#59606B`                                             | `#A8AFBA`                                             | 5.8 / 7.5                            |
+| Primary action        | `#181A1F`                                             | `#F7F3EA`                                             | label cream / charcoal, both 15.7    |
+| Active / selected     | `#FFF3C9`                                             | `#3A3320`                                             | butter wash                          |
+| Secondary surface     | `#EDE7DB`                                             | `#2A2E36`                                             | secondary buttons, chips             |
+| Muted surface         | `#F1ECE2`                                             | `#242830`                                             | table headers, skeletons             |
+| Border                | `#E2DCCF`                                             | `rgb(247 243 234 / 12%)`                              | decorative hairlines                 |
+| Input border          | `#93897A`                                             | `rgb(247 243 234 / 24%)`                              | 3.3:1 on paper                       |
+| Focus ring            | `#59606B`                                             | `#A8AFBA`                                             |                                      |
+| Sidebar / title strip | `#FFFDF8`                                             | `#181A1F`                                             | changed per mode                     |
+| Sidebar primary       | `#181A1F`                                             | `#FFE39A`                                             | logo tile, active submenu, marker    |
+| Butter                | `#FFE39A`                                             | `#FFE39A`                                             | tint and dark chart only             |
+| Coral                 | `#FF7A66`                                             | `#FF7A66`                                             | attention badges, charts             |
+| Destructive           | `#B42318`                                             | `#FF8A80`                                             | white / charcoal label               |
+| Success               | `#2F7D5A`                                             | `#74D3A6`                                             | white / charcoal label               |
+| Warning               | `#8A5A00`                                             | `#F2C063`                                             | darkened for text contrast           |
+| Charts                | `#181A1F`, `#59606B`, `#D9A72E`, `#FF7A66`, `#2F7D5A` | `#F7F3EA`, `#A8AFBA`, `#FFE39A`, `#FF7A66`, `#74D3A6` | neutral + warm signals               |
 
 Hard rules:
 
@@ -101,13 +103,13 @@ Density and radius are **not** in this pass (phase 2).
 
 ## 5. Hypotheses
 
-| # | Hypothesis | Measure |
-| --- | --- | --- |
-| H1 | Neutral cream/charcoal reads as a professional ERP | 5-second test, ≥4/5 |
-| H2 | Monochrome actions reduce visual noise vs the lavender round | preference ≥4/5 |
-| H3 | All text pairs pass WCAG AA | 4.5:1 text, 3:1 fields/focus |
-| H4 | Butter selection is noticeable without being loud | users find the active page in <2s |
-| H5 | Coral is read as attention, not as an error | 0 destructive/coral mix-ups |
+| #   | Hypothesis                                                   | Measure                           |
+| --- | ------------------------------------------------------------ | --------------------------------- |
+| H1  | Neutral cream/charcoal reads as a professional ERP           | 5-second test, ≥4/5               |
+| H2  | Monochrome actions reduce visual noise vs the lavender round | preference ≥4/5                   |
+| H3  | All text pairs pass WCAG AA                                  | 4.5:1 text, 3:1 fields/focus      |
+| H4  | Butter selection is noticeable without being loud            | users find the active page in <2s |
+| H5  | Coral is read as attention, not as an error                  | 0 destructive/coral mix-ups       |
 
 If H4 fails, shift `--accent` and `--sidebar-accent` to the neutral sand `#EDE7DB` and keep
 butter only in charts/highlights. If H5 fails, remove coral from charts and keep it only in
@@ -115,11 +117,11 @@ notification dots.
 
 ## 6. Variants
 
-| Slot | Canvas | Chrome | Primary action | Intent |
-| --- | --- | --- | --- | --- |
-| **A (shipped)** | cream `#F7F3EA` | paper (light) / `#181A1F` (dark) | charcoal / cream | neutral Creator OS tool |
-| B | TBD from reference | TBD | TBD | |
-| C | TBD from reference | TBD | TBD | |
+| Slot            | Canvas             | Chrome                           | Primary action   | Intent                  |
+| --------------- | ------------------ | -------------------------------- | ---------------- | ----------------------- |
+| **A (shipped)** | cream `#F7F3EA`    | paper (light) / `#181A1F` (dark) | charcoal / cream | neutral Creator OS tool |
+| B               | TBD from reference | TBD                              | TBD              |                         |
+| C               | TBD from reference | TBD                              | TBD              |                         |
 
 Dark mode is the same palette inverted: charcoal canvas, cream type, cream actions, butter
 chrome accents. Light remains the default for daylight counters.
@@ -164,19 +166,19 @@ The first fallback is the neutral sand accent (`#EDE7DB`); the second is butter-
 
 Computed with the WCAG relative-luminance formula.
 
-| Pair | Light | Dark |
-| --- | --- | --- |
-| foreground / background | 15.7 | 14.9 |
-| muted foreground / background | 5.8 | 7.5 |
-| primary / background | 15.7 | 14.9 |
-| primary foreground / primary | 15.7 | 15.7 |
-| destructive / background | 6.6 | 7.2 |
-| success / background | 4.9 | 9.1 |
-| warning / background | 5.8 | 9.5 |
-| sidebar foreground / sidebar | 16.2 | 15.7 |
-| sidebar primary / sidebar | 16.2 | 13.8 |
-| ink on butter | 13.8 | 13.8 |
-| input border / paper | 3.3 | — |
+| Pair                          | Light | Dark |
+| ----------------------------- | ----- | ---- |
+| foreground / background       | 15.7  | 14.9 |
+| muted foreground / background | 5.8   | 7.5  |
+| primary / background          | 15.7  | 14.9 |
+| primary foreground / primary  | 15.7  | 15.7 |
+| destructive / background      | 6.6   | 7.2  |
+| success / background          | 4.9   | 9.1  |
+| warning / background          | 5.8   | 9.5  |
+| sidebar foreground / sidebar  | 16.2  | 15.7 |
+| sidebar primary / sidebar     | 16.2  | 13.8 |
+| ink on butter                 | 13.8  | 13.8 |
+| input border / paper          | 3.3   | —    |
 
 Coral on paper is 2.4:1 and butter on paper is 1.1:1, which is why neither is used for text
 or light chart fills.
@@ -193,3 +195,9 @@ command palette (`cmdk` is installed but unused).
 - Is the butter selection strong enough in daylight, or should it be `#FFE9B0`?
 - Keep light as the launch default, or restore dark for evening counters?
 - Is coral needed outside charts, or does the monochrome palette already have enough signal?
+
+## Font Selection (later)
+
+- Product Font (95% of the UI) - Inter for now (If found a better one we will replace)
+- Money/Receipts/Codes - Jetbrains Mono
+- Brand font (very less usage on login or static brand pages like home dashboard etc.) - Bricolage Grotesque

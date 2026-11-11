@@ -13,6 +13,7 @@ import {
   Settings as SettingsIcon,
 } from "lucide-react";
 import { cn } from "@/renderer/lib/utils";
+import { BrandLockup } from "@/renderer/components/brand/BrandMark";
 
 interface MenuSubItem {
   id: string;
@@ -132,19 +133,9 @@ const Sidebar = ({ className }: { className?: string }) => {
       )}
     >
       <div className="h-16 flex items-center justify-between px-4 border-b border-sidebar-border">
-      {!collapsed && (
-        <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-10 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center shrink-0">
-            <span className="text-sidebar-primary-foreground font-bold text-sm">
-              POS
-            </span>
-          </div>
-         
-            <span className="font-semibold text-lg whitespace-nowrap">
-              Dashboard
-            </span>
-        </div>
-          )}
+        {!collapsed && (
+          <BrandLockup className="overflow-hidden text-sidebar-foreground" />
+        )}
         <button
           type="button"
           onClick={() => setCollapsed((prev) => !prev)}

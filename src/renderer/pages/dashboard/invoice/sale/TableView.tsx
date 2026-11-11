@@ -6,6 +6,7 @@ import {
   X,
   Grid3X3,
   List,
+  Check,
 } from "lucide-react";
 import { Button } from "@/renderer/components/ui/button";
 import { Input } from "@/renderer/components/ui/input";
@@ -194,7 +195,8 @@ function TableView({ viewMode, setViewMode }: TableViewProps) {
           <X className="w-4 h-4 mr-2" />
           Clear
         </Button>
-        <Button disabled={state.items.length === 0}>
+        <Button variant="commit" disabled={state.items.length === 0}>
+          <Check className="w-4 h-4" />
           Create Invoice
         </Button>
       </div>

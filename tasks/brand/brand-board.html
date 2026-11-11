@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NayaHisab — Creator OS brand board</title>
+    <style>
+      :root {
+        --ink: #181a1f;
+        --slate: #59606b;
+        --cream: #f7f3ea;
+        --paper: #fffdf8;
+        --butter: #ffe39a;
+        --coral: #ff7a66;
+        --border: #e2dccf;
+        --success: #2f7d5a;
+        --warning: #8a5a00;
+        --danger: #b42318;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--cream);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+        line-height: 1.5;
+      }
+      main { max-width: 1080px; margin: 0 auto; padding: 48px 28px 80px; }
+      h1 { font-size: 34px; letter-spacing: -0.03em; margin: 18px 0 6px; }
+      h2 { font-size: 18px; letter-spacing: -0.01em; margin: 44px 0 14px; }
+      p { color: var(--slate); margin: 0 0 12px; }
+      .eyebrow {
+        font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+        text-transform: uppercase; color: var(--slate);
+      }
+      .hero {
+        display: flex; gap: 20px; align-items: center;
+        background: var(--paper); border: 1px solid var(--border);
+        border-radius: 18px; padding: 28px; box-shadow: 0 12px 40px rgb(24 26 31 / 6%);
+      }
+      .hero p { max-width: 620px; margin: 0; }
+      .mark {
+        width: 74px; height: 74px; border-radius: 17px; background: var(--ink);
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        border: 1px solid rgb(255 255 255 / 10%);
+      }
+      .mark svg { width: 62%; height: 62%; }
+      .wordmark { font-size: 22px; font-weight: 650; letter-spacing: -0.03em; }
+      .wordmark .dot { color: var(--coral); }
+      .sub { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--slate); }
+      .grid { display: grid; gap: 14px; }
+      .palette { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+      .swatch {
+        background: var(--paper); border: 1px solid var(--border); border-radius: 14px;
+        padding: 12px; display: flex; flex-direction: column; gap: 10px;
+      }
+      .chip { height: 62px; border-radius: 9px; border: 1px solid rgb(24 26 31 / 8%); }
+      .swatch strong { font-size: 12px; }
+      .swatch code { font-size: 11px; color: var(--slate); }
+      .ratio { font-size: 10px; color: var(--slate); }
+      table { width: 100%; border-collapse: collapse; background: var(--paper); border-radius: 14px; overflow: hidden; }
+      th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: middle; }
+      th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--slate); background: #fbf8f1; }
+      tr:last-child td { border-bottom: 0; }
+      .btn {
+        display: inline-flex; align-items: center; gap: 7px; border-radius: 8px;
+        padding: 7px 12px; font-size: 12px; font-weight: 600; border: 1px solid transparent;
+      }
+      .btn-primary { background: var(--ink); color: var(--cream); }
+      .btn-commit { background: var(--coral); color: var(--ink); border-color: #e85d4a; }
+      .btn-secondary { background: transparent; color: var(--ink); border-color: #d6cfc2; }
+      .btn-ghost { background: transparent; color: var(--slate); }
+      .btn-destructive { background: var(--danger); color: #fff; }
+      .status-row { display: flex; flex-wrap: wrap; gap: 8px; }
+      .status-pill {
+        display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
+        padding: 4px 10px; font-size: 11px; font-weight: 600; border: 1px solid;
+      }
+      .status-pill::before {
+        content: ""; width: 6px; height: 6px; border-radius: 50%;
+        background: currentColor; flex: none;
+      }
+      .status-success { color: #2f7d5a; background: #ecf7f1; border-color: rgb(47 125 90 / 25%); }
+      .status-warning { color: #8a5a00; background: #fff4d6; border-color: rgb(138 90 0 / 25%); }
+      .status-danger { color: #b42318; background: #fdecea; border-color: rgb(180 35 24 / 25%); }
+      .logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .logo-card {
+        background: var(--paper); border: 1px solid var(--border); border-radius: 16px;
+        padding: 22px; display: flex; flex-direction: column; gap: 16px; min-height: 210px;
+      }
+      .logo-card h3 { font-size: 13px; margin: 0; }
+      .logo-card p { font-size: 12px; margin: 0; }
+      .lockup { display: flex; align-items: center; gap: 12px; }
+      .highlight { background: linear-gradient(transparent 58%, var(--butter) 58%); padding: 0 2px; }
+      .big-wordmark { font-size: 25px; font-weight: 650; letter-spacing: -0.03em; }
+      .big-wordmark .dot { color: var(--coral); }
+      .note {
+        background: var(--paper); border: 1px solid var(--border); border-left: 4px solid var(--coral);
+        border-radius: 10px; padding: 14px 16px; font-size: 13px; color: var(--slate);
+      }
+      .refs { display: flex; flex-wrap: wrap; gap: 8px; }
+      .ref { font-size: 12px; border: 1px solid var(--border); background: var(--paper); border-radius: 999px; padding: 5px 11px; }
+      .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+      @media (max-width: 760px) {
+        .logos, .two { grid-template-columns: 1fr; }
+        .hero { flex-direction: column; align-items: flex-start; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="eyebrow">Creator OS · brand board</div>
+      <div class="hero">
+        <div class="mark">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M7 18V6" stroke="#F7F3EA" stroke-width="2.4" stroke-linecap="round" />
+            <path d="M7 6L17 18" stroke="#FF7A66" stroke-width="2.4" stroke-linecap="round" />
+            <path d="M17 18V6" stroke="#F7F3EA" stroke-width="2.4" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div>
+          <div class="wordmark">NayaHisab<span class="dot">.</span></div>
+          <div class="sub">Point of Sale · Ledger N</div>
+          <h1>A calm ledger with one warm signal.</h1>
+          <p>
+            The product is neutral by default. Coral is the value moment: completing a sale,
+            taking payment, finalizing an invoice. Butter is “you are here.” Everything else is
+            paper, charcoal and slate.
+          </p>
+        </div>
+      </div>
+
+      <h2>Palette and proportion</h2>
+      <div class="grid palette">
+        <div class="swatch"><div class="chip" style="background:#f7f3ea"></div><strong>Canvas</strong><code>#F7F3EA</code><span class="ratio">70% · cream field</span></div>
+        <div class="swatch"><div class="chip" style="background:#fffdf8"></div><strong>Surface</strong><code>#FFFDF8</code><span class="ratio">cards, sidebar, strip</span></div>
+        <div class="swatch"><div class="chip" style="background:#181a1f"></div><strong>Ink</strong><code>#181A1F</code><span class="ratio">20% · type, primary</span></div>
+        <div class="swatch"><div class="chip" style="background:#59606b"></div><strong>Slate</strong><code>#59606B</code><span class="ratio">muted text, icons</span></div>
+        <div class="swatch"><div class="chip" style="background:#ffe39a"></div><strong>Butter</strong><code>#FFE39A</code><span class="ratio">7% · selected only</span></div>
+        <div class="swatch"><div class="chip" style="background:#ff7a66"></div><strong>Coral</strong><code>#FF7A66</code><span class="ratio">3% · commit, brand dot</span></div>
+      </div>
+
+      <h2>Action system</h2>
+      <table>
+        <thead>
+          <tr><th>Role</th><th>Light</th><th>Dark</th><th>Use</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Primary</strong></td><td><span class="btn btn-primary">Save</span></td><td><span class="btn" style="background:#f7f3ea;color:#181a1f">Save</span></td><td>Frequent, quiet actions: Save, Add, Apply</td></tr>
+          <tr><td><strong>Commit</strong></td><td><span class="btn btn-commit">✓ Complete</span></td><td><span class="btn btn-commit">✓ Complete</span></td><td>One per screen: Complete Sale, Take Payment</td></tr>
+          <tr><td><strong>Secondary</strong></td><td><span class="btn btn-secondary">Cancel</span></td><td><span class="btn" style="border-color:rgb(247 243 234 / 18%);color:#f7f3ea">Cancel</span></td><td>Alternative action next to primary</td></tr>
+          <tr><td><strong>Ghost</strong></td><td><span class="btn btn-ghost">Dismiss</span></td><td><span class="btn" style="color:#a8afba">Dismiss</span></td><td>Cancel, dismiss, toolbar</td></tr>
+          <tr><td><strong>Destructive</strong></td><td><span class="btn btn-destructive">Delete</span></td><td><span class="btn" style="background:#c0392b;color:#f7f3ea">Delete</span></td><td>Void, refund, delete; never coral</td></tr>
+          <tr><td><strong>Selected</strong></td><td><span class="btn" style="background:#fff3c9;color:#181a1f">Active page</span></td><td><span class="btn" style="background:#3a3320;color:#f7f3ea">Active page</span></td><td>Navigation, rows, filters</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Status badges</h2>
+      <div class="status-row">
+        <span class="status-pill status-success">In stock</span>
+        <span class="status-pill status-warning">Low stock (3)</span>
+        <span class="status-pill status-danger">Out of stock</span>
+      </div>
+      <p style="margin-top:10px">Shape + label carries the meaning; color is never the only signal.</p>
+
+      <h2>Logo routes</h2>
+      <div class="grid logos">
+        <div class="logo-card">
+          <div class="lockup">
+            <div class="mark" style="width:54px;height:54px;border-radius:13px">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M7 18V6" stroke="#F7F3EA" stroke-width="2.4" stroke-linecap="round" />
+                <path d="M7 6L17 18" stroke="#FF7A66" stroke-width="2.4" stroke-linecap="round" />
+                <path d="M17 18V6" stroke="#F7F3EA" stroke-width="2.4" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="wordmark">NayaHisab<span class="dot">.</span></div>
+          </div>
+          <h3>1 · Ledger N — chosen</h3>
+          <p>Two ledger strokes, one coral diagonal. Sharp at 16px, works in one color, and maps directly to the app icon.</p>
+        </div>
+        <div class="logo-card">
+          <div class="lockup">
+            <div class="mark" style="width:54px;height:54px;border-radius:13px">
+              <svg viewBox="0 0 64 64" aria-hidden="true">
+                <path d="M22 14h20v36l-4-3-4 3-4-3-4 3-4-3V14z" fill="#F7F3EA" />
+                <path d="M27 27l4 4 8-8" stroke="#FF7A66" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div class="wordmark">NayaHisab<span class="dot">.</span></div>
+          </div>
+          <h3>2 · Receipt check</h3>
+          <p>Literal POS/accounting cue: a receipt with a coral check. Trustworthy, but needs a custom cut to avoid the generic receipt icon.</p>
+        </div>
+        <div class="logo-card">
+          <div class="big-wordmark" style="margin-top:8px">
+            <span class="highlight">NayaHisab</span><span class="dot">.</span>
+          </div>
+          <h3>3 · Highlighter wordmark</h3>
+          <p>Butter marks “new,” coral marks the full stop. Editorial and warm, but the highlight does not survive a 16px icon, so it needs a separate mark.</p>
+        </div>
+      </div>
+
+      <h2>Implementation map</h2>
+      <div class="two">
+        <div class="note">
+          <strong>Tokens:</strong> <code>--primary</code> is neutral; <code>--commit</code> is coral;
+          <code>--brand</code> is coral for the mark and dot; <code>--accent</code> is butter for selection;
+          <code>--destructive-solid</code> is the deep-red fill; <code>--destructive</code> is
+          readable error text; <code>--ring</code> is slate.
+        </div>
+        <div class="note">
+          <strong>Label rule:</strong> coral always takes an ink label (6.8:1). Cream/white on coral is
+          2.3–2.5:1 and fails. In light mode, coral gets a deeper inset border so the button edge
+          clears 3:1 on paper.
+        </div>
+      </div>
+
+      <h2>References to study</h2>
+      <div class="refs">
+        <span class="ref">Mercury — cream/ink calm</span>
+        <span class="ref">Brex — coral in enterprise</span>
+        <span class="ref">Linear — precision and density</span>
+        <span class="ref">Attio — sharp data surfaces</span>
+        <span class="ref">Toast / Square — POS clarity</span>
+        <span class="ref">Stripe Press — paper/ink editorial</span>
+      </div>
+
+      <h2>Next production steps</h2>
+      <p>
+        Elevation tokens for paper-on-cream, status badges with icons, 36/40px control density,
+        tabular numerals, empty/loading/error states, a proper app icon and receipt lockup, and a
+        contrast audit in both modes.
+      </p>
+    </main>
+  </body>
+</html>

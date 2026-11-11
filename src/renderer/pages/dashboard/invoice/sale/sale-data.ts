@@ -354,22 +354,24 @@ export const filterProducts = (products: SaleProduct[], searchQuery: string, sel
   });
 };
 
-export const getStockStatus = (stock: number) => {
+export type StockStatus = {
+  label: string;
+  variant: "success" | "warning" | "danger";
+};
+
+export const getStockStatus = (stock: number): StockStatus => {
   if (stock === 0)
     return {
       label: "Out of Stock",
-      color: "text-red-500",
-      bg: "bg-red-500/10",
+      variant: "danger",
     };
   if (stock <= 5)
     return {
       label: `Low Stock (${stock})`,
-      color: "text-amber-500",
-      bg: "bg-amber-500/10",
+      variant: "warning",
     };
   return {
     label: `In Stock (${stock})`,
-    color: "text-emerald-500",
-    bg: "bg-emerald-500/10",
+    variant: "success",
   };
 };

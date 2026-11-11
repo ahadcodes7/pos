@@ -8,8 +8,10 @@ import {
   X,
   Grid3X3,
   List,
+  Check,
 } from "lucide-react";
 import { Button } from "@/renderer/components/ui/button";
+import { Badge } from "@/renderer/components/ui/badge";
 import { Input } from "@/renderer/components/ui/input";
 import { Label } from "@/renderer/components/ui/label";
 import { Separator } from "@/renderer/components/ui/separator";
@@ -196,14 +198,16 @@ function CardView({ viewMode, setViewMode }: CardViewProps) {
                       {product.sku}
                     </p>
                     {/* Stock Indicator */}
-                    <p
-                      className={cn(
-                        "text-[10px] mt-1 font-medium",
-                        stockStatus.color,
-                      )}
+                    <Badge
+                      variant={stockStatus.variant}
+                      className="mt-1.5 h-5 gap-1.5 px-1.5 text-[10px] leading-none"
                     >
+                      <span
+                        aria-hidden="true"
+                        className="size-1.5 rounded-full bg-current"
+                      />
                       {stockStatus.label}
-                    </p>
+                    </Badge>
                   </div>
                   <div className="mt-2 flex items-center justify-between">
                     <span className="font-bold text-base text-foreground">
@@ -337,7 +341,12 @@ function CardView({ viewMode, setViewMode }: CardViewProps) {
           >
             Cancel
           </Button>
-          <Button className="flex-1" disabled={activeOrder.items.length === 0}>
+          <Button
+            variant="commit"
+            className="flex-1"
+            disabled={activeOrder.items.length === 0}
+          >
+            <Check />
             Complete
           </Button>
         </div>
