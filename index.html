@@ -4,7 +4,17 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pos</title>
+    <meta name="theme-color" content="#0B0B0C" />
+    <title>NayaHisab</title>
+    <script>
+      (function () {
+        try {
+          var mode = localStorage.getItem("pos-ui-theme-v2-mode") || "dark";
+          if (mode === "dark") document.documentElement.classList.add("dark");
+          document.documentElement.dataset.mode = mode;
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

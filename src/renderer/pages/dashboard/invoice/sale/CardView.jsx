@@ -196,7 +196,7 @@ function CardView({ viewMode, setViewMode }) {
                     </p>
                   </div>
                   <div className="mt-2 flex items-center justify-between">
-                    <span className="font-bold text-base text-primary">
+                    <span className="font-bold text-base text-foreground">
                       Rs. {product.price}
                     </span>
                     <div
@@ -312,7 +312,7 @@ function CardView({ viewMode, setViewMode }) {
           {/* Grand Total */}
           <div className="flex justify-between font-bold">
             <span>Total</span>
-            <span className="text-base text-primary">
+            <span className="text-base text-foreground">
               {formatCurrency(totals.grandTotal)}
             </span>
           </div>
@@ -376,7 +376,7 @@ function CartItem({ item, actions, formatCurrency }) {
           {item.name}
         </h4>
         {/* Row 2: Price */}
-        <span className="text-sm font-semibold text-primary mt-0.5">
+        <span className="text-sm font-semibold text-foreground mt-0.5">
           {formatCurrency(item.price * item.quantity)}
         </span>
         {/* Row 3: UOM */}

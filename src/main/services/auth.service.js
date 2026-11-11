@@ -17,11 +17,11 @@ export async function loginService(data) {
     throw new ApiError("User not found", 404);
   }
 
-  // const isValidPassword = await bcrypt.compare(password, user.password);
+  const isValidPassword = await bcrypt.compare(password, user.password);
 
-  // if (!isValidPassword) {
-  //   throw new ApiError("Invalid credentials", 401);
-  // }
+  if (!isValidPassword) {
+    throw new ApiError("Invalid credentials", 401);
+  }
 
   const session = {
     id: user.id,

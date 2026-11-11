@@ -23,6 +23,10 @@ const electronAPI = {
       return ipcRenderer.invoke("auth:currentUser");
     },
   },
+  menu: {
+    invoke: (command) => ipcRenderer.invoke("menu:invoke", command),
+    edit: (command) => ipcRenderer.invoke("menu:edit", command),
+  },
 };
 
 contextBridge.exposeInMainWorld("electronAPI", electronAPI);

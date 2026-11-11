@@ -744,7 +744,7 @@ const AddProduct = () => {
                     ) : (
                       <div
                         onClick={() => fileInputRef.current?.click()}
-                        className="border-2 border-dashed border-border rounded-lg p-8 text-center cursor-pointer hover:border-primary hover:bg-muted/50 transition-colors"
+                        className="border-2 border-dashed border-border rounded-lg p-8 text-center cursor-pointer hover:border-foreground/40 hover:bg-muted/50 transition-colors"
                       >
                         <Upload className="mx-auto h-10 w-10 text-muted-foreground mb-3" />
                         <p className="text-sm font-medium text-foreground">

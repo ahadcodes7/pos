@@ -36,8 +36,8 @@ const Navbar = () => {
           size="icon"
           className={cn(
             "relative rounded-full w-9 h-9",
-            "bg-primary/10 hover:bg-primary/20",
-            "text-primary",
+            "bg-primary hover:bg-primary/90",
+            "text-primary-foreground",
           )}
         >
           {user?.name ? (

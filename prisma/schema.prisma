@@ -47,7 +47,7 @@ enum ProductStatus {
   ACTIVE
   INACTIVE
 }
-TODO: complete this schema add tags and other fields
+// TODO: complete this schema add tags and other fields
 model Product {
   id    String  @id @default(uuid())
   name  String

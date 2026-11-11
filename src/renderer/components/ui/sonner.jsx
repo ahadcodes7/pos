@@ -5,25 +5,25 @@ import {
   OctagonXIcon,
   TriangleAlertIcon,
 } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/renderer/context/theme-context";
 import { Toaster as Sonner } from "sonner";
 
 const Toaster = ({ ...props }) => {
-  const { theme = "system" } = useTheme();
+  const { mode = "light" } = useTheme();
 
   return (
     <Sonner
-      theme={theme}
+      theme={mode}
       className="toaster group"
       icons={{
         success: (
-          <CircleCheckIcon className="size-4 text-[oklch(0.68_0.17_150)]" />
+          <CircleCheckIcon className="size-4 text-success" />
         ),
-        info: <InfoIcon className="size-4 text-[oklch(0.65_0.16_190)]" />,
+        info: <InfoIcon className="size-4 text-chart-2" />,
         warning: (
-          <TriangleAlertIcon className="size-4 text-[oklch(0.8_0.15_85)]" />
+          <TriangleAlertIcon className="size-4 text-warning" />
         ),
-        error: <OctagonXIcon className="size-4 text-[oklch(0.62_0.22_25)]" />,
+        error: <OctagonXIcon className="size-4 text-destructive" />,
         loading: (
           <Loader2Icon className="size-4 animate-spin text-muted-foreground" />
         ),

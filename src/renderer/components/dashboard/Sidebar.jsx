@@ -118,8 +118,8 @@ const Sidebar = ({ className }) => {
       <div className="h-16 flex items-center justify-between px-4 border-b border-sidebar-border">
       {!collapsed && (
         <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-10 h-8 rounded-lg bg-primary flex items-center justify-center shrink-0">
-            <span className="text-primary-foreground font-bold text-sm">
+          <div className="w-10 h-8 rounded-lg bg-sidebar-primary flex items-center justify-center shrink-0">
+            <span className="text-sidebar-primary-foreground font-bold text-sm">
               POS
             </span>
           </div>
@@ -165,8 +165,8 @@ const Sidebar = ({ className }) => {
                     "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                     "focus:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
                     active && !collapsed && "active-item",
-                    collapsed && "justify-center bg-popover",
-                    active && collapsed && "bg-muted text-secondary",
+                    collapsed && "justify-center",
+                    active && collapsed && "bg-sidebar-accent text-sidebar-accent-foreground",
                   )}
                 >
                   <div
@@ -209,9 +209,9 @@ const Sidebar = ({ className }) => {
                               className={cn(
                                 "cursor-pointer w-full flex items-center gap-3 px-3 py-2 rounded-lg",
                                 "text-sm transition-all duration-200",
-                                "hover:text-secondary",
+                                "hover:text-sidebar-accent-foreground",
                                 "focus:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
-                                subActive && "text-secondary",
+                                subActive && "text-sidebar-primary",
                                 !subActive && "text-sidebar-foreground/80",
                               )}
                             >

@@ -4,6 +4,7 @@ import { ThemeProvider } from "./context/theme-context";
 import { AuthProvider } from "./context/auth-context";
 import { Toaster } from "./components/ui/sonner.jsx";
 import { routes } from "./routes/index.jsx";
+import MenuBar from "./components/layout/MenuBar.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,11 +22,16 @@ const AppRoutes = () => {
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="main" defaultMode="light" storageKey="pos-ui-theme">
+      <ThemeProvider defaultMode="dark" storageKey="pos-ui-theme-v2">
         <AuthProvider>
           <Router>
-            <AppRoutes />
-            <Toaster expand={false} richColors duration={4000} />
+            <div className="flex h-screen flex-col overflow-hidden bg-background">
+              <MenuBar />
+              <div className="relative min-h-0 flex-1 overflow-hidden">
+                <AppRoutes />
+              </div>
+              <Toaster expand={false} richColors duration={4000} />
+            </div>
           </Router>
         </AuthProvider>
       </ThemeProvider>
