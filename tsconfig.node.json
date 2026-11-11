@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": [
+      "ES2023"
+    ],
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src/main",
+    "src/preload",
+    "src/shared"
+  ],
+  "exclude": [
+    "src/main/generated",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ]
+}

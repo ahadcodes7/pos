@@ -31,3 +31,8 @@ out/
 dev.db
 dev.db-journal
 dev.db*
+dist-electron
+.dev-server-url
+test-results
+playwright-report
+coverage

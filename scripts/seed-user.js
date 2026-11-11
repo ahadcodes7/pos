@@ -31,7 +31,7 @@ try {
     console.error("Apply your migrations first, then re-run: npm run seed");
     process.exitCode = 1;
   } else {
-    // Same hashing rounds as createUserService in src/main/services/user.service.js
+    // Same hashing rounds as createUserService in src/main/modules/user/user.service.ts
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Matches the format written by @prisma/adapter-better-sqlite3 (iso8601)
