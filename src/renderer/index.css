@@ -62,114 +62,114 @@
 
   /* ============================================
      NayaHisab brand palette - LIGHT
-     Midnight #0B0B0C + White #FFFFFF + Neon teal #00D7CE.
-     60/30/10: black structure and type, white content, teal actions.
+     Deep teal #295255 + mist #F0F5F7 + ink #162623 + slate #577877.
+     Role-based dashboard palette: neutral canvas, white surfaces,
+     one brand color for actions, conventional status colors.
      Swap only this block to change brand direction.
      ============================================ */
 
   /* Canvas and ink */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.15 0.002 286.1);
+  --background: #f0f5f7;
+  --foreground: #162623;
 
   /* Surfaces */
-  --card: oklch(1 0 0);
+  --card: #ffffff;
   --card-foreground: var(--foreground);
-  --popover: oklch(1 0 0);
+  --popover: #ffffff;
   --popover-foreground: var(--foreground);
 
-  /* Primary action: neon teal fill, midnight label (white on teal fails AA) */
-  --primary: oklch(0.78 0.16 190);
-  --primary-foreground: oklch(0.15 0.002 286.1);
+  /* Primary action: deep teal fill, mist label (7.9:1) */
+  --primary: #295255;
+  --primary-foreground: #f0f5f7;
 
   /* Structural surfaces */
-  --secondary: oklch(0.952 0 0);
+  --secondary: #e4edef;
   --secondary-foreground: var(--foreground);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.529 0.008 286.1);
-  --accent: oklch(0.962 0.032 190);
+  --muted: #e9f1f3;
+  --muted-foreground: #577877;
+  --accent: #dce9eb;
   --accent-foreground: var(--foreground);
 
   /* Semantics: status colors stay conventional */
-  --destructive: oklch(0.539 0.194 26.7);
-  --destructive-foreground: oklch(1 0 0);
-  --success: oklch(0.523 0.135 144.2);
-  --success-foreground: oklch(1 0 0);
-  --warning: oklch(0.769 0.165 70.1);
-  --warning-foreground: oklch(0.15 0.002 286.1);
+  --destructive: #b42318;
+  --destructive-foreground: #ffffff;
+  --success: #177a4c;
+  --success-foreground: #ffffff;
+  --warning: #b45309;
+  --warning-foreground: #ffffff;
 
   /* Lines and focus */
-  --border: oklch(0.919 0 0);
-  --input: oklch(0.635 0.007 286.2);
-  --ring: oklch(0.15 0.002 286.1);
+  --border: #d6e3e5;
+  --input: #b7cbce;
+  --ring: #295255;
 
-  /* Data visualisation: midnight, teal, deep teal, amber, red */
-  --chart-1: oklch(0.15 0.002 286.1);
-  --chart-2: oklch(0.78 0.16 190);
-  --chart-3: oklch(0.55 0.12 200);
-  --chart-4: oklch(0.769 0.165 70.1);
-  --chart-5: oklch(0.539 0.194 26.7);
+  /* Data visualisation: teal, slate, ink, amber, red */
+  --chart-1: #295255;
+  --chart-2: #577877;
+  --chart-3: #162623;
+  --chart-4: #c98a2e;
+  --chart-5: #b42318;
 
-  /* Chrome: midnight structure */
-  --sidebar: oklch(0.15 0.002 286.1);
-  --sidebar-foreground: oklch(1 0 0);
-  --sidebar-primary: oklch(0.78 0.16 190);
-  --sidebar-primary-foreground: oklch(0.15 0.002 286.1);
-  --sidebar-accent: oklch(1 0 0 / 8%);
-  --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.78 0.16 190);
+  /* Chrome: constant deep-green frame in both modes */
+  --sidebar: #162623;
+  --sidebar-foreground: #f0f5f7;
+  --sidebar-primary: #9ac2bf;
+  --sidebar-primary-foreground: #162623;
+  --sidebar-accent: rgb(41 82 85 / 45%);
+  --sidebar-accent-foreground: #f0f5f7;
+  --sidebar-border: rgb(240 245 247 / 10%);
+  --sidebar-ring: #9ac2bf;
 }
 
 .dark {
   /* ============================================
-     The 60% midnight version: black canvas, white type,
-     neon teal actions and active states.
+     Dark companion: deep-green canvas, mist type, light-teal
+     actions and active states. Same chrome as light.
      ============================================ */
 
-  --background: oklch(0.15 0.002 286.1);
-  --foreground: oklch(1 0 0);
+  --background: #162623;
+  --foreground: #f0f5f7;
 
-  --card: oklch(0.197 0.004 286);
+  --card: #1c2f2c;
   --card-foreground: var(--foreground);
-  --popover: oklch(0.219 0.006 285.9);
+  --popover: #213633;
   --popover-foreground: var(--foreground);
 
-  --primary: oklch(0.78 0.16 190);
-  --primary-foreground: oklch(0.15 0.002 286.1);
+  --primary: #9ac2bf;
+  --primary-foreground: #162623;
 
-  --secondary: oklch(0.262 0.006 286);
+  --secondary: #243a36;
   --secondary-foreground: var(--foreground);
-  --muted: oklch(0.228 0.006 285.9);
-  --muted-foreground: oklch(0.711 0.01 286.1);
-  --accent: oklch(0.28 0.04 193);
-  --accent-foreground: oklch(0.93 0.07 190);
+  --muted: #1f332f;
+  --muted-foreground: #a3bab8;
+  --accent: #24403c;
+  --accent-foreground: var(--foreground);
 
-  --destructive: oklch(0.577 0.215 27.3);
-  --destructive-foreground: oklch(1 0 0);
-  --success: oklch(0.8 0.182 151.7);
-  --success-foreground: oklch(0.15 0.002 286.1);
-  --warning: oklch(0.769 0.165 70.1);
-  --warning-foreground: oklch(0.15 0.002 286.1);
+  --destructive: #f28b82;
+  --destructive-foreground: #162623;
+  --success: #5cc08d;
+  --success-foreground: #162623;
+  --warning: #e0a83e;
+  --warning-foreground: #162623;
 
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(0.552 0.014 285.9);
-  /* White focus ring stays visible on the teal primary fill */
-  --ring: oklch(1 0 0);
+  --border: rgb(240 245 247 / 12%);
+  --input: rgb(240 245 247 / 20%);
+  --ring: #9ac2bf;
 
-  --chart-1: oklch(1 0 0);
-  --chart-2: oklch(0.78 0.16 190);
-  --chart-3: oklch(0.72 0.12 190);
-  --chart-4: oklch(0.769 0.165 70.1);
-  --chart-5: oklch(0.711 0.166 22.2);
+  --chart-1: #9ac2bf;
+  --chart-2: #577877;
+  --chart-3: #f0f5f7;
+  --chart-4: #e0a83e;
+  --chart-5: #f28b82;
 
-  --sidebar: oklch(0.15 0.002 286.1);
-  --sidebar-foreground: oklch(1 0 0);
-  --sidebar-primary: oklch(0.78 0.16 190);
-  --sidebar-primary-foreground: oklch(0.15 0.002 286.1);
-  --sidebar-accent: oklch(1 0 0 / 7%);
-  --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.78 0.16 190);
+  --sidebar: #162623;
+  --sidebar-foreground: #f0f5f7;
+  --sidebar-primary: #9ac2bf;
+  --sidebar-primary-foreground: #162623;
+  --sidebar-accent: rgb(154 194 191 / 12%);
+  --sidebar-accent-foreground: #f0f5f7;
+  --sidebar-border: rgb(240 245 247 / 10%);
+  --sidebar-ring: #9ac2bf;
 }
 
 @layer base {

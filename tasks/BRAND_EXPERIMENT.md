@@ -1,108 +1,116 @@
 # Brand Direction Experiment
 
-Status: **midnight-dominant**, single brand theme with light + dark modes. Round 3 accent:
-neon teal (replaces lime). Layout variants pending the three reference designs.
+Status: **deep-teal dashboard palette**, light default with a dark companion. Round 4
+replaces the midnight/neon-teal direction. Layout variants are still pending reference designs.
 
 ## 1. Decision
 
-Drop multi-theme. One brand theme built on a 60/30/10 split:
+Retire the 60/30/10 split. It is a landing-page heuristic; a dashboard is a working surface
+where four or five roles coexist:
 
-- **60%** midnight `#0B0B0C` — chrome, type, structure.
-- **30%** pure white `#FFFFFF` — canvas and cards (light) / type (dark).
-- **10%** neon teal `#00D7CE` — every primary action, active navigation, selection.
+1. **Canvas** — the large neutral field behind everything.
+2. **Surface** — cards, tables, dialogs and popovers that sit above the canvas.
+3. **Ink** — headings, body copy, money, table values.
+4. **Brand** — primary actions, active navigation, focus, key figures.
+5. **Muted** — labels, icons, helper text, secondary structure.
+6. **Status** — success / warning / danger, always conventional and never brand-colored.
 
-Teal is the brand signal, not a rare accent: it is the fill for primary buttons, the active nav
-marker and the selected-state tint. Status colors (emerald / amber / red) stay conventional.
+Palette source: `#295255` deep teal, `#F0F5F7` mist, `#162623` ink green, `#577877` slate teal.
+Pure white is structural (cards), not a brand color. Tints for borders and hover states are
+derived from the same teal family.
 
-Why:
+Why this direction:
 
-- `src/renderer/index.css` had 6 themes × 2 modes = 12 hand-duplicated token blocks (~490 lines)
-  where only the accent hue changed.
-- `--sidebar` was aliased to `--card` in every theme, so there was no structural layer at all.
-- The theme picker in `pages/dashboard/Settings.jsx` made the product read as six products.
+- The old theme used midnight + neon teal at large scale. In a dashboard that reads as a
+  marketing page and makes every surface compete with the data.
+- Deep teal carries actions without glowing; the light canvas keeps tables and forms calm.
+- A constant `#162623` chrome (sidebar + 36px title strip) frames both modes and matches the
+  native Electron caption buttons.
+- Status colors stay green / amber / red, so “primary” and “success” cannot be confused.
 
 ## 2. Palette
 
-Anchor hexes are for reference; the implementation is OKLCH in `src/renderer/index.css`.
+Implementation lives in `src/renderer/index.css`. Hex is the source of truth; the app uses the
+same values through shadcn tokens.
 
 | Role | Light | Dark | Notes |
 | --- | --- | --- | --- |
-| Chrome (sidebar) | `#0B0B0C` | `#000000` | the 60% layer |
-| Canvas | `#FFFFFF` | `#0B0B0C` | light mode is the 30% white surface |
-| Surface (cards/popovers) | `#FFFFFF` | `#151517` / `#1A1A1D` | border + shadow separate cards on white |
-| Text | `#0B0B0C` | `#FFFFFF` | 19.7:1 both ways |
-| Muted text | `#6B6B70` | `#A1A1A8` | 5.3 / 7.7 |
-| Primary action | neon teal `#00D7CE` + midnight label | identical | white on teal is 3.8:1 |
-| Selected / hover | teal wash `#DBFAF7` + midnight text | `#0B2F2E` + `#C8FCF5` | 17.8 / 12.0 |
-| Destructive | `#C62828` + white label | `#DC2626` + white label | dialogs / icons |
-| Warning | `#F59E0B` + midnight label | identical | filled badge |
-| Success / paid | `#2E7D32` + white label | `#4ADE80` + midnight label | status only |
-| Focus ring | midnight | white (teal on sidebar) | visible on the teal fill |
+| Canvas | `#F0F5F7` | `#162623` | mist in light, ink green in dark |
+| Surface (cards) | `#FFFFFF` | `#1C2F2C` | popovers one step lighter: `#213633` |
+| Ink | `#162623` | `#F0F5F7` | 14.3:1 both ways |
+| Muted text | `#577877` | `#A3BAB8` | 4.4 light / 7.7 dark |
+| Brand / primary | `#295255` | `#9AC2BF` | label `#F0F5F7` / `#162623` |
+| Hover / selected | `#DCE9EB` | `#24403C` | menus, rows, secondary surfaces |
+| Secondary surface | `#E4EDEF` | `#243A36` | secondary buttons, chips |
+| Muted surface | `#E9F1F3` | `#1F332F` | table headers, skeletons |
+| Border | `#D6E3E5` | `rgb(240 245 247 / 12%)` | hairlines |
+| Input border | `#B7CBCE` | `rgb(240 245 247 / 20%)` | form fields |
+| Focus ring | `#295255` | `#9AC2BF` | |
+| Sidebar / title strip | `#162623` | `#162623` | constant chrome |
+| Sidebar accent | `rgb(41 82 85 / 45%)` | `rgb(154 194 191 / 12%)` | nav hover + active |
+| Sidebar primary | `#9AC2BF` | `#9AC2BF` | logo tile, active marker, submenu |
+| Destructive | `#B42318` | `#F28B82` | white / ink label |
+| Success | `#177A4C` | `#5CC08D` | white / ink label |
+| Warning | `#B45309` | `#E0A83E` | white / ink label |
+| Charts | `#295255`, `#577877`, `#162623`, `#C98A2E`, `#B42318` | `#9AC2BF`, `#577877`, `#F0F5F7`, `#E0A83E`, `#F28B82` | teal family + amber/red status |
 
 Hard rules:
 
-1. **Never white text on teal** (3.8:1). Teal always carries midnight.
-2. **Never teal as text on white** (1.8:1). Teal text only belongs on chrome.
-3. In light mode a teal button on white has a 1.8:1 fill boundary; the midnight label plus
-   `shadow` identifies it. If that ever tests badly, add a 1px midnight border to primary buttons.
+1. **Brand teal is for actions and active states only.** Never use it to mean success.
+2. **Status colors are never brand colors.** Green = success, amber = warning, red = danger.
+3. **`#577877` is for labels/icons.** For strict AA at small sizes use `#4E6D6C`.
+4. **White cards are structural.** Do not promote white to a brand role.
+5. **Chrome is constant `#162623` in both modes.** It matches the native caption overlay.
 
 ## 3. Token architecture
 
 Three layers, shadcn variable names preserved so components need no edits:
 
 1. **Base** — canvas, ink, surfaces, lines, charts, sidebar.
-2. **Brand** — `--primary`, `--primary-foreground`, `--accent`, `--ring`, `--sidebar-primary`;
-   the only values that change when a new design direction is adopted.
-3. **Semantics** — `--destructive`, `--success`, `--warning` and the Tailwind `@theme inline`
+2. **Brand** — `--primary`, `--primary-foreground`, `--accent`, `--ring`, `--sidebar-primary`.
+3. **Semantics** — `--destructive`, `--success`, `--warning` plus the Tailwind `@theme inline`
    mappings.
 
-Mode contract: `<html class="dark">` + `data-mode="light|dark"`. One `:root` block and one
-`.dark` block replace the 12 class blocks.
+Mode contract: `<html class="dark">` + `data-mode="light|dark"`, storage key
+`pos-ui-theme-v3`. Pre-paint in `index.html` defaults to light.
 
-**Swap procedure:** when a new direction is chosen, edit only the commented brand block in
-`index.css` (`--primary`, `--accent`, `--ring`, `--sidebar*`). No components change.
+**Swap procedure:** edit only `:root` and `.dark` in `src/renderer/index.css`. If `--sidebar`
+changes, also update the three chrome values (`titleBarOverlay.color`,
+`BrowserWindow.backgroundColor`, `<meta name="theme-color">`). No components change.
 
 Density and radius are **not** in this pass (phase 2).
 
-## 4. Known bugs this refactor fixes
+## 4. Fixed by the earlier refactor
 
-1. `@custom-variant dark (&:is(.dark *))` never matched, because the provider added classes like
-   `main-dark`, never `.dark`. All `dark:` utilities (including `ThemeToggle`'s icon animation)
-   were dead.
-2. `ui/sonner.jsx` used `useTheme` from `next-themes` while the app uses its own provider, so
-   toasts never followed the app theme.
-3. `text-success`, `text-warning` and `text-destructive-foreground` had no `@theme` mapping, so
-   those utilities did not generate CSS at all.
-4. `.active-item` in the base layer used `--secondary`/`--muted` (light colors) inside the sidebar.
-5. Sidebar collapsed state painted white blocks on dark chrome.
-6. Switch thumb was white on the accent track (1.28:1); it now uses the primary foreground.
+1. `@custom-variant dark` matches `.dark` (the provider writes it; `ThemeToggle` icons work).
+2. `ui/sonner.tsx` uses the app theme context, not `next-themes`.
+3. `text-success`, `text-warning` and `text-destructive-foreground` have `@theme` mappings.
+4. `.active-item` uses sidebar tokens, not content tokens.
+5. Sidebar collapsed state no longer paints white blocks on dark chrome.
+6. Switch thumb uses the primary foreground.
 
 ## 5. Hypotheses
 
 | # | Hypothesis | Measure |
 | --- | --- | --- |
-| H1 | Midnight chrome + neon teal actions is recognizable as NayaHisab | 5-second test, ≥4/5 |
-| H2 | High-contrast dark UI does not slow the sale flow | task time within 5% of baseline |
-| H3 | All pairs pass WCAG AA | 4.5:1 text, 3:1 boundaries/focus |
-| H4 | Teal primary is not confused with success/paid green | 0 first-click errors |
-| H5 | Operators prefer it over the previous theme | ≥3/5 preference |
+| H1 | Deep teal + mist reads as a calm, professional ERP | 5-second test, ≥4/5 |
+| H2 | Light canvas improves table/form scanning vs dark | task time within 5% of baseline |
+| H3 | All text pairs pass WCAG AA | 4.5:1 text, 3:1 boundaries/focus |
+| H4 | Brand teal is not confused with success green | 0 first-click errors |
+| H5 | Operators prefer it over midnight/neon teal | ≥3/5 preference |
 
-If H4 fails, move success to teal and keep the green family out of status colors.
+If H4 fails, darken success toward `#146B45` and add a success icon to status cells.
 
 ## 6. Variants
 
-Three reference designs are pending. Each will be expressed as a replacement of the brand block
-(values only) if the differences are chromatic, or as an extra style layer (`--radius`, spacing,
-type scale) if they change shape and density.
-
 | Slot | Canvas | Chrome | Primary action | Intent |
 | --- | --- | --- | --- | --- |
-| **A (shipped)** | white / midnight | midnight | neon teal | 60/30/10, teal promoted to actions |
+| **A (shipped)** | mist `#F0F5F7` | `#162623` | `#295255` | role-based dashboard, teal actions |
 | B | TBD from reference | TBD | TBD | |
 | C | TBD from reference | TBD | TBD | |
 
-Dark mode is the literal 60% midnight version and is the default; light mode keeps the white
-canvas with the same midnight chrome and teal actions.
+Dark mode is derived from the same four colors: ink-green canvas, mist type, light-teal
+actions. Light is the default for daylight counters.
 
 ## 7. Test protocol
 
@@ -110,54 +118,52 @@ Screens: Login, Dashboard, Sale invoice, Product list, Receipt.
 
 Methods:
 
-- 5-second recall: show screenshot, ask "what product is this?".
+- 5-second recall: show screenshot, ask “what product is this?”.
 - Desaturation test: grayscale screenshot, can you still identify it?
-- First-click test: "start a new sale", "complete this sale", "delete this line".
+- First-click test: “start a new sale”, “complete this sale”, “delete this line”.
 - Task timing: create a sale, add 3 items, apply discount, take payment.
 - Subjective 5-point: calm / trustworthy / premium / energetic.
 - Contrast audit in DevTools for every text and interactive boundary pair.
 
-Participants: author + 2–4 operators if available. Screenshots stored under `tasks/brand/<variant>/`.
+Participants: author + 2–4 operators if available. Screenshots under `tasks/brand/<variant>/`.
 
 ## 8. Success and kill criteria
 
-Ship when: AA passes in light and dark, no task slowdown, ≥3/5 preference, zero teal/red
-confusion.
+Ship when: AA passes in light and dark, no task slowdown, ≥3/5 preference, zero
+teal/success confusion.
 
-Iterate when: any contrast failure, teal/success confusion, or the dark canvas becomes tiring
-after 10 minutes of use.
+Iterate when: any contrast failure, teal/success confusion, or the light canvas feels washed
+out after 10 minutes of use.
 
 ## 9. Implementation checklist
 
-- [x] `src/renderer/index.css`: replace 12 theme blocks with `:root` + `.dark`; add missing
-      `@theme inline` color mappings; retarget `.active-item` at sidebar tokens.
-- [x] `src/renderer/context/theme-context.jsx`: drop `themes`, keep `modes`, write `dark` class.
-- [x] `src/renderer/App.jsx`: remove `defaultTheme` prop; default to dark.
-- [x] `src/renderer/pages/dashboard/Settings.jsx`: remove the color theme card.
-- [x] `src/renderer/components/ui/sonner.jsx`: use the app theme context.
-- [x] Midnight/white/teal palette applied; teal promoted to `--primary`.
-- [x] Accent text removed from light surfaces (Navbar avatar, links, money, selection).
-- [ ] Add the three reference designs as brand-block variants.
-- [ ] Verify build and screenshot every screen in light + dark.
+- [x] `src/renderer/index.css`: replace midnight/neon teal with deep-teal light + dark companion.
+- [x] `src/main/window.ts`: `titleBarOverlay` / `backgroundColor` → `#162623`.
+- [x] `index.html`: `theme-color` → `#162623`; pre-paint key → `pos-ui-theme-v3`, default light.
+- [x] `src/renderer/App.tsx`: `defaultMode="light"`, `storageKey="pos-ui-theme-v3"`.
+- [x] Status colors re-anchored: `#177A4C` / `#B45309` / `#B42318` (light).
+- [ ] Verify every screen in light + dark and screenshot both.
+- [ ] Decide whether light stays the launch default.
+- [ ] Add the pending reference designs as brand-block variants.
 
 ### Measured contrast
 
-Computed from the shipped OKLCH tokens with the WCAG relative-luminance formula:
+Computed with the WCAG relative-luminance formula.
 
 | Pair | Light | Dark |
 | --- | --- | --- |
-| foreground / background | 19.7 | 19.7 |
-| muted foreground / background | 5.3 | 7.7 |
-| primary foreground / primary | 10.8 | 10.8 |
-| destructive foreground / destructive | 5.6 | 4.8 |
-| success / background | 5.1 | 11.3 |
-| sidebar foreground / sidebar | 19.7 | 21.0 |
-| sidebar primary / sidebar | 10.8 | 10.8 |
-| input border / card | 3.4 | 3.8 |
-| primary boundary vs canvas | 1.82 | 10.8 |
+| foreground / background | 14.3 | 14.3 |
+| muted foreground / background | 4.4 | 7.7 |
+| primary / background | 7.9 | 8.1 |
+| primary foreground / primary | 7.9 | 8.1 |
+| destructive / background | 6.6 | 6.6 |
+| success / background | 5.4 | 7.0 |
+| warning / background | 5.0 | 7.4 |
+| sidebar foreground / sidebar | 14.3 | 14.3 |
+| sidebar primary / sidebar | 8.1 | 8.1 |
+| primary boundary vs canvas | 7.9 | 8.1 |
 
-The last row is the known trade-off in light mode: teal is a fill color, so the button is
-identified by its midnight label and shadow.
+The old 1.82:1 primary-boundary trade-off is gone: deep teal has a strong edge on mist.
 
 ## 10. Out of scope (next phase)
 
@@ -167,8 +173,8 @@ command palette (`cmdk` is installed but unused).
 
 ## 11. Open questions
 
-- Neon teal vs the exact original main-theme teal `oklch(0.55 0.22 200)` (deeper, #0091A3) vs
-  a true neon green (`#8EFF2D`)? One-line swap in the brand block.
-- Keep dark as the default, or switch to light for daylight counters?
-- Is the printed receipt part of the brand experiment or a separate ticket?
-- Do the three reference designs change layout/typography, or only color?
+- Does teal read as “info” next to success green in dense tables? (H4)
+- Keep light as the launch default, or restore dark for evening counters?
+- Is the five-color chart ramp enough for category-heavy reports?
+- Native caption buttons are a static `#162623`; per-mode chrome would need a
+  `win.setTitleBarOverlay()` IPC call on theme change.

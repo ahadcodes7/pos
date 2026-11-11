@@ -22,7 +22,7 @@ const AppRoutes = () => {
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultMode="dark" storageKey="pos-ui-theme-v2">
+      <ThemeProvider defaultMode="light" storageKey="pos-ui-theme-v3">
         <AuthProvider>
           <Router>
             <div className="flex h-screen flex-col overflow-hidden bg-background">
