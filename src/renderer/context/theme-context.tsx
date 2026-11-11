@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { setWindowChrome } from "@/renderer/modules/chrome/api";
 
 export type ThemeMode = "light" | "dark";
 
@@ -37,6 +38,15 @@ export function ThemeProvider({
     root.dataset.mode = mode;
     localStorage.setItem(`${storageKey}-mode`, mode);
     localStorage.removeItem(`${storageKey}-theme`);
+
+    // Windows paints its caption buttons in a fixed color: keep it equal to the
+    // themed title strip so the native controls never show a seam.
+    const styles = window.getComputedStyle(root);
+    const color = styles.getPropertyValue("--sidebar").trim();
+    const symbolColor = styles.getPropertyValue("--sidebar-foreground").trim();
+    if (color && symbolColor) {
+      void setWindowChrome({ color, symbolColor }).catch(() => {});
+    }
   }, [storageKey, mode]);
 
   return (

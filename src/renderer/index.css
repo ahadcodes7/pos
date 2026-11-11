@@ -61,115 +61,116 @@
   --radius: 0.625rem;
 
   /* ============================================
-     NayaHisab brand palette - LIGHT
-     Deep teal #295255 + mist #F0F5F7 + ink #162623 + slate #577877.
-     Role-based dashboard palette: neutral canvas, white surfaces,
-     one brand color for actions, conventional status colors.
+     NayaHisab brand palette - LIGHT (Creator OS)
+     Charcoal #181A1F + slate #59606B + cream #F7F3EA
+     + butter #FFE39A + coral #FF7A66.
+     Mostly neutral: monochrome actions, butter only for selection,
+     coral reserved for attention and charts.
      Swap only this block to change brand direction.
      ============================================ */
 
   /* Canvas and ink */
-  --background: #f0f5f7;
-  --foreground: #162623;
+  --background: #f7f3ea;
+  --foreground: #181a1f;
 
   /* Surfaces */
-  --card: #ffffff;
+  --card: #fffdf8;
   --card-foreground: var(--foreground);
-  --popover: #ffffff;
+  --popover: #fffdf8;
   --popover-foreground: var(--foreground);
 
-  /* Primary action: deep teal fill, mist label (7.9:1) */
-  --primary: #295255;
-  --primary-foreground: #f0f5f7;
+  /* Primary action: charcoal fill, cream label (15.7:1) */
+  --primary: #181a1f;
+  --primary-foreground: #f7f3ea;
 
   /* Structural surfaces */
-  --secondary: #e4edef;
+  --secondary: #ede7db;
   --secondary-foreground: var(--foreground);
-  --muted: #e9f1f3;
-  --muted-foreground: #577877;
-  --accent: #dce9eb;
+  --muted: #f1ece2;
+  --muted-foreground: #59606b;
+  --accent: #fff3c9;
   --accent-foreground: var(--foreground);
 
   /* Semantics: status colors stay conventional */
   --destructive: #b42318;
   --destructive-foreground: #ffffff;
-  --success: #177a4c;
+  --success: #2f7d5a;
   --success-foreground: #ffffff;
-  --warning: #b45309;
+  --warning: #8a5a00;
   --warning-foreground: #ffffff;
 
   /* Lines and focus */
-  --border: #d6e3e5;
-  --input: #b7cbce;
-  --ring: #295255;
+  --border: #e2dccf;
+  --input: #93897a;
+  --ring: #59606b;
 
-  /* Data visualisation: teal, slate, ink, amber, red */
-  --chart-1: #295255;
-  --chart-2: #577877;
-  --chart-3: #162623;
-  --chart-4: #c98a2e;
-  --chart-5: #b42318;
+  /* Data visualisation: ink, slate, dark butter, coral, green */
+  --chart-1: #181a1f;
+  --chart-2: #59606b;
+  --chart-3: #d9a72e;
+  --chart-4: #ff7a66;
+  --chart-5: #2f7d5a;
 
-  /* Chrome: constant deep-green frame in both modes */
-  --sidebar: #162623;
-  --sidebar-foreground: #f0f5f7;
-  --sidebar-primary: #9ac2bf;
-  --sidebar-primary-foreground: #162623;
-  --sidebar-accent: rgb(41 82 85 / 45%);
-  --sidebar-accent-foreground: #f0f5f7;
-  --sidebar-border: rgb(240 245 247 / 10%);
-  --sidebar-ring: #9ac2bf;
+  /* Chrome: paper in light mode; native overlay follows --sidebar */
+  --sidebar: #fffdf8;
+  --sidebar-foreground: #181a1f;
+  --sidebar-primary: #181a1f;
+  --sidebar-primary-foreground: #f7f3ea;
+  --sidebar-accent: #fff3c9;
+  --sidebar-accent-foreground: #181a1f;
+  --sidebar-border: #e2dccf;
+  --sidebar-ring: #59606b;
 }
 
 .dark {
   /* ============================================
-     Dark companion: deep-green canvas, mist type, light-teal
-     actions and active states. Same chrome as light.
+     Dark companion: charcoal canvas, cream type, cream actions,
+     butter chrome accents. Coral stays in charts/attention.
      ============================================ */
 
-  --background: #162623;
-  --foreground: #f0f5f7;
+  --background: #1c1f25;
+  --foreground: #f7f3ea;
 
-  --card: #1c2f2c;
+  --card: #23262d;
   --card-foreground: var(--foreground);
-  --popover: #213633;
+  --popover: #282c34;
   --popover-foreground: var(--foreground);
 
-  --primary: #9ac2bf;
-  --primary-foreground: #162623;
+  --primary: #f7f3ea;
+  --primary-foreground: #181a1f;
 
-  --secondary: #243a36;
+  --secondary: #2a2e36;
   --secondary-foreground: var(--foreground);
-  --muted: #1f332f;
-  --muted-foreground: #a3bab8;
-  --accent: #24403c;
+  --muted: #242830;
+  --muted-foreground: #a8afba;
+  --accent: #3a3320;
   --accent-foreground: var(--foreground);
 
-  --destructive: #f28b82;
-  --destructive-foreground: #162623;
-  --success: #5cc08d;
-  --success-foreground: #162623;
-  --warning: #e0a83e;
-  --warning-foreground: #162623;
+  --destructive: #ff8a80;
+  --destructive-foreground: #181a1f;
+  --success: #74d3a6;
+  --success-foreground: #181a1f;
+  --warning: #f2c063;
+  --warning-foreground: #181a1f;
 
-  --border: rgb(240 245 247 / 12%);
-  --input: rgb(240 245 247 / 20%);
-  --ring: #9ac2bf;
+  --border: rgb(247 243 234 / 12%);
+  --input: rgb(247 243 234 / 24%);
+  --ring: #a8afba;
 
-  --chart-1: #9ac2bf;
-  --chart-2: #577877;
-  --chart-3: #f0f5f7;
-  --chart-4: #e0a83e;
-  --chart-5: #f28b82;
+  --chart-1: #f7f3ea;
+  --chart-2: #a8afba;
+  --chart-3: #ffe39a;
+  --chart-4: #ff7a66;
+  --chart-5: #74d3a6;
 
-  --sidebar: #162623;
-  --sidebar-foreground: #f0f5f7;
-  --sidebar-primary: #9ac2bf;
-  --sidebar-primary-foreground: #162623;
-  --sidebar-accent: rgb(154 194 191 / 12%);
-  --sidebar-accent-foreground: #f0f5f7;
-  --sidebar-border: rgb(240 245 247 / 10%);
-  --sidebar-ring: #9ac2bf;
+  --sidebar: #181a1f;
+  --sidebar-foreground: #f7f3ea;
+  --sidebar-primary: #ffe39a;
+  --sidebar-primary-foreground: #181a1f;
+  --sidebar-accent: #3a3320;
+  --sidebar-accent-foreground: #f7f3ea;
+  --sidebar-border: rgb(247 243 234 / 10%);
+  --sidebar-ring: #ffe39a;
 }
 
 @layer base {

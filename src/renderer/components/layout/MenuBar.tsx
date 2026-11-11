@@ -75,7 +75,7 @@ function runCommand(item: AppMenuItem | EditMenuItem) {
 
 export default function MenuBar() {
   return (
-    <header className="flex h-9 shrink-0 select-none items-center justify-center border-b border-white/5 bg-sidebar text-sidebar-foreground [-webkit-app-region:drag]">
+    <header className="flex h-9 shrink-0 select-none items-center justify-center border-b border-sidebar-border bg-sidebar text-sidebar-foreground [-webkit-app-region:drag]">
       <MenubarPrimitive.Root className="flex h-full items-center [-webkit-app-region:no-drag]">
         {menus.map((menu) => (
           <MenubarPrimitive.Menu key={menu.label}>
@@ -83,8 +83,8 @@ export default function MenuBar() {
               className={cn(
                 "flex h-full select-none items-center rounded-none px-3 text-[12px] font-medium",
                 "text-sidebar-foreground/70 outline-none transition-colors",
-                "hover:bg-white/10 hover:text-sidebar-foreground",
-                "data-[state=open]:bg-white/10 data-[state=open]:text-sidebar-foreground",
+                "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                "data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground",
               )}
             >
               {menu.label}

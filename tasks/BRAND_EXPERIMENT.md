@@ -1,66 +1,70 @@
 # Brand Direction Experiment
 
-Status: **deep-teal dashboard palette**, light default with a dark companion. Round 4
-replaces the midnight/neon-teal direction. Layout variants are still pending reference designs.
+Status: **Creator OS palette**, light default with a charcoal dark companion. Round 6
+replaces the lavender direction. Layout variants are still pending reference designs.
 
 ## 1. Decision
 
-Retire the 60/30/10 split. It is a landing-page heuristic; a dashboard is a working surface
-where four or five roles coexist:
+The lavender round was rejected: too much brand color across chrome, hovers and status
+surfaces. Creator OS is a **neutral workspace with two small accents**:
 
-1. **Canvas** — the large neutral field behind everything.
-2. **Surface** — cards, tables, dialogs and popovers that sit above the canvas.
-3. **Ink** — headings, body copy, money, table values.
-4. **Brand** — primary actions, active navigation, focus, key figures.
-5. **Muted** — labels, icons, helper text, secondary structure.
-6. **Status** — success / warning / danger, always conventional and never brand-colored.
+- **Mostly neutral:** cream canvas, paper surfaces, charcoal ink, slate secondary text.
+- **Monochrome actions:** charcoal primary in light, cream primary in dark.
+- **Butter** `#FFE39A` is a tint source for selection only. It is never body text or a light
+  chart fill.
+- **Coral** `#FF7A66` is reserved for attention badges and chart series. It is not the
+  destructive color (2.4:1 on paper fails as text and it reads like an error everywhere).
 
-Palette source: `#295255` deep teal, `#F0F5F7` mist, `#162623` ink green, `#577877` slate teal.
-Pure white is structural (cards), not a brand color. Tints for borders and hover states are
-derived from the same teal family.
+Roles:
+
+1. **Canvas** `#F7F3EA` warm cream.
+2. **Surfaces** `#FFFDF8` paper cards, sidebar, title strip.
+3. **Ink** `#181A1F` charcoal.
+4. **Muted** `#59606B` slate.
+5. **Brand action** `#181A1F` in light, `#F7F3EA` in dark.
+6. **Status** conventional green / amber / red.
 
 Why this direction:
 
-- The old theme used midnight + neon teal at large scale. In a dashboard that reads as a
-  marketing page and makes every surface compete with the data.
-- Deep teal carries actions without glowing; the light canvas keeps tables and forms calm.
-- A constant `#162623` chrome (sidebar + 36px title strip) frames both modes and matches the
-  native Electron caption buttons.
-- Status colors stay green / amber / red, so “primary” and “success” cannot be confused.
+- A POS/ERP should read as a tool, not a campaign. Neutral surfaces keep tables and money calm.
+- Charcoal buttons look deliberate and avoid the “every button is the brand color” effect.
+- Butter gives one warm, unmistakable selected state without turning navigation yellow everywhere.
+- Coral is warm but cannot carry text, so it stays a chart/attention signal.
+- The light sidebar is paper, not dark, so the chrome no longer dominates the content.
 
 ## 2. Palette
 
-Implementation lives in `src/renderer/index.css`. Hex is the source of truth; the app uses the
-same values through shadcn tokens.
+Implementation lives in `src/renderer/index.css`. Hex is the source of truth.
 
 | Role | Light | Dark | Notes |
 | --- | --- | --- | --- |
-| Canvas | `#F0F5F7` | `#162623` | mist in light, ink green in dark |
-| Surface (cards) | `#FFFFFF` | `#1C2F2C` | popovers one step lighter: `#213633` |
-| Ink | `#162623` | `#F0F5F7` | 14.3:1 both ways |
-| Muted text | `#577877` | `#A3BAB8` | 4.4 light / 7.7 dark |
-| Brand / primary | `#295255` | `#9AC2BF` | label `#F0F5F7` / `#162623` |
-| Hover / selected | `#DCE9EB` | `#24403C` | menus, rows, secondary surfaces |
-| Secondary surface | `#E4EDEF` | `#243A36` | secondary buttons, chips |
-| Muted surface | `#E9F1F3` | `#1F332F` | table headers, skeletons |
-| Border | `#D6E3E5` | `rgb(240 245 247 / 12%)` | hairlines |
-| Input border | `#B7CBCE` | `rgb(240 245 247 / 20%)` | form fields |
-| Focus ring | `#295255` | `#9AC2BF` | |
-| Sidebar / title strip | `#162623` | `#162623` | constant chrome |
-| Sidebar accent | `rgb(41 82 85 / 45%)` | `rgb(154 194 191 / 12%)` | nav hover + active |
-| Sidebar primary | `#9AC2BF` | `#9AC2BF` | logo tile, active marker, submenu |
-| Destructive | `#B42318` | `#F28B82` | white / ink label |
-| Success | `#177A4C` | `#5CC08D` | white / ink label |
-| Warning | `#B45309` | `#E0A83E` | white / ink label |
-| Charts | `#295255`, `#577877`, `#162623`, `#C98A2E`, `#B42318` | `#9AC2BF`, `#577877`, `#F0F5F7`, `#E0A83E`, `#F28B82` | teal family + amber/red status |
+| Canvas | `#F7F3EA` | `#1C1F25` | warm cream / charcoal |
+| Surface (cards) | `#FFFDF8` | `#23262D` | popovers one step lighter: `#282C34` |
+| Ink | `#181A1F` | `#F7F3EA` | 15.7 / 14.9 |
+| Muted text | `#59606B` | `#A8AFBA` | 5.8 / 7.5 |
+| Primary action | `#181A1F` | `#F7F3EA` | label cream / charcoal, both 15.7 |
+| Active / selected | `#FFF3C9` | `#3A3320` | butter wash |
+| Secondary surface | `#EDE7DB` | `#2A2E36` | secondary buttons, chips |
+| Muted surface | `#F1ECE2` | `#242830` | table headers, skeletons |
+| Border | `#E2DCCF` | `rgb(247 243 234 / 12%)` | decorative hairlines |
+| Input border | `#93897A` | `rgb(247 243 234 / 24%)` | 3.3:1 on paper |
+| Focus ring | `#59606B` | `#A8AFBA` | |
+| Sidebar / title strip | `#FFFDF8` | `#181A1F` | changed per mode |
+| Sidebar primary | `#181A1F` | `#FFE39A` | logo tile, active submenu, marker |
+| Butter | `#FFE39A` | `#FFE39A` | tint and dark chart only |
+| Coral | `#FF7A66` | `#FF7A66` | attention badges, charts |
+| Destructive | `#B42318` | `#FF8A80` | white / charcoal label |
+| Success | `#2F7D5A` | `#74D3A6` | white / charcoal label |
+| Warning | `#8A5A00` | `#F2C063` | darkened for text contrast |
+| Charts | `#181A1F`, `#59606B`, `#D9A72E`, `#FF7A66`, `#2F7D5A` | `#F7F3EA`, `#A8AFBA`, `#FFE39A`, `#FF7A66`, `#74D3A6` | neutral + warm signals |
 
 Hard rules:
 
-1. **Brand teal is for actions and active states only.** Never use it to mean success.
-2. **Status colors are never brand colors.** Green = success, amber = warning, red = danger.
-3. **`#577877` is for labels/icons.** For strict AA at small sizes use `#4E6D6C`.
-4. **White cards are structural.** Do not promote white to a brand role.
-5. **Chrome is constant `#162623` in both modes.** It matches the native caption overlay.
+1. **Primary is monochrome.** Do not make primary buttons yellow or coral.
+2. **Butter is a surface tint.** Ink on butter only; never butter text on paper.
+3. **Coral never carries text.** Use it as a fill with ink/charcoal labels or as a chart series.
+4. **Status stays conventional.** Warning is a dark amber in light mode so it passes AA.
+5. **Chrome follows the mode.** Paper strip in light, charcoal in dark.
 
 ## 3. Token architecture
 
@@ -72,11 +76,16 @@ Three layers, shadcn variable names preserved so components need no edits:
    mappings.
 
 Mode contract: `<html class="dark">` + `data-mode="light|dark"`, storage key
-`pos-ui-theme-v3`. Pre-paint in `index.html` defaults to light.
+`pos-ui-theme-v5`. Pre-paint in `index.html` defaults to light.
 
-**Swap procedure:** edit only `:root` and `.dark` in `src/renderer/index.css`. If `--sidebar`
-changes, also update the three chrome values (`titleBarOverlay.color`,
-`BrowserWindow.backgroundColor`, `<meta name="theme-color">`). No components change.
+**Chrome sync:** the 36px title strip and sidebar share `--sidebar`. `ThemeProvider` reads
+`--sidebar` / `--sidebar-foreground` after each mode change and calls the `chrome:set` IPC
+route, which runs `win.setTitleBarOverlay({ color, symbolColor, height: 36 })` on Windows.
+The static `titleBarOverlay` in `src/main/window.ts` matches the light default.
+
+**Swap procedure:** edit only `:root` and `.dark` in `src/renderer/index.css`. The overlay
+follows automatically; only the initial `window.ts` and `<meta name="theme-color">` values
+need a manual update if the light chrome changes. No components change.
 
 Density and radius are **not** in this pass (phase 2).
 
@@ -88,29 +97,32 @@ Density and radius are **not** in this pass (phase 2).
 4. `.active-item` uses sidebar tokens, not content tokens.
 5. Sidebar collapsed state no longer paints white blocks on dark chrome.
 6. Switch thumb uses the primary foreground.
+7. MenuBar hover/border use sidebar tokens, so they work on the paper strip.
 
 ## 5. Hypotheses
 
 | # | Hypothesis | Measure |
 | --- | --- | --- |
-| H1 | Deep teal + mist reads as a calm, professional ERP | 5-second test, ≥4/5 |
-| H2 | Light canvas improves table/form scanning vs dark | task time within 5% of baseline |
-| H3 | All text pairs pass WCAG AA | 4.5:1 text, 3:1 boundaries/focus |
-| H4 | Brand teal is not confused with success green | 0 first-click errors |
-| H5 | Operators prefer it over midnight/neon teal | ≥3/5 preference |
+| H1 | Neutral cream/charcoal reads as a professional ERP | 5-second test, ≥4/5 |
+| H2 | Monochrome actions reduce visual noise vs the lavender round | preference ≥4/5 |
+| H3 | All text pairs pass WCAG AA | 4.5:1 text, 3:1 fields/focus |
+| H4 | Butter selection is noticeable without being loud | users find the active page in <2s |
+| H5 | Coral is read as attention, not as an error | 0 destructive/coral mix-ups |
 
-If H4 fails, darken success toward `#146B45` and add a success icon to status cells.
+If H4 fails, shift `--accent` and `--sidebar-accent` to the neutral sand `#EDE7DB` and keep
+butter only in charts/highlights. If H5 fails, remove coral from charts and keep it only in
+notification dots.
 
 ## 6. Variants
 
 | Slot | Canvas | Chrome | Primary action | Intent |
 | --- | --- | --- | --- | --- |
-| **A (shipped)** | mist `#F0F5F7` | `#162623` | `#295255` | role-based dashboard, teal actions |
+| **A (shipped)** | cream `#F7F3EA` | paper (light) / `#181A1F` (dark) | charcoal / cream | neutral Creator OS tool |
 | B | TBD from reference | TBD | TBD | |
 | C | TBD from reference | TBD | TBD | |
 
-Dark mode is derived from the same four colors: ink-green canvas, mist type, light-teal
-actions. Light is the default for daylight counters.
+Dark mode is the same palette inverted: charcoal canvas, cream type, cream actions, butter
+chrome accents. Light remains the default for daylight counters.
 
 ## 7. Test protocol
 
@@ -129,19 +141,21 @@ Participants: author + 2–4 operators if available. Screenshots under `tasks/br
 
 ## 8. Success and kill criteria
 
-Ship when: AA passes in light and dark, no task slowdown, ≥3/5 preference, zero
-teal/success confusion.
+Ship when: AA passes in light and dark, no task slowdown, ≥3/5 preference, no butter/coral
+noise complaint.
 
-Iterate when: any contrast failure, teal/success confusion, or the light canvas feels washed
-out after 10 minutes of use.
+Iterate when: any contrast failure, the active state is missed, or coral reads as an error.
+The first fallback is the neutral sand accent (`#EDE7DB`); the second is butter-only charts.
 
 ## 9. Implementation checklist
 
-- [x] `src/renderer/index.css`: replace midnight/neon teal with deep-teal light + dark companion.
-- [x] `src/main/window.ts`: `titleBarOverlay` / `backgroundColor` → `#162623`.
-- [x] `index.html`: `theme-color` → `#162623`; pre-paint key → `pos-ui-theme-v3`, default light.
-- [x] `src/renderer/App.tsx`: `defaultMode="light"`, `storageKey="pos-ui-theme-v3"`.
-- [x] Status colors re-anchored: `#177A4C` / `#B45309` / `#B42318` (light).
+- [x] `src/renderer/index.css`: Creator OS light + charcoal dark companion.
+- [x] `src/main/window.ts`: initial overlay paper/ink, background `#F7F3EA`.
+- [x] `index.html`: `theme-color` → `#F7F3EA`; pre-paint key → `pos-ui-theme-v5`, default light.
+- [x] `src/renderer/App.tsx`: `defaultMode="light"`, `storageKey="pos-ui-theme-v5"`.
+- [x] `chrome:set` route + `ThemeProvider` sync for per-mode caption buttons.
+- [x] `MenuBar` hover/border use sidebar tokens (works on a paper strip).
+- [x] Status colors re-anchored: `#2F7D5A` / `#8A5A00` / `#B42318` (light).
 - [ ] Verify every screen in light + dark and screenshot both.
 - [ ] Decide whether light stays the launch default.
 - [ ] Add the pending reference designs as brand-block variants.
@@ -152,18 +166,20 @@ Computed with the WCAG relative-luminance formula.
 
 | Pair | Light | Dark |
 | --- | --- | --- |
-| foreground / background | 14.3 | 14.3 |
-| muted foreground / background | 4.4 | 7.7 |
-| primary / background | 7.9 | 8.1 |
-| primary foreground / primary | 7.9 | 8.1 |
-| destructive / background | 6.6 | 6.6 |
-| success / background | 5.4 | 7.0 |
-| warning / background | 5.0 | 7.4 |
-| sidebar foreground / sidebar | 14.3 | 14.3 |
-| sidebar primary / sidebar | 8.1 | 8.1 |
-| primary boundary vs canvas | 7.9 | 8.1 |
+| foreground / background | 15.7 | 14.9 |
+| muted foreground / background | 5.8 | 7.5 |
+| primary / background | 15.7 | 14.9 |
+| primary foreground / primary | 15.7 | 15.7 |
+| destructive / background | 6.6 | 7.2 |
+| success / background | 4.9 | 9.1 |
+| warning / background | 5.8 | 9.5 |
+| sidebar foreground / sidebar | 16.2 | 15.7 |
+| sidebar primary / sidebar | 16.2 | 13.8 |
+| ink on butter | 13.8 | 13.8 |
+| input border / paper | 3.3 | — |
 
-The old 1.82:1 primary-boundary trade-off is gone: deep teal has a strong edge on mist.
+Coral on paper is 2.4:1 and butter on paper is 1.1:1, which is why neither is used for text
+or light chart fills.
 
 ## 10. Out of scope (next phase)
 
@@ -173,8 +189,7 @@ command palette (`cmdk` is installed but unused).
 
 ## 11. Open questions
 
-- Does teal read as “info” next to success green in dense tables? (H4)
+- Does the paper sidebar separate enough from white cards, or should it be cream `#F7F3EA`?
+- Is the butter selection strong enough in daylight, or should it be `#FFE9B0`?
 - Keep light as the launch default, or restore dark for evening counters?
-- Is the five-color chart ramp enough for category-heavy reports?
-- Native caption buttons are a static `#162623`; per-mode chrome would need a
-  `win.setTitleBarOverlay()` IPC call on theme change.
+- Is coral needed outside charts, or does the monochrome palette already have enough signal?

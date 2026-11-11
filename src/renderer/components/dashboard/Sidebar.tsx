@@ -248,7 +248,7 @@ const Sidebar = ({ className }: { className?: string }) => {
 
       {!collapsed && (
         <div className="p-4 border-t border-sidebar-border">
-          <p className="text-xs text-sidebar-foreground/50 text-center">
+          <p className="text-xs text-sidebar-foreground/70 text-center">
             © 2026 POS System
           </p>
         </div>
