@@ -70,6 +70,8 @@
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-accent: var(--sidebar-accent);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-active-foreground: var(--sidebar-active-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 }
@@ -83,7 +85,7 @@
        primary  electric violet #7C3AED: default actions, white label
        commit   Turbo #FACC15: finalise a sale/invoice, deep indigo label
        brand    electric violet #7C3AED: logo, badges
-       focus    deep violet #6D28D9: rings and active nav
+       focus    deep violet #6D28D9: rings and active submenu text
        selection soft lavender #EDE9FE
      Violet and Turbo never share a fill. Status colours stay conventional.
      Colours are authored in OKLCH except --sidebar / --sidebar-foreground,
@@ -158,13 +160,16 @@
   --chart-5: oklch(0.257 0.086 281.3);
 
   /* Chrome: white sidebar and title strip; native overlay follows --sidebar.
-     Keep these two as #RRGGBB for chrome:set. Nav markers use deep violet. */
+     Keep these two as #RRGGBB for chrome:set. Nav active and hover states use
+     neutral surfaces; violet stays in the submenu text and focus ring. */
   --sidebar: #ffffff;
   --sidebar-foreground: #1e1b4b;
   --sidebar-primary: oklch(0.491 0.241 292.6);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.943 0.028 294.6);
+  --sidebar-accent: oklch(0.967 0.001 286.4);
   --sidebar-accent-foreground: oklch(0.257 0.086 281.3);
+  --sidebar-active: oklch(0.210 0.006 285.9);
+  --sidebar-active-foreground: oklch(1 0 0);
   --sidebar-border: oklch(0.929 0.013 255.5);
   --sidebar-ring: oklch(0.491 0.241 292.6);
 }
@@ -173,8 +178,9 @@
   /* ============================================
      Dark companion: the earlier neutral black base with small violet/Turbo
      accents. Cards, fields and sidebar stay blackish; a low-chroma violet tint
-     is reserved for hover/selection surfaces. Electric violet is the primary
-     fill; Turbo #F0E100 is the commit accent with a void label.
+     is reserved for general hover/selection surfaces while the sidebar uses
+     neutral active and hover surfaces. Electric violet is the primary fill;
+     Turbo #F0E100 is the commit accent with a void label.
      ============================================ */
 
   --background: oklch(0.173 0.006 271.0);
@@ -235,8 +241,10 @@
   --sidebar-foreground: #f4f4f5;
   --sidebar-primary: oklch(0.709 0.159 293.5);
   --sidebar-primary-foreground: oklch(0.173 0.006 271.0);
-  --sidebar-accent: oklch(0.245 0.026 293);
+  --sidebar-accent: oklch(0.265 0.004 286.0);
   --sidebar-accent-foreground: var(--foreground);
+  --sidebar-active: oklch(0.967 0.001 286.4);
+  --sidebar-active-foreground: oklch(0.173 0.006 271.0);
   --sidebar-border: oklch(1 0 0 / 8%);
   --sidebar-ring: oklch(0.709 0.159 293.5);
 }
@@ -305,12 +313,6 @@
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--muted-foreground) transparent;
-  }
-
-  .active-item {
-    border-left: 2.5px solid var(--sidebar-primary);
-    background: var(--sidebar-accent);
-    color: var(--sidebar-accent-foreground);
   }
 }
 

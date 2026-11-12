@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -72,7 +72,7 @@ const menuItems: MenuItem[] = [
 ];
 
 const Sidebar = ({ className }: { className?: string }) => {
-  const [expandedItems, setExpandedItems] = useState<string[]>([]);
+  const [openState, setOpenState] = useState<Record<string, boolean>>({});
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -84,38 +84,24 @@ const Sidebar = ({ className }: { className?: string }) => {
     return item.subItems.some((subItem) => location.pathname === subItem.path);
   };
 
-  useEffect(() => {
-    menuItems.forEach((item) => {
-      if (
-        item.subItems &&
-        hasActiveChild(item) &&
-        !expandedItems.includes(item.id)
-      ) {
-        setExpandedItems((prev) => [...prev, item.id]);
-      }
-    });
-  }, [location.pathname]);
+  const isExpanded = (item: MenuItem) =>
+    openState[item.id] ?? hasActiveChild(item);
 
-  const toggleExpand = (itemId: string) => {
-    setExpandedItems((prev) =>
-      prev.includes(itemId)
-        ? prev.filter((id) => id !== itemId)
-        : [...prev, itemId],
-    );
+  const toggleExpand = (item: MenuItem) => {
+    setOpenState((prev) => ({
+      ...prev,
+      [item.id]: !(prev[item.id] ?? hasActiveChild(item)),
+    }));
   };
-
-  const isExpanded = (itemId: string) => expandedItems.includes(itemId);
 
   const handleItemClick = (item: MenuItem) => {
     if (item.subItems) {
       if (collapsed) {
         setCollapsed(false);
-        setExpandedItems((prev) =>
-          prev.includes(item.id) ? prev : [...prev, item.id],
-        );
+        setOpenState((prev) => ({ ...prev, [item.id]: true }));
         return;
       }
-      toggleExpand(item.id);
+      toggleExpand(item);
       return;
     }
 
@@ -127,84 +113,108 @@ const Sidebar = ({ className }: { className?: string }) => {
   return (
     <aside
       className={cn(
-        "bg-sidebar text-sidebar-foreground border-r border-sidebar-border flex flex-col overflow-y-auto transition-all duration-200",
-        collapsed ? "w-16" : "w-64",
+        "flex flex-col overflow-hidden border-r border-sidebar-border bg-sidebar pt-2 text-sidebar-foreground transition-[width] duration-200",
+        collapsed ? "w-16" : "w-[17rem]",
         className,
       )}
     >
-      <div className="h-16 flex items-center justify-between px-4 border-b border-sidebar-border">
+      <div
+        className={cn(
+          "flex h-16 shrink-0 items-center justify-between gap-2",
+          collapsed ? "justify-center px-2" : "px-4",
+        )}
+      >
         {!collapsed && (
           <BrandLockup className="overflow-hidden text-sidebar-foreground" />
         )}
         <button
           type="button"
           onClick={() => setCollapsed((prev) => !prev)}
-          className="cursor-pointer inline-flex h-7 w-7 items-center justify-center rounded-md border border-sidebar-border text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors"
+          className="inline-flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {collapsed ? (
-            <div>
-              <Menu className="h-5 w-5 justify-center" />
-            </div>
+            <Menu aria-hidden="true" className="h-5 w-5" />
           ) : (
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft aria-hidden="true" className="h-4 w-4" />
           )}
         </button>
       </div>
 
-      <nav className="flex-1 py-4 px-2 overflow-y-auto">
+      <nav
+        className={cn(
+          "min-h-0 flex-1 overflow-y-auto py-3",
+          collapsed ? "px-2" : "px-3",
+        )}
+      >
         <ul className="space-y-1">
           {menuItems.map((item) => {
             const Icon = item.icon;
-            const hasSubItems = item.subItems && item.subItems.length > 0;
-            const expanded = isExpanded(item.id);
-            const active = item.path
-              ? isActive(item.path)
-              : hasActiveChild(item);
+            const hasSubItems = Boolean(item.subItems?.length);
+            const expanded = isExpanded(item);
+            const active = item.path ? isActive(item.path) : hasActiveChild(item);
+            const submenuId = `sidebar-submenu-${item.id}`;
 
             return (
               <li key={item.id}>
                 <button
+                  type="button"
                   onClick={() => handleItemClick(item)}
+                  aria-current={item.path && active ? "page" : undefined}
+                  aria-expanded={
+                    hasSubItems && !collapsed ? expanded : undefined
+                  }
+                  aria-controls={
+                    hasSubItems && !collapsed ? submenuId : undefined
+                  }
+                  aria-label={collapsed ? item.label : undefined}
+                  title={collapsed ? item.label : undefined}
                   className={cn(
-                    "cursor-pointer w-full flex items-center justify-between px-3 py-2.5 rounded-lg",
-                    "text-sm font-medium transition-all duration-200",
-                    "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
-                    active && !collapsed && "active-item",
-                    collapsed && "justify-center",
-                    active && collapsed && "bg-sidebar-accent text-sidebar-accent-foreground",
+                    "flex w-full cursor-pointer items-center justify-between gap-3 rounded-xl text-sm font-medium transition-colors",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+                    collapsed
+                      ? "mx-auto h-10 w-10 justify-center p-0"
+                      : "h-10 px-3.5",
+                    active
+                      ? "bg-sidebar-active text-sidebar-active-foreground shadow-sm hover:bg-sidebar-active hover:text-sidebar-active-foreground"
+                      : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                   )}
                 >
                   <div
                     className={cn(
-                      "flex items-center gap-3",
+                      "flex min-w-0 items-center gap-3",
                       collapsed && "justify-center",
                     )}
                   >
-                    <Icon className="w-5 h-5" />
-                    {!collapsed && <span>{item.label}</span>}
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center">
+                      <Icon
+                        aria-hidden="true"
+                        className="h-[18px] w-[18px]"
+                      />
+                    </span>
+                    {!collapsed && <span className="truncate">{item.label}</span>}
                   </div>
                   {hasSubItems && !collapsed && (
-                    <div
+                    <ChevronDown
+                      aria-hidden="true"
                       className={cn(
-                        "transition-transform duration-200",
+                        "h-4 w-4 shrink-0 transition-transform duration-200",
                         expanded && "rotate-180",
                       )}
-                    >
-                      <ChevronDown className="w-4 h-4" />
-                    </div>
+                    />
                   )}
                 </button>
 
                 {hasSubItems && !collapsed && (
                   <div
+                    id={submenuId}
                     className={cn(
                       "overflow-hidden transition-all duration-200 ease-in-out",
                       expanded ? "max-h-40 opacity-100" : "max-h-0 opacity-0",
                     )}
                   >
-                    <ul className="mt-1 ml-4 pl-4 border-l border-sidebar-border space-y-1">
+                    <ul className="mt-1 ml-3 space-y-1">
                       {item.subItems?.map((subItem) => {
                         const SubIcon = subItem.icon;
                         const subActive = isActive(subItem.path);
@@ -212,18 +222,22 @@ const Sidebar = ({ className }: { className?: string }) => {
                         return (
                           <li key={subItem.id}>
                             <button
+                              type="button"
                               onClick={() => navigate(subItem.path)}
+                              aria-current={subActive ? "page" : undefined}
                               className={cn(
-                                "cursor-pointer w-full flex items-center gap-3 px-3 py-2 rounded-lg",
-                                "text-sm transition-all duration-200",
-                                "hover:text-sidebar-accent-foreground",
-                                "focus:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
-                                subActive && "text-sidebar-primary",
-                                !subActive && "text-sidebar-foreground/80",
+                                "flex h-9 w-full cursor-pointer items-center gap-3 rounded-lg px-3 text-sm transition-colors",
+                                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
+                                subActive
+                                  ? "font-semibold text-sidebar-primary hover:bg-sidebar-accent hover:text-sidebar-primary"
+                                  : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                               )}
                             >
-                              <SubIcon className="w-4 h-4" />
-                              <span>{subItem.label}</span>
+                              <SubIcon
+                                aria-hidden="true"
+                                className="h-4 w-4 shrink-0"
+                              />
+                              <span className="truncate">{subItem.label}</span>
                             </button>
                           </li>
                         );
@@ -238,8 +252,8 @@ const Sidebar = ({ className }: { className?: string }) => {
       </nav>
 
       {!collapsed && (
-        <div className="p-4 border-t border-sidebar-border">
-          <p className="text-xs text-sidebar-foreground/70 text-center">
+        <div className="shrink-0 border-t border-sidebar-border/70 px-4 py-3">
+          <p className="text-center text-xs text-sidebar-foreground/60">
             © 2026 POS System
           </p>
         </div>

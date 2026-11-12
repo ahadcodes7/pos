@@ -18,8 +18,9 @@ Two colours carry the action system:
 
 - **Primary: original electric violet `#7C3AED`.** Default actions, brand badges and the logo
   tile. Violet fills take white labels. On light surfaces use `#7C3AED` for brand text and
-  `#6D28D9` for focus rings and active nav markers. On dark surfaces use light violet `#A78BFA`
-  for text, markers and rings; `#7C3AED` remains the fill colour.
+  `#6D28D9` for focus rings and active submenu text. The current nav item uses a neutral
+  inverted pill, not violet. On dark surfaces use light violet `#A78BFA` for text, markers and
+  rings; `#7C3AED` remains the fill colour.
 - **Commit/hero accent: Turbo `#FACC15` (light) / `#F0E100` (dark).** Reserved for the action
   that closes a sale, invoice or payment, or the single commerce hero CTA on a dashboard. It
   takes deep indigo `#1E1B4B` in light and void `#0F1013` in dark. Turbo is a highlighter fill,
@@ -28,8 +29,8 @@ Two colours carry the action system:
 
 There is **no third action hue**. Secondary buttons stay neutral outline/filled surfaces.
 Micro actions use violet or neutral. Lavender `#EDE9FE` is the light selection tint; dark
-hover/selection uses a low-chroma violet `#272334`. The focus ring itself is violet, not the
-selection fill.
+hover/selection uses a low-chroma violet `#272334`. The sidebar is the exception: its hover and
+current-item surfaces stay neutral. The focus ring itself is violet, not the selection fill.
 
 **Type:** Plus Jakarta Sans (400–800, bundled via `@fontsource/plus-jakarta-sans`, so it works
 offline). h1–h3 use -0.02em tracking. Money uses `tabular-nums`.
@@ -72,7 +73,8 @@ accent.
 | **Secondary** | `variant="outline"` / `variant="secondary"` | Transparent border or neutral fill | Cancel, clear, add tag, row actions |
 | **Ghost** | `variant="ghost"` | No fill until hover | Toolbar, dismiss, icons |
 | **Destructive** | `variant="destructive"` | Red + white | Void, refund, delete |
-| **Selected** | `--accent` | Lavender light / soft violet dark + violet marker | Active nav, rows, filters, view toggles |
+| **Selected** | `--accent` | Lavender light / soft violet dark + violet marker | Rows, filters, view toggles |
+| **Sidebar active** | `--sidebar-active` | Near-black pill + white text light; off-white pill + ink text dark | Current nav item |
 | **Focus** | `--ring` | Deep violet `#6D28D9` light / light violet `#A78BFA` dark | All controls |
 
 Rules:
@@ -91,7 +93,7 @@ Rules:
 5. **Do not put an ink border on Turbo.** The dark label and existing shadow carry the button.
    If it looks too soft, deepen the fill or soften the shadow; do not add an outline.
 6. **Violet text is `#7C3AED` on light and `#A78BFA` on dark.** Use `#6D28D9` for focus rings
-   and active markers on light. `#7C3AED` is a fill on dark, not small text.
+   and active submenu text on light. `#7C3AED` is a fill on dark, not small text.
 7. **Secondary is neutral, not a third hue.** Micro actions use violet or neutral; Turbo is
    reserved for commits and the one commerce hero.
 8. **Keep the dark base blackish.** Cards, fields and sidebar backgrounds stay neutral; only
@@ -108,8 +110,11 @@ All in `src/renderer/index.css` (`:root` and `.dark`).
 - `--brand` is the electric violet identity colour; `--brand-secondary` is the badge fill. Both
   violet fills use white labels.
 - `--ring` and `--sidebar-primary` are `#6D28D9` light / `#A78BFA` dark.
-- `--accent` is lavender light / soft violet `#272334` dark; `--sidebar-accent` is lavender
-  light / soft violet `#211E2C` dark.
+- `--accent` is lavender light / soft violet `#272334` dark. `--sidebar-accent` is the sidebar's
+  neutral hover: `#F4F4F5` light / `#26272B` dark.
+- `--sidebar-active` is the inverted nav pill: near-black `#18181B` with white text in light,
+  off-white `#F4F4F5` with ink text in dark. Active submenu items use violet text only, without
+  a fill; hover adds the neutral sidebar surface.
 - `--field` and `--field-hover` are the soft cool field fills in light and neutral black fills
   in dark (`#1F2025` / `#25272D`).
 - `--input` is `#7C8BA1` in light (3.5:1 on white) and white 35% in dark (3.2:1 on the card).
