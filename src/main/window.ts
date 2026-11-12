@@ -31,10 +31,10 @@ export async function createMainWindow() {
     titleBarStyle: "hidden",
     titleBarOverlay: {
       color: "#FFFFFF",
-      symbolColor: "#0F1013",
+      symbolColor: "#1E1B4B",
       height: 36,
     },
-    backgroundColor: "#F6F6F7",
+    backgroundColor: "#F8FAFC",
     show: false,
     webPreferences: {
       preload: preloadPath,

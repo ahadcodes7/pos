@@ -8,9 +8,9 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+          "bg-primary text-primary-foreground shadow hover:bg-primary-hover",
         commit:
-          "border border-commit-border bg-commit text-commit-foreground shadow-sm hover:bg-commit-hover focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+          "bg-commit text-commit-foreground shadow-sm hover:bg-commit-hover focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         destructive:
           "bg-destructive-solid text-destructive-foreground shadow-sm hover:bg-destructive-solid/90",
         outline:

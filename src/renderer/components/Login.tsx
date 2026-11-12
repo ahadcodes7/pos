@@ -62,10 +62,14 @@ const Login = () => {
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[#ff7a66]/15 blur-3xl"
+          className="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[#f0e100]/10 blur-3xl"
         />
 
-        <BrandLockup className="relative" markClassName="h-10 w-10" wordmarkClassName="text-lg" />
+        <BrandLockup
+          className="relative [--brand:#a78bfa]"
+          markClassName="h-10 w-10"
+          wordmarkClassName="text-lg"
+        />
 
         <div className="relative space-y-8">
           <h2 className="max-w-sm text-[2rem] leading-[1.15] font-bold">
@@ -74,7 +78,7 @@ const Login = () => {
           <ul className="space-y-3.5">
             {VALUE_POINTS.map((point) => (
               <li key={point} className="flex items-center gap-3 text-[15px] text-white/80">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#ff7a66]/15 text-[#ff7a66]">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#a78bfa]/15 text-[#a78bfa]">
                   <Check className="h-3.5 w-3.5" strokeWidth={3} />
                 </span>
                 {point}

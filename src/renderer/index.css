@@ -31,6 +31,7 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -44,7 +45,6 @@
   --color-brand-secondary-surface: var(--brand-secondary-surface);
   --color-commit: var(--commit);
   --color-commit-foreground: var(--commit-foreground);
-  --color-commit-border: var(--commit-border);
   --color-commit-hover: var(--commit-hover);
   --color-destructive: var(--destructive);
   --color-destructive-solid: var(--destructive-solid);
@@ -78,161 +78,167 @@
   --radius: 0.625rem;
 
   /* ============================================
-     NayaHisab brand palette - LIGHT (Round 14: neutral + violet/coral)
-     Neutral white/black base with two brand colours:
-       primary   electric violet #7C3AED: main actions, links, active nav, focus
-       secondary coral #FF7A66: badges and small "commit" actions, always with ink labels
-     Ink #0F1013 · slate #5E626B · canvas #F6F6F7 · card #FFFFFF.
-     Swap only this block to change brand direction.
+     NayaHisab theme - LIGHT (Round 19: violet primary + Turbo commit)
+     Cool white with one primary and one commit accent:
+       primary  electric violet #7C3AED: default actions, white label
+       commit   Turbo #FACC15: finalise a sale/invoice, deep indigo label
+       brand    electric violet #7C3AED: logo, badges
+       focus    deep violet #6D28D9: rings and active nav
+       selection soft lavender #EDE9FE
+     Violet and Turbo never share a fill. Status colours stay conventional.
+     Colours are authored in OKLCH except --sidebar / --sidebar-foreground,
+     which stay #RRGGBB because chrome:set validates native title-bar colours.
      ============================================ */
 
-  /* Canvas and ink */
-  --background: #f6f6f7;
-  --foreground: #0f1013;
+  /* Cool canvas and deep indigo ink */
+  --background: oklch(0.984 0.003 247.9);
+  --foreground: oklch(0.257 0.086 281.3);
 
   /* Surfaces */
-  --card: #ffffff;
+  --card: oklch(1 0 0);
   --card-foreground: var(--foreground);
-  --popover: #ffffff;
+  --popover: oklch(1 0 0);
   --popover-foreground: var(--foreground);
 
-  /* Primary action: violet fill, white label (5.7:1) */
-  --primary: #7c3aed;
-  --primary-foreground: #ffffff;
+  /* Primary action: electric violet fill, white label (5.7:1). */
+  --primary: oklch(0.541 0.247 293.0);
+  --primary-foreground: oklch(1 0 0);
+  --primary-hover: oklch(0.491 0.241 292.6);
 
   /* Structural surfaces and neutral selection */
-  --secondary: #eeeef0;
+  --secondary: oklch(0.968 0.007 247.9);
   --secondary-foreground: var(--foreground);
-  --muted: #f1f1f3;
-  --muted-foreground: #5e626b;
-  --accent: #edeef0;
+  --muted: oklch(0.968 0.007 247.9);
+  --muted-foreground: oklch(0.511 0.034 259.5);
+  --accent: oklch(0.943 0.028 294.6);
   --accent-foreground: var(--foreground);
 
-  /* Brand mark accents (decorative) */
-  --brand: #7c3aed;
-  --brand-foreground: #ffffff;
+  /* Brand identity: the original electric violet. Also the default primary action. */
+  --brand: oklch(0.541 0.247 293.0);
+  --brand-foreground: oklch(1 0 0);
 
-  /* Secondary brand colour: coral fill, ink label (7.5:1). Never used as text. */
-  --brand-secondary: #ff7a66;
-  --brand-secondary-foreground: #0f1013;
-  --brand-secondary-surface: #ffe9e5;
+  /* Brand badge: electric violet fill, white label (5.7:1). */
+  --brand-secondary: oklch(0.541 0.247 293.0);
+  --brand-secondary-foreground: oklch(1 0 0);
+  --brand-secondary-surface: oklch(0.943 0.028 294.6);
 
-  /* Commit (one per screen): coral fill, ink label */
-  --commit: #ff7a66;
-  --commit-foreground: #0f1013;
-  --commit-border: #e85d4a;
-  --commit-hover: #ff8f7d;
+  /* Commit/hero accent (one per screen): Turbo fill, deep indigo label (10.4:1). No border. */
+  --commit: oklch(0.861 0.173 91.9);
+  --commit-foreground: oklch(0.257 0.086 281.3);
+  --commit-hover: oklch(0.795 0.162 86.0);
 
   /* Semantics: green success, amber warning, red destructive.
-     Coral stays a fill with an ink label, so it never reads as an error.
+     Violet is a brand/primary colour, not a status colour.
      `--destructive` is for text, borders and rings; `--destructive-solid` is the filled action. */
-  --destructive: #b91c1c;
-  --destructive-solid: #b91c1c;
-  --destructive-foreground: #ffffff;
-  --success: #166534;
-  --success-surface: #e8f5ec;
-  --success-foreground: #ffffff;
-  --warning: #a16207;
-  --warning-surface: #fef6dc;
-  --warning-foreground: #ffffff;
-  --destructive-surface: #fdecec;
+  --destructive: oklch(0.505 0.190 27.5);
+  --destructive-solid: oklch(0.505 0.190 27.5);
+  --destructive-foreground: oklch(1 0 0);
+  --success: oklch(0.527 0.137 150.1);
+  --success-surface: oklch(0.962 0.043 156.7);
+  --success-foreground: oklch(1 0 0);
+  --warning: oklch(0.555 0.146 49.0);
+  --warning-surface: oklch(0.962 0.058 95.6);
+  --warning-foreground: oklch(1 0 0);
+  --destructive-surface: oklch(0.936 0.031 17.7);
 
-  /* Lines and focus */
-  --border: #e4e4e7;
-  --input: #8a8d96;
-  --ring: #6d28d9;
+  /* Lines and focus: original deep-violet ring, lavender selection, 3.5:1 input edge */
+  --border: oklch(0.929 0.013 255.5);
+  --input: oklch(0.632 0.038 257.9);
+  --ring: oklch(0.491 0.241 292.6);
 
-  /* Soft filled fields: grey fill at rest, card fill + violet border on focus */
-  --field: #eeeef0;
-  --field-hover: #e6e6e9;
+  /* Soft filled fields: cool tint at rest, white + violet border on focus */
+  --field: oklch(0.968 0.007 247.9);
+  --field-hover: oklch(0.929 0.013 255.5);
 
-  /* Data visualisation: violet, coral, slate, amber, ink */
-  --chart-1: #7c3aed;
-  --chart-2: #ff7a66;
-  --chart-3: #5e626b;
-  --chart-4: #a16207;
-  --chart-5: #0f1013;
+  /* Data visualisation: violet, Turbo, slate, amber, indigo */
+  --chart-1: oklch(0.541 0.247 293.0);
+  --chart-2: oklch(0.861 0.173 91.9);
+  --chart-3: oklch(0.554 0.041 257.4);
+  --chart-4: oklch(0.555 0.146 49.0);
+  --chart-5: oklch(0.257 0.086 281.3);
 
   /* Chrome: white sidebar and title strip; native overlay follows --sidebar.
-     Nav markers use deep violet (6.1:1 on selection). */
+     Keep these two as #RRGGBB for chrome:set. Nav markers use deep violet. */
   --sidebar: #ffffff;
-  --sidebar-foreground: #0f1013;
-  --sidebar-primary: #6d28d9;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #edeef0;
-  --sidebar-accent-foreground: #0f1013;
-  --sidebar-border: #e4e4e7;
-  --sidebar-ring: #6d28d9;
+  --sidebar-foreground: #1e1b4b;
+  --sidebar-primary: oklch(0.491 0.241 292.6);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.943 0.028 294.6);
+  --sidebar-accent-foreground: oklch(0.257 0.086 281.3);
+  --sidebar-border: oklch(0.929 0.013 255.5);
+  --sidebar-ring: oklch(0.491 0.241 292.6);
 }
 
 .dark {
   /* ============================================
-     Dark companion: near-black canvas, off-white type, the same violet actions
-     (white labels), lighter #A78BFA markers and rings, coral commit with ink label.
+     Dark companion: the earlier neutral black base with small violet/Turbo
+     accents. Cards, fields and sidebar stay blackish; a low-chroma violet tint
+     is reserved for hover/selection surfaces. Electric violet is the primary
+     fill; Turbo #F0E100 is the commit accent with a void label.
      ============================================ */
 
-  --background: #0f1013;
-  --foreground: #f4f4f5;
+  --background: oklch(0.173 0.006 271.0);
+  --foreground: oklch(0.967 0.001 286.4);
 
-  --card: #17181c;
+  --card: oklch(0.210 0.008 274.5);
   --card-foreground: var(--foreground);
-  --popover: #1e1f24;
+  --popover: oklch(0.240 0.010 276.7);
   --popover-foreground: var(--foreground);
 
-  --primary: #7c3aed;
-  --primary-foreground: #ffffff;
+  --primary: oklch(0.541 0.247 293.0);
+  --primary-foreground: oklch(1 0 0);
+  --primary-hover: oklch(0.491 0.241 292.6);
 
-  --secondary: #1f2025;
+  --secondary: oklch(0.245 0.010 276.7);
   --secondary-foreground: var(--foreground);
-  --muted: #1a1b1f;
-  --muted-foreground: #a1a1aa;
-  --accent: #24262b;
+  --muted: oklch(0.223 0.008 274.6);
+  --muted-foreground: oklch(0.712 0.013 286.1);
+  --accent: oklch(0.269 0.030 293);
   --accent-foreground: var(--foreground);
 
-  --brand: #7c3aed;
-  --brand-foreground: #ffffff;
+  --brand: oklch(0.709 0.159 293.5);
+  --brand-foreground: oklch(0.173 0.006 271.0);
 
-  --brand-secondary: #ff7a66;
-  --brand-secondary-foreground: #0f1013;
-  --brand-secondary-surface: #3a201c;
+  --brand-secondary: oklch(0.541 0.247 293.0);
+  --brand-secondary-foreground: oklch(1 0 0);
+  --brand-secondary-surface: oklch(0.245 0.010 276.7);
 
-  --commit: #ff7a66;
-  --commit-foreground: #0f1013;
-  --commit-border: #ff9a8c;
-  --commit-hover: #ff8f7d;
+  --commit: oklch(0.893 0.189 104.7);
+  --commit-foreground: oklch(0.173 0.006 271.0);
+  --commit-hover: oklch(0.940 0.175 104.0);
 
-  --destructive: #f87171;
-  --destructive-solid: #b91c1c;
-  --destructive-foreground: #ffffff;
-  --success: #4ade80;
-  --success-surface: #11301c;
-  --success-foreground: #0f1013;
-  --warning: #facc15;
-  --warning-surface: #332b0a;
-  --warning-foreground: #0f1013;
-  --destructive-surface: #3a1717;
+  --destructive: oklch(0.711 0.166 22.2);
+  --destructive-solid: oklch(0.505 0.190 27.5);
+  --destructive-foreground: oklch(1 0 0);
+  --success: oklch(0.800 0.182 151.7);
+  --success-surface: oklch(0.297 0.056 152.4);
+  --success-foreground: oklch(0.173 0.006 271.0);
+  --warning: oklch(0.837 0.117 66.3);
+  --warning-surface: oklch(0.298 0.044 75.8);
+  --warning-foreground: oklch(0.173 0.006 271.0);
+  --destructive-surface: oklch(0.257 0.056 21.7);
 
-  --border: rgb(255 255 255 / 10%);
-  --input: rgb(255 255 255 / 20%);
-  --ring: #a78bfa;
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 35%);
+  --ring: oklch(0.709 0.159 293.5);
 
-  --field: #1f2025;
-  --field-hover: #25272d;
+  --field: oklch(0.245 0.010 276.7);
+  --field-hover: oklch(0.273 0.011 271.0);
 
-  --chart-1: #a78bfa;
-  --chart-2: #ff7a66;
-  --chart-3: #a1a1aa;
-  --chart-4: #facc15;
-  --chart-5: #f4f4f5;
+  --chart-1: oklch(0.709 0.159 293.5);
+  --chart-2: oklch(0.893 0.189 104.7);
+  --chart-3: oklch(0.712 0.013 286.1);
+  --chart-4: oklch(0.837 0.117 66.3);
+  --chart-5: oklch(0.967 0.001 286.4);
 
   --sidebar: #0b0c0e;
   --sidebar-foreground: #f4f4f5;
-  --sidebar-primary: #a78bfa;
-  --sidebar-primary-foreground: #0f1013;
-  --sidebar-accent: #1f2025;
-  --sidebar-accent-foreground: #f4f4f5;
-  --sidebar-border: rgb(255 255 255 / 8%);
-  --sidebar-ring: #a78bfa;
+  --sidebar-primary: oklch(0.709 0.159 293.5);
+  --sidebar-primary-foreground: oklch(0.173 0.006 271.0);
+  --sidebar-accent: oklch(0.245 0.026 293);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.709 0.159 293.5);
 }
 
 @layer base {

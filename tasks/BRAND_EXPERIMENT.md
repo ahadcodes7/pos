@@ -1,15 +1,44 @@
 # Brand Direction Experiment
 
-Status: **Round 6 palette history.** The production action and logo system is in
-`tasks/BRAND_SYSTEM.md`. Creator OS is the current palette: light default with a
-charcoal dark companion. Round 6 replaced the lavender direction; layout variants are
-still pending reference designs.
+Status: **Round 19 action and palette history.** The production action and logo system is in
+`tasks/BRAND_SYSTEM.md`. Violet primary with a Turbo commit/hero accent is current. Round 18's
+Turbo-primary action mapping is historical. Round 6 below remains history.
 
-Round 14 (current, see `BRAND_SYSTEM.md`): **Neutral + violet/coral**. The tonal teal base
-was rejected in favour of the earlier neutral white/black base (`#F6F6F7` / `#0F1013`). The
-dashboard now has two brand colours: electric violet `#7C3AED` as primary (picked over fuchsia,
-emerald and teal) and coral `#FF7A66` as secondary for badges and the commit action. Plus
-Jakarta Sans and the soft filled fields stay.
+Round 19 (current, see `BRAND_SYSTEM.md`): **Violet primary + Turbo commit**. The round 18
+palette is unchanged; the action roles are inverted. Electric violet `#7C3AED` is now the
+app-wide primary action (Create Product, Add Customer, Save Settings, Login) with white labels
+and `#6D28D9` hover. Turbo `#FACC15` light / `#F0E100` dark is reserved for commit/hero actions
+(Complete Sale, Create Invoice, Receive Payment, one dashboard commerce CTA) with deep indigo/
+void labels and no border. Secondary buttons stay neutral outline/fill; micro actions use
+violet or neutral. Round 18's soft violet hover/selection and neutral-black dark base remain.
+There is no third action hue.
+
+Round 18 (historical): **Violet grid + neutral black dark**. Light kept the round 17 grid:
+`#F8FAFC` canvas, white cards, Turbo `#FACC15` primary, lavender `#EDE9FE` selection. The violet
+returned to the original electric `#7C3AED` for brand, commit, badge and logo, with `#6D28D9`
+focus rings and active markers. Dark returned to the earlier blackish base: `#0F1013` canvas,
+`#17181C` cards, `#1E1F24` popovers, `#0B0C0E` sidebar, `#1F2025` fields, soft violet `#272334`
+hover/selection and `#A1A1AA` muted text. Turbo in dark returned to the earlier `#F0E100` with a
+`#0F1013` label. Violet stayed an accent in dark: `#A78BFA` text/markers/rings and `#7C3AED`
+fills. No violet-tinted cards or fields; only the hover/selection surfaces got the low-chroma
+tint.
+
+Round 17 (historical): **Violet grid**. Cool canvas `#F8FAFC` / white cards and violet-black
+`#0F0A1F` / `#1A1230` dark surfaces. Turbo `#FACC15` light / `#FDE047` dark, with indigo / void
+labels and no ink border. Royal violet `#5B21B6` light / `#7C3AED` dark, light violet `#A78BFA`
+markers; lavender `#EDE9FE` / deep violet `#2E1065` selection. The separate secondary brand
+colour was removed; secondary buttons stayed outline/neutral.
+
+Round 16 (historical): **Creator OS + Turbo + petrol teal**. The Creator OS cream/paper base
+returned with bright Turbo `#F0E100` as the primary action (ink label and ink edge on light
+surfaces). Deep petrol teal `#0F4C5C` replaced violet as brand, focus and active marker, and
+replaced coral as the commit colour; teal fills took cream labels. Dark mode kept its
+near-black base and used light teal `#5EEAD4` for markers and rings.
+
+Round 14 (historical): **Neutral + violet/coral**. The tonal teal base was rejected in
+favour of the earlier neutral white/black base (`#F6F6F7` / `#0F1013`). The dashboard had two
+brand colours: electric violet `#7C3AED` as primary and coral `#FF7A66` as secondary for
+badges and the commit action.
 
 Round 13: **Tonal teal**. The canvas, sidebar, borders,
 selection and ink are tinted toward the teal accent, and Inter is replaced by Plus Jakarta

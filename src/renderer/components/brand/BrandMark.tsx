@@ -1,7 +1,7 @@
 import { cn } from "@/renderer/lib/utils";
 
 /**
- * The Ledger N: two white ledger strokes and a coral diagonal on an electric violet tile.
+ * The Ledger N: two white ledger strokes and a Turbo diagonal on an electric violet tile.
  * The tile is a fixed brand asset, not a theme token, so the mark is identical in
  * light and dark mode and matches the app icon.
  */
@@ -16,7 +16,7 @@ export function BrandMark({ className }: { className?: string }) {
     >
       <svg viewBox="0 0 24 24" fill="none" className="h-[62%] w-[62%]">
         <path d="M7 18V6" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" />
-        <path d="M7 6L17 18" stroke="#FF7A66" strokeWidth="2.4" strokeLinecap="round" />
+        <path d="M7 6L17 18" stroke="#F0E100" strokeWidth="2.4" strokeLinecap="round" />
         <path d="M17 18V6" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" />
       </svg>
     </span>

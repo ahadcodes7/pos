@@ -126,17 +126,19 @@ function CardView({ viewMode, setViewMode }: CardViewProps) {
           {/* View Toggle */}
           <div className="flex items-center gap-1 bg-muted rounded-lg p-0.5 shrink-0">
             <Button
-              variant={viewMode === "card" ? "default" : "ghost"}
+              variant="ghost"
               size="sm"
-              className="h-7 px-2"
+              className={cn("h-7 px-2", viewMode === "card" && "bg-accent text-brand")}
+              aria-pressed={viewMode === "card"}
               onClick={() => setViewMode("card")}
             >
               <Grid3X3 className="w-3.5 h-3.5" />
             </Button>
             <Button
-              variant={viewMode === "table" ? "default" : "ghost"}
+              variant="ghost"
               size="sm"
-              className="h-7 px-2"
+              className={cn("h-7 px-2", viewMode === "table" && "bg-accent text-brand")}
+              aria-pressed={viewMode === "table"}
               onClick={() => setViewMode("table")}
             >
               <List className="w-3.5 h-3.5" />

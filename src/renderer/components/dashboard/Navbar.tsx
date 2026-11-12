@@ -39,7 +39,7 @@ const Navbar = () => {
           size="icon"
           className={cn(
             "relative rounded-full w-9 h-9",
-            "bg-primary hover:bg-primary/90",
+            "bg-primary hover:bg-primary-hover",
             "text-primary-foreground",
           )}
         >

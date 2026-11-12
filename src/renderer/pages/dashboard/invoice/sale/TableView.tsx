@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/renderer/components/ui/button";
 import { Input } from "@/renderer/components/ui/input";
+import { cn } from "@/renderer/lib/utils";
 import { useTableViewReducer, calculateTableTotals } from "./hooks/useTableViewReducer";
 import type { ViewMode } from "./sale-data";
 import { 
@@ -43,17 +44,19 @@ function TableView({ viewMode, setViewMode }: TableViewProps) {
         <h2 className="text-lg font-semibold">Sale Invoice</h2>
         <div className="flex items-center gap-1 bg-muted rounded-lg p-0.5 shrink-0">
           <Button
-            variant={viewMode === "card" ? "default" : "ghost"}
+            variant="ghost"
             size="sm"
-            className="h-7 px-2"
+            className={cn("h-7 px-2", viewMode === "card" && "bg-accent text-brand")}
+            aria-pressed={viewMode === "card"}
             onClick={() => setViewMode("card")}
           >
             <Grid3X3 className="w-3.5 h-3.5" />
           </Button>
           <Button
-            variant={viewMode === "table" ? "default" : "ghost"}
+            variant="ghost"
             size="sm"
-            className="h-7 px-2"
+            className={cn("h-7 px-2", viewMode === "table" && "bg-accent text-brand")}
+            aria-pressed={viewMode === "table"}
             onClick={() => setViewMode("table")}
           >
             <List className="w-3.5 h-3.5" />
