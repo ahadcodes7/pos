@@ -22,13 +22,13 @@ const CommandInput = React.forwardRef<
   HTMLInputElement,
   React.InputHTMLAttributes<HTMLInputElement> & { onValueChange?: (value: string) => void }
 >(({ className, placeholder, onValueChange, ...props }, ref) => (
-  <div className="flex items-center border-b px-3">
+  <div className="m-1 flex items-center rounded-lg bg-field px-3">
     <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
     <input
       ref={ref}
       placeholder={placeholder}
       className={cn(
-        "flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-10 w-full bg-transparent py-2 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
         className
       )}
       onChange={(e) => onValueChange?.(e.target.value)}
@@ -96,7 +96,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground",
+      "relative flex cursor-pointer select-none items-center rounded-lg px-2.5 py-2 text-sm outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground",
       className
     )}
     {...props}

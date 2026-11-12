@@ -284,7 +284,7 @@ function CardView({ viewMode, setViewMode }: CardViewProps) {
           <div className="flex items-center justify-between mb-1">
             <span className="text-xs text-muted-foreground">Payment</span>
             <Select value={paymentMode} onValueChange={setPaymentMode}>
-              <SelectTrigger className="h-8 w-28 text-xs py-0">
+              <SelectTrigger className="h-8 w-28 rounded-lg px-2.5 text-xs py-0">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -411,7 +411,7 @@ function CartItem({ item, actions, formatCurrency }: CartItemProps) {
             value={item.uom || "pc"}
             onValueChange={(val) => actions.updateItem(item.id, "uom", val)}
           >
-            <SelectTrigger className="h-7 cursor-pointer text-xs font-medium w-18 bg-background/50 border-border/50">
+            <SelectTrigger className="h-7 rounded-lg px-2 text-xs font-medium w-18">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -454,7 +454,7 @@ function CartItem({ item, actions, formatCurrency }: CartItemProps) {
             value={localQty}
             onChange={handleChange}
             onBlur={handleBlur}
-            className="w-16 h-8 text-center text-sm font-medium rounded-md"
+            className="w-16 h-8 rounded-lg px-1 text-center text-sm font-medium"
           />
           <Button
             variant="outline"

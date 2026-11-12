@@ -5,6 +5,32 @@ Status: **Round 6 palette history.** The production action and logo system is in
 charcoal dark companion. Round 6 replaced the lavender direction; layout variants are
 still pending reference designs.
 
+Round 14 (current, see `BRAND_SYSTEM.md`): **Neutral + violet/coral**. The tonal teal base
+was rejected in favour of the earlier neutral white/black base (`#F6F6F7` / `#0F1013`). The
+dashboard now has two brand colours: electric violet `#7C3AED` as primary (picked over fuchsia,
+emerald and teal) and coral `#FF7A66` as secondary for badges and the commit action. Plus
+Jakarta Sans and the soft filled fields stay.
+
+Round 13: **Tonal teal**. The canvas, sidebar, borders,
+selection and ink are tinted toward the teal accent, and Inter is replaced by Plus Jakarta
+Sans. Inspired by a reference UI that used one hue across every layer.
+
+Round 12: **Teal**. This restores the original "Main" theme
+colour, `oklch(0.55 0.22 200)` ≈ `#0091A3`, deepened to `#007F8F` in light mode for AA
+with white labels; dark mode uses `#00A2AF`. The neutral base is unchanged. Mint,
+tangerine and Volt accents were rejected.
+
+Round 11: **Mint** `#3DDC97` on the same neutral base.
+Tangerine did not land either.
+
+Round 10: **Tangerine** `#FF5C1A` on the Volt neutral
+base. The base was kept, but the lime accent did not click.
+
+Round 9: **Volt**. Ultramarine (round 8) was rejected
+as boring and not distinctive, and the cream base as too yellow next to accents. The base
+is now neutral (`#F6F6F7` / `#0F1013`) with lime `#C6F432` as the one accent. The
+sections below record round 6 (Creator OS) for history.
+
 ## 1. Decision
 
 The lavender round was rejected: too much brand color across chrome, hovers and status

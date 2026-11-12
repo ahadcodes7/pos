@@ -3,6 +3,7 @@ import { Check, ChevronDown, X } from "lucide-react";
 import { Command, CommandEmpty, CommandGroup, CommandItem, CommandInput, CommandList } from "@/renderer/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/renderer/components/ui/popover";
 import { Button } from "@/renderer/components/ui/button";
+import { fieldVariants } from "@/renderer/components/ui/field";
 import { cn } from "@/renderer/lib/utils";
 
 export type OptionValue = string | number;
@@ -128,7 +129,8 @@ export function SearchableSelect({
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "w-full justify-between truncate",
+            fieldVariants,
+            "justify-between truncate font-normal shadow-none data-[state=open]:border-ring data-[state=open]:bg-card data-[state=open]:ring-[3px] data-[state=open]:ring-ring/20",
             !value && "text-muted-foreground",
             className
           )}

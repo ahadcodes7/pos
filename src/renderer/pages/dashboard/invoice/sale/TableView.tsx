@@ -131,7 +131,7 @@ function TableView({ viewMode, setViewMode }: TableViewProps) {
                           min="1"
                           value={item.quantity}
                           onChange={(e) => actions.updateItem(item.id, 'quantity', e.target.value)}
-                          className="w-16 text-right"
+                          className="h-9 w-16 text-right"
                         />
                       </td>
                       <td className="p-1">
@@ -140,7 +140,7 @@ function TableView({ viewMode, setViewMode }: TableViewProps) {
                           min="0"
                           value={item.price}
                           onChange={(e) => actions.updateItem(item.id, 'price', e.target.value)}
-                          className="w-20 text-right"
+                          className="h-9 w-20 text-right"
                         />
                       </td>
                       <td className="p-1">
@@ -150,7 +150,7 @@ function TableView({ viewMode, setViewMode }: TableViewProps) {
                           max="100"
                           value={item.taxRate || 18}
                           onChange={(e) => actions.updateItem(item.id, 'taxRate', e.target.value)}
-                          className="w-16 text-right"
+                          className="h-9 w-16 text-right"
                         />
                       </td>
                       <td className="p-2 text-sm font-medium text-right">

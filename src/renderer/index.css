@@ -1,14 +1,15 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
-@import "@fontsource/inter/700.css";
+@import "@fontsource/plus-jakarta-sans/400.css";
+@import "@fontsource/plus-jakarta-sans/500.css";
+@import "@fontsource/plus-jakarta-sans/600.css";
+@import "@fontsource/plus-jakarta-sans/700.css";
+@import "@fontsource/plus-jakarta-sans/800.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 @theme inline {
@@ -19,6 +20,9 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+  --radius-field: 0.75rem;
+  --color-field: var(--field);
+  --color-field-hover: var(--field-hover);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -35,6 +39,9 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-brand: var(--brand);
   --color-brand-foreground: var(--brand-foreground);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-secondary-foreground: var(--brand-secondary-foreground);
+  --color-brand-secondary-surface: var(--brand-secondary-surface);
   --color-commit: var(--commit);
   --color-commit-foreground: var(--commit-foreground);
   --color-commit-border: var(--commit-border);
@@ -71,144 +78,161 @@
   --radius: 0.625rem;
 
   /* ============================================
-     NayaHisab brand palette - LIGHT (Creator OS)
-     Charcoal #181A1F + slate #59606B + cream #F7F3EA
-     + butter #FFE39A + coral #FF7A66.
-     Mostly neutral: monochrome actions, butter only for selection,
-     coral reserved for attention and charts.
+     NayaHisab brand palette - LIGHT (Round 14: neutral + violet/coral)
+     Neutral white/black base with two brand colours:
+       primary   electric violet #7C3AED: main actions, links, active nav, focus
+       secondary coral #FF7A66: badges and small "commit" actions, always with ink labels
+     Ink #0F1013 · slate #5E626B · canvas #F6F6F7 · card #FFFFFF.
      Swap only this block to change brand direction.
      ============================================ */
 
   /* Canvas and ink */
-  --background: #f7f3ea;
-  --foreground: #181a1f;
+  --background: #f6f6f7;
+  --foreground: #0f1013;
 
   /* Surfaces */
-  --card: #fffdf8;
+  --card: #ffffff;
   --card-foreground: var(--foreground);
-  --popover: #fffdf8;
+  --popover: #ffffff;
   --popover-foreground: var(--foreground);
 
-  /* Primary action: charcoal fill, cream label (15.7:1) */
-  --primary: #181a1f;
-  --primary-foreground: #f7f3ea;
+  /* Primary action: violet fill, white label (5.7:1) */
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
 
-  /* Structural surfaces */
-  --secondary: #ede7db;
+  /* Structural surfaces and neutral selection */
+  --secondary: #eeeef0;
   --secondary-foreground: var(--foreground);
-  --muted: #f1ece2;
-  --muted-foreground: #59606b;
-  --accent: #fff3c9;
+  --muted: #f1f1f3;
+  --muted-foreground: #5e626b;
+  --accent: #edeef0;
   --accent-foreground: var(--foreground);
 
-  /* Brand / commit: coral appears only at the value moment.
-     Ink labels are required; cream or white on coral fails AA. */
-  --brand: #ff7a66;
-  --brand-foreground: #181a1f;
-  --commit: #ff7a66;
-  --commit-foreground: #181a1f;
-  --commit-border: #e85d4a;
-  --commit-hover: #f26a56;
+  /* Brand mark accents (decorative) */
+  --brand: #7c3aed;
+  --brand-foreground: #ffffff;
 
-  /* Semantics: status colors stay conventional.
-     `--destructive` is for text, borders and rings; `--destructive-solid` is
-     the filled action, so dark mode can use a deep red without harming error text. */
-  --destructive: #b42318;
-  --destructive-solid: #b42318;
+  /* Secondary brand colour: coral fill, ink label (7.5:1). Never used as text. */
+  --brand-secondary: #ff7a66;
+  --brand-secondary-foreground: #0f1013;
+  --brand-secondary-surface: #ffe9e5;
+
+  /* Commit (one per screen): coral fill, ink label */
+  --commit: #ff7a66;
+  --commit-foreground: #0f1013;
+  --commit-border: #e85d4a;
+  --commit-hover: #ff8f7d;
+
+  /* Semantics: green success, amber warning, red destructive.
+     Coral stays a fill with an ink label, so it never reads as an error.
+     `--destructive` is for text, borders and rings; `--destructive-solid` is the filled action. */
+  --destructive: #b91c1c;
+  --destructive-solid: #b91c1c;
   --destructive-foreground: #ffffff;
-  --success: #2f7d5a;
-  --success-surface: #ecf7f1;
+  --success: #166534;
+  --success-surface: #e8f5ec;
   --success-foreground: #ffffff;
-  --warning: #8a5a00;
-  --warning-surface: #fff4d6;
+  --warning: #a16207;
+  --warning-surface: #fef6dc;
   --warning-foreground: #ffffff;
-  --destructive-surface: #fdecea;
+  --destructive-surface: #fdecec;
 
   /* Lines and focus */
-  --border: #e2dccf;
-  --input: #93897a;
-  --ring: #59606b;
+  --border: #e4e4e7;
+  --input: #8a8d96;
+  --ring: #6d28d9;
 
-  /* Data visualisation: ink, slate, dark butter, coral, green */
-  --chart-1: #181a1f;
-  --chart-2: #59606b;
-  --chart-3: #d9a72e;
-  --chart-4: #ff7a66;
-  --chart-5: #2f7d5a;
+  /* Soft filled fields: grey fill at rest, card fill + violet border on focus */
+  --field: #eeeef0;
+  --field-hover: #e6e6e9;
 
-  /* Chrome: paper in light mode; native overlay follows --sidebar */
-  --sidebar: #fffdf8;
-  --sidebar-foreground: #181a1f;
-  --sidebar-primary: #181a1f;
-  --sidebar-primary-foreground: #f7f3ea;
-  --sidebar-accent: #fff3c9;
-  --sidebar-accent-foreground: #181a1f;
-  --sidebar-border: #e2dccf;
-  --sidebar-ring: #59606b;
+  /* Data visualisation: violet, coral, slate, amber, ink */
+  --chart-1: #7c3aed;
+  --chart-2: #ff7a66;
+  --chart-3: #5e626b;
+  --chart-4: #a16207;
+  --chart-5: #0f1013;
+
+  /* Chrome: white sidebar and title strip; native overlay follows --sidebar.
+     Nav markers use deep violet (6.1:1 on selection). */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #0f1013;
+  --sidebar-primary: #6d28d9;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #edeef0;
+  --sidebar-accent-foreground: #0f1013;
+  --sidebar-border: #e4e4e7;
+  --sidebar-ring: #6d28d9;
 }
 
 .dark {
   /* ============================================
-     Dark companion: charcoal canvas, cream type, cream actions,
-     butter chrome accents. Coral stays in charts/attention.
+     Dark companion: near-black canvas, off-white type, the same violet actions
+     (white labels), lighter #A78BFA markers and rings, coral commit with ink label.
      ============================================ */
 
-  --background: #1c1f25;
-  --foreground: #f7f3ea;
+  --background: #0f1013;
+  --foreground: #f4f4f5;
 
-  --card: #23262d;
+  --card: #17181c;
   --card-foreground: var(--foreground);
-  --popover: #282c34;
+  --popover: #1e1f24;
   --popover-foreground: var(--foreground);
 
-  --primary: #f7f3ea;
-  --primary-foreground: #181a1f;
+  --primary: #7c3aed;
+  --primary-foreground: #ffffff;
 
-  --secondary: #2a2e36;
+  --secondary: #1f2025;
   --secondary-foreground: var(--foreground);
-  --muted: #242830;
-  --muted-foreground: #a8afba;
-  --accent: #3a3320;
+  --muted: #1a1b1f;
+  --muted-foreground: #a1a1aa;
+  --accent: #24262b;
   --accent-foreground: var(--foreground);
 
-  --brand: #ff7a66;
-  --brand-foreground: #181a1f;
+  --brand: #7c3aed;
+  --brand-foreground: #ffffff;
+
+  --brand-secondary: #ff7a66;
+  --brand-secondary-foreground: #0f1013;
+  --brand-secondary-surface: #3a201c;
+
   --commit: #ff7a66;
-  --commit-foreground: #181a1f;
+  --commit-foreground: #0f1013;
   --commit-border: #ff9a8c;
   --commit-hover: #ff8f7d;
 
-  /* Deep red keeps the filled destructive action distinct from coral; the
-     lighter `--destructive` keeps error text readable on the dark canvas. */
-  --destructive: #ff8a80;
-  --destructive-solid: #c0392b;
-  --destructive-foreground: #f7f3ea;
-  --success: #74d3a6;
-  --success-surface: #17352a;
-  --success-foreground: #181a1f;
-  --warning: #f2c063;
-  --warning-surface: #3a2e18;
-  --warning-foreground: #181a1f;
-  --destructive-surface: #3a1e1b;
+  --destructive: #f87171;
+  --destructive-solid: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --success: #4ade80;
+  --success-surface: #11301c;
+  --success-foreground: #0f1013;
+  --warning: #facc15;
+  --warning-surface: #332b0a;
+  --warning-foreground: #0f1013;
+  --destructive-surface: #3a1717;
 
-  --border: rgb(247 243 234 / 12%);
-  --input: rgb(247 243 234 / 24%);
-  --ring: #a8afba;
+  --border: rgb(255 255 255 / 10%);
+  --input: rgb(255 255 255 / 20%);
+  --ring: #a78bfa;
 
-  --chart-1: #f7f3ea;
-  --chart-2: #a8afba;
-  --chart-3: #ffe39a;
-  --chart-4: #ff7a66;
-  --chart-5: #74d3a6;
+  --field: #1f2025;
+  --field-hover: #25272d;
 
-  --sidebar: #181a1f;
-  --sidebar-foreground: #f7f3ea;
-  --sidebar-primary: #ffe39a;
-  --sidebar-primary-foreground: #181a1f;
-  --sidebar-accent: #3a3320;
-  --sidebar-accent-foreground: #f7f3ea;
-  --sidebar-border: rgb(247 243 234 / 10%);
-  --sidebar-ring: #ffe39a;
+  --chart-1: #a78bfa;
+  --chart-2: #ff7a66;
+  --chart-3: #a1a1aa;
+  --chart-4: #facc15;
+  --chart-5: #f4f4f5;
+
+  --sidebar: #0b0c0e;
+  --sidebar-foreground: #f4f4f5;
+  --sidebar-primary: #a78bfa;
+  --sidebar-primary-foreground: #0f1013;
+  --sidebar-accent: #1f2025;
+  --sidebar-accent-foreground: #f4f4f5;
+  --sidebar-border: rgb(255 255 255 / 8%);
+  --sidebar-ring: #a78bfa;
 }
 
 @layer base {
@@ -217,6 +241,37 @@
   }
   body {
     @apply bg-background text-foreground h-screen overflow-hidden;
+  }
+
+  /* Tighter display headings: the font's geometric shapes read best slightly condensed. */
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
+  }
+
+  /* Pointer on everything clickable; text fields keep the I-beam. */
+  button,
+  select,
+  summary,
+  label[for],
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="file"],
+  [role="button"],
+  [role="combobox"],
+  [role="switch"],
+  [role="checkbox"],
+  [role="radio"],
+  [role="tab"],
+  [role="option"],
+  [role="menuitem"] {
+    cursor: pointer;
+  }
+  :disabled,
+  [aria-disabled="true"],
+  [data-disabled] {
+    cursor: not-allowed;
   }
 
   /* Global Scrollbar Styles - Minimal & Theme-aware */

@@ -212,10 +212,7 @@ const AddProduct = () => {
   ];
 
   const inputClass = (field: keyof ProductFormData) =>
-    cn(
-      "bg-background",
-      errors[field] && "border-destructive focus-visible:ring-destructive",
-    );
+    cn(errors[field] && "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/15");
 
   return (
     <div className="p-6">

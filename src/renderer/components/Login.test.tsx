@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { act, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Route } from "react-router-dom";
 import type { AuthUser } from "@/shared/contracts/auth.contract";
@@ -90,6 +90,40 @@ describe("Login", () => {
     await submitCredentials("ab", "secret123");
 
     expect(await screen.findByText("Username must be at least 3 characters long")).toBeInTheDocument();
+  });
+
+  it("reveals and hides the password without losing what was typed", async () => {
+    const session = fakeSession();
+    const api = installFakeElectronApi({ auth: { status: session.status, login: () => session.signIn(user) } });
+    renderRoutes(app, { initialPath: "/login" });
+    const ue = userEvent.setup();
+
+    await ue.type(screen.getByLabelText("Password"), "secret123");
+    expect(screen.getByLabelText("Password")).toHaveAttribute("type", "password");
+
+    await ue.click(screen.getByRole("button", { name: "Show password" }));
+    expect(screen.getByLabelText("Password")).toHaveAttribute("type", "text");
+    expect(screen.getByLabelText("Password")).toHaveValue("secret123");
+
+    await ue.click(screen.getByRole("button", { name: "Hide password" }));
+    expect(screen.getByLabelText("Password")).toHaveAttribute("type", "password");
+
+    await ue.type(screen.getByLabelText("Username"), "cashier1");
+    await ue.click(screen.getByRole("button", { name: "Login" }));
+    expect(await screen.findByText("Dashboard home")).toBeInTheDocument();
+    expect(api.auth.login).toHaveBeenCalledWith({ username: "cashier1", password: "secret123" });
+  });
+
+  it("warns while Caps Lock is on in the password field", async () => {
+    installFakeElectronApi({ auth: { status: fakeSession().status, login: () => failure("NOT_FOUND", "User not found") } });
+    renderRoutes(app, { initialPath: "/login" });
+    const password = await screen.findByLabelText("Password");
+
+    fireEvent.keyUp(password, { key: "A", modifierCapsLock: true });
+    expect(screen.getByText("Caps Lock is on")).toBeInTheDocument();
+
+    fireEvent.keyUp(password, { key: "a", modifierCapsLock: false });
+    expect(screen.queryByText("Caps Lock is on")).not.toBeInTheDocument();
   });
 
   it("disables the form while the request is in flight and clears a previous error on retry", async () => {

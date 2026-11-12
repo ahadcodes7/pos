@@ -3,6 +3,7 @@ import { Check, ChevronDown } from "lucide-react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 
 import { cn } from "@/renderer/lib/utils";
+import { fieldVariants } from "./field";
 
 function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) {
   return <SelectPrimitive.Root data-slot="select" {...props} />;
@@ -21,7 +22,8 @@ function SelectTrigger({ className, children, ...props }: React.ComponentProps<t
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
       className={cn(
-        "cursor-pointer border-border bg-background hover:bg-muted flex w-fit items-center justify-between gap-1 rounded-md border px-2 py-1 text-sm whitespace-nowrap transition-colors outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+        fieldVariants,
+        "flex w-fit cursor-pointer items-center justify-between gap-2 py-1 whitespace-nowrap data-[placeholder]:text-muted-foreground data-[state=open]:border-ring data-[state=open]:bg-card data-[state=open]:ring-[3px] data-[state=open]:ring-ring/20",
         className,
       )}
       {...props}
@@ -40,7 +42,7 @@ function SelectContent({ className, children, ...props }: React.ComponentProps<t
       <SelectPrimitive.Content
         data-slot="select-content"
         className={cn(
-          "bg-popover text-popover-foreground relative z-50 max-h-72 min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-md border shadow-md",
+          "bg-popover text-popover-foreground relative z-50 max-h-72 min-w-[var(--radix-select-trigger-width)] overflow-hidden rounded-field border shadow-lg",
           "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
           className,
         )}
@@ -72,7 +74,7 @@ function SelectItem({ className, children, ...props }: React.ComponentProps<type
     <SelectPrimitive.Item
       data-slot="select-item"
       className={cn(
-        "relative flex w-full cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm outline-none select-none",
+        "relative flex w-full cursor-pointer items-center rounded-lg py-2 pr-8 pl-2.5 text-sm outline-none select-none",
         "focus:bg-accent focus:text-accent-foreground data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className,
       )}
