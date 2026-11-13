@@ -1,17 +1,19 @@
-// FLAG(money): prices here are floats in major units (PKR). Money must become integer
-// minor units (see src/shared/contracts/common.ts) when this moves to real data.
 import type { OptionValue } from "@/renderer/components/common/SearchableSelect";
+import type { Money } from "@/shared/contracts/common";
 
 export interface SaleProduct {
   id: string;
   name: string;
   sku: string;
-  price: number;
+  /** Unit price in paisa. */
+  price: Money;
+  /** Percent, e.g. 18. */
   taxRate: number;
   category: string;
   image: string;
   stock: number;
   uom: string;
+  /** Default line discount in percent. */
   discount?: number;
 }
 
@@ -22,7 +24,9 @@ export type Customer = {
   phone: string;
 };
 
-export type ViewMode = "card" | "table";
+export type ViewMode = "card" | "staged" | "grid";
+
+export const viewModes: readonly ViewMode[] = ["card", "staged", "grid"];
 
 export const mockCategories = [
   { id: "all", name: "All", icon: "📦" },
@@ -55,7 +59,7 @@ export const mockProducts: SaleProduct[] = [
     id: "1",
     name: "Chicken Biryani",
     sku: "FOOD-001",
-    price: 350,
+    price: 35000,
     taxRate: 18,
     category: "food",
     image: "🍚",
@@ -67,7 +71,7 @@ export const mockProducts: SaleProduct[] = [
     id: "2",
     name: "Beef Pulao",
     sku: "FOOD-002",
-    price: 400,
+    price: 40000,
     taxRate: 18,
     category: "food",
     image: "🍲",
@@ -79,7 +83,7 @@ export const mockProducts: SaleProduct[] = [
     id: "3",
     name: "Chicken Karahi",
     sku: "FOOD-003",
-    price: 1200,
+    price: 120000,
     taxRate: 18,
     category: "food",
     image: "🍗",
@@ -91,7 +95,7 @@ export const mockProducts: SaleProduct[] = [
     id: "4",
     name: "Seekh Kabab (4 pcs)",
     sku: "FOOD-004",
-    price: 450,
+    price: 45000,
     taxRate: 18,
     category: "food",
     image: "🥩",
@@ -103,7 +107,7 @@ export const mockProducts: SaleProduct[] = [
     id: "5",
     name: "Chicken Tikka",
     sku: "FOOD-005",
-    price: 550,
+    price: 55000,
     taxRate: 18,
     category: "food",
     image: "🍖",
@@ -115,7 +119,7 @@ export const mockProducts: SaleProduct[] = [
     id: "6",
     name: "Fresh Lime Soda",
     sku: "DRINK-001",
-    price: 80,
+    price: 8000,
     taxRate: 18,
     category: "drinks",
     image: "🍋",
@@ -127,7 +131,7 @@ export const mockProducts: SaleProduct[] = [
     id: "7",
     name: "Cold Coffee",
     sku: "DRINK-002",
-    price: 150,
+    price: 15000,
     taxRate: 18,
     category: "drinks",
     image: "☕",
@@ -139,7 +143,7 @@ export const mockProducts: SaleProduct[] = [
     id: "8",
     name: "Mint Margarita",
     sku: "DRINK-003",
-    price: 120,
+    price: 12000,
     taxRate: 18,
     category: "drinks",
     image: "🍃",
@@ -151,7 +155,7 @@ export const mockProducts: SaleProduct[] = [
     id: "9",
     name: "Lassi (Sweet)",
     sku: "DRINK-004",
-    price: 100,
+    price: 10000,
     taxRate: 18,
     category: "drinks",
     image: "🥛",
@@ -163,7 +167,7 @@ export const mockProducts: SaleProduct[] = [
     id: "10",
     name: "Soft Drink (500ml)",
     sku: "DRINK-005",
-    price: 60,
+    price: 6000,
     taxRate: 18,
     category: "drinks",
     image: "🥤",
@@ -175,7 +179,7 @@ export const mockProducts: SaleProduct[] = [
     id: "11",
     name: "Samosa (2 pcs)",
     sku: "SNACK-001",
-    price: 50,
+    price: 5000,
     taxRate: 18,
     category: "snacks",
     image: "🥟",
@@ -187,7 +191,7 @@ export const mockProducts: SaleProduct[] = [
     id: "12",
     name: "Pakora (200g)",
     sku: "SNACK-002",
-    price: 80,
+    price: 8000,
     taxRate: 18,
     category: "snacks",
     image: "🍤",
@@ -199,7 +203,7 @@ export const mockProducts: SaleProduct[] = [
     id: "13",
     name: "French Fries (L)",
     sku: "SNACK-003",
-    price: 250,
+    price: 25000,
     taxRate: 18,
     category: "snacks",
     image: "🍟",
@@ -211,7 +215,7 @@ export const mockProducts: SaleProduct[] = [
     id: "14",
     name: "Chicken Wings (6 pcs)",
     sku: "SNACK-004",
-    price: 350,
+    price: 35000,
     taxRate: 18,
     category: "snacks",
     image: "🍗",
@@ -223,7 +227,7 @@ export const mockProducts: SaleProduct[] = [
     id: "15",
     name: "Fresh Milk (1L)",
     sku: "DAIRY-001",
-    price: 120,
+    price: 12000,
     taxRate: 18,
     category: "dairy",
     image: "🥛",
@@ -235,7 +239,7 @@ export const mockProducts: SaleProduct[] = [
     id: "16",
     name: "Yogurt (500g)",
     sku: "DAIRY-002",
-    price: 80,
+    price: 8000,
     taxRate: 18,
     category: "dairy",
     image: "🥛",
@@ -247,7 +251,7 @@ export const mockProducts: SaleProduct[] = [
     id: "17",
     name: "Ice Cream (500ml)",
     sku: "FROZEN-001",
-    price: 250,
+    price: 25000,
     taxRate: 18,
     category: "frozen",
     image: "🍨",
@@ -259,7 +263,7 @@ export const mockProducts: SaleProduct[] = [
     id: "18",
     name: "Shake (Any flavor)",
     sku: "FROZEN-002",
-    price: 180,
+    price: 18000,
     taxRate: 18,
     category: "frozen",
     image: "🥤",
@@ -333,17 +337,7 @@ export const useInfiniteCustomers = (params?: Record<string, OptionValue>) => {
   };
 };
 
-export const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat("en-PK", {
-    style: "currency",
-    currency: "PKR",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount);
-};
-
-// NOTE: TableView calls this without a category, so nothing matches there (pre-existing behavior).
-export const filterProducts = (products: SaleProduct[], searchQuery: string, selectedCategory?: string) => {
+export const filterProducts = (products: SaleProduct[], searchQuery: string, selectedCategory = "all") => {
   return products.filter((product) => {
     const matchesSearch =
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

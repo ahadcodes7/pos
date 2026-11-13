@@ -1,56 +1,50 @@
-import { User } from "lucide-react";
+import { ChevronRight, User } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import { ThemeToggle } from "@/renderer/components/ui/theme-toggle";
-import { Button } from "@/renderer/components/ui/button";
 import { useAuth } from "@/renderer/context/auth-context";
-import { cn } from "@/renderer/lib/utils";
+import { initialsOf, pageTitleFor } from "./nav";
+import { UserMenu } from "./UserMenu";
 
 const Navbar = () => {
   const { user } = useAuth();
-  // NOTE: AuthUser has no `name`, so this is always undefined and the icon is shown.
-  // Kept as-is (pre-existing behavior); use `username` if initials are wanted.
-  const name = (user as { name?: string } | null)?.name;
-
-  // Get user initials for avatar
-  const getInitials = (name: string) => {
-    if (!name) return "U";
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
+  const { pathname } = useLocation();
+  const { section, title } = pageTitleFor(pathname);
 
   return (
-    <header className="h-16 bg-background border-b border-border flex items-center justify-between px-6 shrink-0">
-      {/* Left - Page Title/Breadcrumb */}
-      <div className="flex items-center gap-4">
-        <h1 className="text-lg font-semibold text-foreground">Dashboard</h1>
+    <header className="flex h-16 shrink-0 items-center justify-between border-b border-border/70 bg-background/80 px-6 backdrop-blur">
+      {/* Left - page title with its parent section */}
+      <div className="flex min-w-0 items-center gap-2 text-sm">
+        {section && (
+          <>
+            <span className="truncate text-muted-foreground">{section}</span>
+            <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0 text-muted-foreground/60" />
+          </>
+        )}
+        <h1 className="truncate text-base font-semibold text-foreground">{title}</h1>
       </div>
 
       {/* Right - Actions */}
-      <div className="flex items-center gap-3">
-        {/* Theme Toggle */}
+      <div className="flex items-center gap-2">
         <ThemeToggle />
 
-        {/* Profile Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn(
-            "relative rounded-full w-9 h-9",
-            "bg-primary hover:bg-primary-hover",
-            "text-primary-foreground",
-          )}
-        >
-          {name ? (
-            <span className="text-sm font-medium">
-              {getInitials(name)}
-            </span>
-          ) : (
-            <User className="w-5 h-5" />
-          )}
-        </Button>
+        <span aria-hidden="true" className="mx-1 h-6 w-px bg-border" />
+
+        <UserMenu
+          trigger={
+            <button
+              type="button"
+              aria-label={user ? `Account menu for ${user.username}` : "Account menu"}
+              title={user ? `Signed in as ${user.username}` : undefined}
+              className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-hover text-primary-foreground shadow-[0_0_0_3px] shadow-primary/15 ring-2 ring-background transition-shadow outline-none hover:shadow-primary/30 focus-visible:shadow-[0_0_0_4px] focus-visible:shadow-ring/40 data-[state=open]:shadow-primary/30"
+            >
+              {user ? (
+                <span className="text-xs font-semibold tracking-wide">{initialsOf(user.username)}</span>
+              ) : (
+                <User aria-hidden="true" className="h-4 w-4" />
+              )}
+            </button>
+          }
+        />
       </div>
     </header>
   );

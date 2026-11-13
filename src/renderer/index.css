@@ -49,6 +49,8 @@
   --color-destructive: var(--destructive);
   --color-destructive-solid: var(--destructive-solid);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-info: var(--info);
+  --color-info-surface: var(--info-surface);
   --color-success: var(--success);
   --color-success-surface: var(--success-surface);
   --color-success-foreground: var(--success-foreground);
@@ -76,7 +78,8 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-:root {
+:root,
+.light {
   --radius: 0.625rem;
 
   /* ============================================
@@ -142,6 +145,9 @@
   --warning-surface: oklch(0.962 0.058 95.6);
   --warning-foreground: oklch(1 0 0);
   --destructive-surface: oklch(0.936 0.031 17.7);
+  /* Info: blue, for neutral guidance (callouts, tips). Text-safe on card and canvas. */
+  --info: oklch(0.488 0.217 264.4);
+  --info-surface: oklch(0.970 0.014 254.6);
 
   /* Lines and focus: original deep-violet ring, lavender selection, 3.5:1 input edge */
   --border: oklch(0.929 0.013 255.5);
@@ -152,11 +158,14 @@
   --field: oklch(0.968 0.007 247.9);
   --field-hover: oklch(0.929 0.013 255.5);
 
-  /* Data visualisation: violet, Turbo, slate, amber, indigo */
-  --chart-1: oklch(0.541 0.247 293.0);
-  --chart-2: oklch(0.861 0.173 91.9);
-  --chart-3: oklch(0.554 0.041 257.4);
-  --chart-4: oklch(0.555 0.146 49.0);
+  /* Data visualisation: categorical order violet, teal, amber, pink, then neutral ink.
+     Validated with the dataviz palette checker (lightness band, chroma, CVD separation,
+     >= 3:1 on the card). Turbo is too light to read as a mark on white, so it stays
+     a commit colour only. */
+  --chart-1: #7c3aed;
+  --chart-2: #0d9488;
+  --chart-3: #d97706;
+  --chart-4: #db2777;
   --chart-5: oklch(0.257 0.086 281.3);
 
   /* Chrome: white sidebar and title strip; native overlay follows --sidebar.
@@ -223,6 +232,8 @@
   --warning-surface: oklch(0.298 0.044 75.8);
   --warning-foreground: oklch(0.173 0.006 271.0);
   --destructive-surface: oklch(0.257 0.056 21.7);
+  --info: oklch(0.707 0.165 254.6);
+  --info-surface: oklch(0.282 0.091 267.9);
 
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 35%);
@@ -231,10 +242,11 @@
   --field: oklch(0.245 0.010 276.7);
   --field-hover: oklch(0.273 0.011 271.0);
 
-  --chart-1: oklch(0.709 0.159 293.5);
-  --chart-2: oklch(0.893 0.189 104.7);
-  --chart-3: oklch(0.712 0.013 286.1);
-  --chart-4: oklch(0.837 0.117 66.3);
+  /* Same hues, stepped into the dark-mode lightness band and validated on #17181C. */
+  --chart-1: #8b5cf6;
+  --chart-2: #0d9488;
+  --chart-3: #d97706;
+  --chart-4: #db2777;
   --chart-5: oklch(0.967 0.001 286.4);
 
   --sidebar: #0b0c0e;

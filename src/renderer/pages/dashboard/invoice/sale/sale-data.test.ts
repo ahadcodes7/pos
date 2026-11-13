@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getStockStatus } from "./sale-data";
+import { filterProducts, getStockStatus, mockProducts } from "./sale-data";
 
 describe("getStockStatus", () => {
   it("flags zero stock as out of stock", () => {
@@ -21,5 +21,22 @@ describe("getStockStatus", () => {
       label: "In Stock (6)",
       variant: "success",
     });
+  });
+});
+
+describe("filterProducts", () => {
+  it("matches name or SKU across all categories when no category is given", () => {
+    expect(filterProducts(mockProducts, "drink-00").map((p) => p.sku)).toEqual([
+      "DRINK-001",
+      "DRINK-002",
+      "DRINK-003",
+      "DRINK-004",
+      "DRINK-005",
+    ]);
+    expect(filterProducts(mockProducts, "lassi").map((p) => p.name)).toEqual(["Lassi (Sweet)"]);
+  });
+
+  it("narrows to the selected category", () => {
+    expect(filterProducts(mockProducts, "chicken", "snacks").map((p) => p.name)).toEqual(["Chicken Wings (6 pcs)"]);
   });
 });
